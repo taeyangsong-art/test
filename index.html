@@ -516,10 +516,14 @@ function periodControls(){
        <input type="date" value="${rangeEnd}" onchange="setRangeEnd(this.value)">`
     : `<input type="date" value="${selDate}" onchange="setDate(this.value)">
        <button class="btn" onclick="setDate('${ymd(today())}')">오늘</button>`;
-  return seg+picker;
+  const quick=`<button class="btn${isQuickRange(7)?' primary':''}" onclick="setQuickRange(7)">최근 7일</button>
+    <button class="btn${isQuickRange(30)?' primary':''}" onclick="setQuickRange(30)">최근 30일</button>`;
+  return seg+picker+quick;
 }
 function setRangeStart(v){ rangeStart=v; renderMain(); }
 function setRangeEnd(v){ rangeEnd=v; renderMain(); }
+function setQuickRange(days){ viewMode='custom'; rangeEnd=ymd(today()); rangeStart=ymd(addDays(today(),-(days-1))); renderMain(); }
+function isQuickRange(days){ return viewMode==='custom' && rangeEnd===ymd(today()) && rangeStart===ymd(addDays(today(),-(days-1))); }
 function sumRange(cat, dates, emp){
   return dates.reduce((a,d)=>{
     if(emp) return a + getCount(cat,d,emp);
