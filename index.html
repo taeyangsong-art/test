@@ -558,8 +558,32 @@ function renderStats(){
       ${trendChart(activeCat, viewMode, selDate)}
     </div>
 
+    ${activeCat==="as" ? externCard() : ""}
     ${activeCat==="as" ? pendingCard() : ""}
   `;
+}
+
+// 외주 처리 (별도 집계) — 선택 날짜 기준
+function externCard(){
+  const day=slackDay(selDate);
+  const ex=(day&&day.counts&&day.counts.extern)||null;
+  if(!ex||Object.keys(ex).length===0) return "";
+  const rows=Object.entries(ex).sort((a,b)=>b[1]-a[1]);
+  const total=rows.reduce((a,[,n])=>a+n,0);
+  const maxv=Math.max(1,...rows.map(r=>r[1]));
+  return `<div class="card">
+    <div class="card-head">
+      <h3>🧩 외주 처리 (별도 집계)</h3>
+      <span class="hint">${fmtShort(selDate)} 기준 · 총 ${total}건</span>
+    </div>
+    <p class="note" style="margin:-6px 0 14px;font-size:13px;color:var(--gray)">
+      <b>원격외주</b> 이모지가 찍힌 처리완료 건입니다. AS·온보딩과 <b>별도로</b> 집계됩니다.</p>
+    ${rows.map(([emp,n])=>`
+      <div class="bar-row">
+        <div class="bar-meta"><span class="nm">${emp}</span><span class="ct">${n}건</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:${n/maxv*100}%"></div></div>
+      </div>`).join("")}
+  </div>`;
 }
 
 // 미처리·확인필요 건 (슬랙 채널 스캔) — 선택 날짜 기준, 상호/사업자 조회

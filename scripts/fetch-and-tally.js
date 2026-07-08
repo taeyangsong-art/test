@@ -48,8 +48,8 @@ async function fetchAll() {
 }
 
 function tally(msgs) {
-  const counts = {}, pending = [], extern = {};
-  let completed = 0, latest = '';
+  const counts = {}, pending = [];
+  let completed = 0, externCount = 0, latest = '';
   for (const m of msgs) {
     if (m.subtype) continue; // 시스템 메시지 제외
     const time = kstHM(m.ts);
@@ -66,32 +66,35 @@ function tally(msgs) {
     // 카테고리 이모지
     let catKey = null;
     for (const n of names) { if (catMap[n]) { catKey = catMap[n]; break; } }
-    const isExtern = !catKey && names.includes('원격외주');
-    if (!catKey && !isExtern && emp) catKey = 'as'; // 완료 담당자 있고 카테고리 없으면 기본 AS
+    const hasExtern = names.includes('원격외주');
+    if (!catKey && !hasExtern && emp) catKey = 'as'; // 완료 담당자 있고 카테고리·외주 없으면 기본 AS
     // 확인 담당자 (OOO_확인) — 예: 태양_확인 → 송태양
     let confirmPerson = null;
     for (const n of names) { const cm = n.match(/^(규빈|선유|성현|동욱|현기|태양|기범|상원|민석)(_확인.*)?$/); if (cm) { confirmPerson = personMap[cm[1]]; break; } }
     const has2ndAbsent = names.some(n => /2차.?부재/.test(n)); // 2차부재는 확인필요에서 제외
+    const doer = emp || confirmPerson;   // 처리자(원격OOO 우선, 없으면 확인자)
 
-    if (emp && catKey) {                 // 완료 → 집계
+    if (hasExtern) {                     // 외주 → 처리완료로 인정, 별도 집계
+      const who = doer || '미지정';
+      counts.extern = counts.extern || {};
+      counts.extern[who] = (counts.extern[who] || 0) + 1; externCount++;
+    } else if (emp && catKey) {          // AS/온보딩 완료
       if (!counts[catKey]) counts[catKey] = {};
       counts[catKey][emp] = (counts[catKey][emp] || 0) + 1; completed++;
-    } else if (emp && isExtern) {         // 외주 완료
-      extern[emp] = (extern[emp] || 0) + 1;
-    } else if (confirmPerson && !emp && !catKey && !isExtern && !has2ndAbsent) {
-      // 확인(OOO_확인)만 되고 완료(원격OOO)·분류(카테고리)가 안 됐고 2차부재가 아닌 건만 확인필요로 적재
+    } else if (confirmPerson && !emp && !catKey && !has2ndAbsent) {
+      // 확인(OOO_확인)만 되고 완료·분류가 안 됐고 2차부재가 아닌 건만 확인필요로 적재
       pending.push({ time, store, biz, handler: confirmPerson, reasons: ['확인 후 미완료'] });
     }
     // 그 외(무반응 / 부재만 / 이미 분류됨) → 적재하지 않음
   }
   pending.sort((a, b) => (b.time || '').localeCompare(a.time || ''));
-  return { counts, pending, extern, completed, latest };
+  return { counts, pending, completed, externCount, latest };
 }
 
 (async () => {
   const msgs = await fetchAll();
-  const { counts, pending, extern, completed, latest } = tally(msgs);
-  console.log(`[${targetDate}] 메시지 ${msgs.length} · 완료 ${completed} · 확인필요 ${pending.length} · 외주 ${Object.values(extern).reduce((a,b)=>a+b,0)}`);
+  const { counts, pending, completed, externCount, latest } = tally(msgs);
+  console.log(`[${targetDate}] 메시지 ${msgs.length} · 완료 ${completed} · 확인필요 ${pending.length} · 외주 ${externCount}`);
 
   let data = { version: 0, days: {} };
   if (fs.existsSync(OUT)) {
