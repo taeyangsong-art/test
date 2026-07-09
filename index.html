@@ -216,6 +216,10 @@
   .ev-chip{display:flex; align-items:flex-start; gap:5px; font-size:11px; font-weight:700; padding:4px 5px 4px 7px;
     border-radius:7px; line-height:1.35; transition:.15s}
   .ev-chip:hover{filter:brightness(.96)}
+  .ev-chip{cursor:grab}
+  .ev-chip:active{cursor:grabbing}
+  .ev-chip.dragging{opacity:.4}
+  .daycell.share.drop-hover{border:2px dashed var(--blue); background:var(--blue-soft)}
   .ev-dot{width:7px; height:7px; border-radius:50%; flex:0 0 auto; margin-top:3px; display:inline-block}
   .ev-txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:1px; white-space:normal; word-break:keep-all}
   .ev-head{font-weight:800}
@@ -978,12 +982,13 @@ function renderShare(){
     const chips = evs.map(e=>{
       const t=typeMeta(e.type);
       const tt=`${e.emp} · ${t.label}${e.time?' · '+e.time:''}${e.title?' · '+e.title:''}`;
-      return `<div class="ev-chip" style="background:${t.soft};color:${t.color}" title="${escapeHtml(tt)}">
+      return `<div class="ev-chip" draggable="true" ondragstart="shareDragStart(event,'${ds}','${e.id}')" ondragend="shareDragEnd(event)" style="background:${t.soft};color:${t.color}" title="${escapeHtml(tt)} — 드래그해서 날짜 이동">
         <span class="ev-dot" style="background:${t.color}"></span>
         <span class="ev-txt"><span class="ev-head">${escapeHtml(e.emp)} · ${t.label}</span>${e.time?`<span class="ev-time">🕒 ${escapeHtml(e.time)}</span>`:''}${e.title?`<span class="ev-memo">${escapeHtml(e.title)}</span>`:''}</span>
         <button class="ev-del" title="삭제" onclick="removeShare('${ds}','${e.id}')">×</button></div>`;
     }).join("");
-    return `<div class="daycell share ${ds===todayStr?'today':''} ${holi?'holi':''}">
+    return `<div class="daycell share ${ds===todayStr?'today':''} ${holi?'holi':''}"
+      ondragover="shareDragOver(event,this)" ondragleave="shareDragLeave(this)" ondrop="shareDrop(event,'${ds}',this)">
       <div class="dnum ${numCls}">${d}${holi?`<span class="holi-tag">${holi}</span>`:''}
         <button class="add-ev" title="일정 추가" onclick="openShareForm('${ds}')">+</button></div>
       <div class="ev-list">${chips}</div>
@@ -994,7 +999,7 @@ function renderShare(){
     <div class="page-head">
       <div>
         <h2>📢 공유</h2>
-        <div class="sub">연차 · 반차 · 시간차 · 외부일정 · 교육일정 · 회의를 팀원과 공유하세요. 일정마다 시작~종료 시간을 넣을 수 있고, 달력에 시간·내용이 함께 표시됩니다. 삭제는 일정의 × 버튼을 누르세요.</div>
+        <div class="sub">연차 · 반차 · 시간차 · 외부일정 · 교육일정 · 회의를 팀원과 공유하세요. 일정마다 시작~종료 시간을 넣을 수 있고, 달력에 시간·내용이 함께 표시됩니다. <b>일정을 드래그하면 다른 날짜로 이동</b>되고, 삭제는 × 버튼을 누르세요.</div>
       </div>
       <div class="controls">
         <select class="sel" onchange="setShareFilter(this.value)">
@@ -1084,6 +1089,33 @@ function removeShare(ds, id){
   if(!confirm(`${ev.emp}님의 ${t.label}${ev.title?' ('+ev.title+')':''} 일정을 삭제할까요?`)) return;
   SHARE[ds]=SHARE[ds].filter(e=>e.id!==id);
   if(SHARE[ds].length===0) delete SHARE[ds];
+  save(LS_SHARE, SHARE);
+  renderShare();
+}
+
+/* ===== 드래그&드롭으로 일정 날짜 이동 ===== */
+let shareDrag=null; // {ds, id}
+function shareDragStart(ev, ds, id){
+  shareDrag={ds, id};
+  ev.dataTransfer.effectAllowed="move";
+  try{ ev.dataTransfer.setData("text/plain", ds+"|"+id); }catch(e){}
+  ev.currentTarget.classList.add("dragging");
+}
+function shareDragEnd(ev){ ev.currentTarget.classList.remove("dragging"); }
+function shareDragOver(ev, cell){ ev.preventDefault(); ev.dataTransfer.dropEffect="move"; cell.classList.add("drop-hover"); }
+function shareDragLeave(cell){ cell.classList.remove("drop-hover"); }
+function shareDrop(ev, targetDs, cell){
+  ev.preventDefault(); cell.classList.remove("drop-hover");
+  let src=shareDrag;
+  if(!src){ const d=(ev.dataTransfer.getData("text/plain")||"").split("|"); if(d.length===2) src={ds:d[0], id:d[1]}; }
+  shareDrag=null;
+  if(!src || src.ds===targetDs) return;           // 같은 날이면 무시
+  const list=SHARE[src.ds]; if(!list) return;
+  const idx=list.findIndex(e=>e.id===src.id); if(idx<0) return;
+  const moved=list.splice(idx,1)[0];
+  if(list.length===0) delete SHARE[src.ds];
+  if(!SHARE[targetDs]) SHARE[targetDs]=[];
+  SHARE[targetDs].push(moved);
   save(LS_SHARE, SHARE);
   renderShare();
 }
