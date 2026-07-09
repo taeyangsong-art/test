@@ -54,9 +54,9 @@ function mapIndustry(raw){
 }
 // 칭찬 판별 키워드 (원문에 포함되면 직원칭찬으로 적재)
 const VOC_PRAISE_KW = ['친절','좋았','좋아요','좋습니','최고','감사','만족스','깔끔','빠르','세심','훌륭','신속','편리','도움','대박','꼼꼼','상냥'];
-// 고점 기준
-const VOC_HIGH_INSTALL = 4;  // 구매설치 ≥4 (만점5)
-const VOC_HIGH_NPS = 9;      // 추천의향 ≥9 (만점10)
+// 고점 기준 (만점)
+const VOC_HIGH_INSTALL = 5;  // 구매설치 5 (만점)
+const VOC_HIGH_NPS = 10;     // 추천의향 10 (만점)
 const pad = n => String(n).padStart(2, '0');
 
 // 집계 대상 날짜: TALLY_DATE_OFFSET (0=오늘, -1=어제). 새벽 최종집계는 -1 로 '전날' 마감.
