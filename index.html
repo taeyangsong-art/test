@@ -171,8 +171,24 @@
   .voc-reason{font-size:12.5px; line-height:1.5; margin:2px 0; color:var(--ink-soft)}
   .voc-rcat{display:inline-block; background:var(--red-soft); color:var(--red); font-weight:700; font-size:11px;
     padding:1px 7px; border-radius:6px; margin-right:5px; white-space:nowrap}
-  .praise-emp{display:inline-block; background:var(--green-soft); color:var(--green-text,#166534); font-weight:700;
+  .praise-emp{display:inline-block; background:var(--green-soft); color:#166534; font-weight:700;
     font-size:12px; padding:2px 9px; border-radius:7px}
+  /* 칭찬 카드 (예쁘게) */
+  .praise-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(268px,1fr)); gap:14px}
+  .praise-card{border:1px solid var(--line-soft); border-left:4px solid var(--green); border-radius:16px;
+    padding:15px 17px; background:linear-gradient(180deg,#f4fdf7,#fafafa); display:flex; flex-direction:column; gap:11px;
+    box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .praise-top{display:flex; align-items:center; justify-content:space-between; gap:8px}
+  .praise-store{font-weight:700; font-size:15px; color:var(--ink); letter-spacing:-.01em}
+  .praise-score{flex:0 0 auto; background:#dcfce7; color:#166534; font-weight:700; font-size:12px;
+    padding:3px 10px; border-radius:20px; white-space:nowrap}
+  .praise-quote{font-size:13.5px; line-height:1.6; color:var(--ink-soft); font-style:italic;
+    border-left:2px solid #bbf7d0; padding-left:10px}
+  .praise-foot{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:auto; flex-wrap:wrap}
+  .praise-mid{font-size:11px; color:var(--gray2)}
+  .praise-sel{font-family:inherit; font-size:12.5px; font-weight:600; padding:7px 10px; border:1px solid var(--line);
+    border-radius:9px; background:#fff; color:var(--ink); cursor:pointer}
+  .praise-sel:focus{outline:none; border-color:var(--green); box-shadow:0 0 0 3px var(--green-soft)}
   .voc-rawind{font-size:11px; color:var(--gray2); margin-top:2px}
   .voc-rawtxt{font-size:12px; color:var(--ink-soft); line-height:1.45}
   .voc-table td{vertical-align:top}
@@ -497,6 +513,8 @@ let SHARE  = load(LS_SHARE, {});   // { "YYYY-MM-DD": [ {id, emp, type, title, t
 let VOCEDIT= load(LS_VOCEDIT, {}); // { "date|storeId|time": { industry, reasonCat, note } } — VOC 수기 보정
 const LS_VOCCOMMENT = "opcare_voccomment_v1";
 let VOCCOMMENT = load(LS_VOCCOMMENT, {}); // { "YYYY-MM": "먼슬리 코멘트" }
+const LS_VOCPRAISE = "opcare_vocpraise_v1";
+let VOCPRAISE = load(LS_VOCPRAISE, {});   // { "date|storeId|time": { emp } } — 칭찬 담당직원 수기 지정
 
 function load(k, def){ try{ const v=JSON.parse(localStorage.getItem(k)); return v==null?def:v; }catch(e){ return def; } }
 function save(k, v){ localStorage.setItem(k, JSON.stringify(v)); }
@@ -833,16 +851,8 @@ function renderVoc(){
     </div>
 
     <div class="card">
-      <div class="card-head"><h3>👏 직원 칭찬 · 고점</h3><span class="hint">고점(구매설치≥4·추천≥9) ${v.high.install+v.high.nps}건 · 칭찬 ${v.praises.length}건</span></div>
-      ${v.praises.length?`<div style="overflow-x:auto"><table style="margin-top:6px">
-        <thead><tr><th style="width:52px">시간</th><th>매장명</th><th style="width:80px">매장ID</th><th style="width:90px">담당</th><th class="num" style="width:96px">점수</th><th>고객 원문</th></tr></thead>
-        <tbody>${v.praises.map(p=>{
-          const sc=`${p.install!=null?`설치 ${p.install}`:''}${p.install!=null&&p.nps!=null?' · ':''}${p.nps!=null?`추천 ${p.nps}`:''}`;
-          return `<tr><td class="trow-time">${p.time||''}</td><td class="emp-name">${escapeHtml(p.store||'-')}</td><td class="trow-biz">${p.storeId||'-'}</td>
-            <td>${p.emp?`<span class="praise-emp">${escapeHtml(p.emp)}</span>`:'<span style="color:var(--gray2)">-</span>'}</td>
-            <td class="num" style="color:var(--green);font-weight:800;white-space:nowrap">${sc||'-'}</td>
-            <td class="voc-rawtxt">${escapeHtml(p.text||'-')}</td></tr>`;}).join('')}</tbody>
-      </table></div>`:'<div class="empty-note">이 기간 칭찬·고점 적재 건이 없습니다</div>'}
+      <div class="card-head"><h3>👏 직원 칭찬 · 고점</h3><span class="hint">고점(구매설치≥4·추천≥9) ${v.high.install+v.high.nps}건 · 칭찬/확인 ${v.praises.length}건</span></div>
+      ${praiseCardsHTML(v.praises)}
     </div>
 
     <div class="card">
@@ -856,6 +866,28 @@ function renderVoc(){
   `;
 }
 function filterVoc(q){ q=(q||'').trim().toLowerCase(); document.querySelectorAll('#vocBody tr').forEach(tr=>{ tr.style.display=(tr.dataset.key||'').includes(q)?'':'none'; }); }
+// 칭찬 카드 (매장·점수·원문 + 담당직원 지정 드롭다운)
+function praiseCardsHTML(praises){
+  if(!praises||!praises.length) return '<div class="empty-note">이 기간 칭찬·확인 적재 건이 없습니다</div>';
+  return `<div class="praise-grid">${praises.map(p=>{
+    const key=vocKey(p), ov=VOCPRAISE[key]||{}, empVal=ov.emp!=null?ov.emp:(p.emp||'');
+    const sc=`${p.install!=null?`설치 ${p.install}`:''}${p.install!=null&&p.nps!=null?' · ':''}${p.nps!=null?`추천 ${p.nps}`:''}`;
+    return `<div class="praise-card">
+      <div class="praise-top"><span class="praise-store">${escapeHtml(p.store||'-')}</span>${sc?`<span class="praise-score">${sc}</span>`:''}</div>
+      <div class="praise-quote">“${escapeHtml((p.text||'-').slice(0,140))}”</div>
+      <div class="praise-foot">
+        <span class="praise-mid">${p.date||''} ${p.time||''}${p.storeId?' · ID'+p.storeId:''}</span>
+        <select class="praise-sel" onchange="saveVocPraise('${key}',this.value)"><option value="">👤 직원 미지정</option>${EMPLOYEES.map(e=>`<option ${e===empVal?'selected':''}>${e}</option>`).join('')}</select>
+      </div>
+    </div>`;}).join('')}</div>`;
+}
+function saveVocPraise(key, emp){
+  if(!VOCPRAISE[key]) VOCPRAISE[key]={};
+  if(emp==='') delete VOCPRAISE[key].emp; else VOCPRAISE[key].emp=emp;
+  if(Object.keys(VOCPRAISE[key]).length===0) delete VOCPRAISE[key];
+  save(LS_VOCPRAISE, VOCPRAISE);
+  if(activeCat==='voc-monthly') renderVocMonthly(); else if(activeCat==='voc') renderVoc();
+}
 
 /* ================= VOC Monthly (먼슬리 발표용) ================= */
 function vocMonthAgg(){
@@ -889,7 +921,7 @@ function renderVocMonthly(){
   const indMax=Math.max(1,...indRows.map(r=>r[1]));
   const reaMax=Math.max(1,...reaRows.map(r=>r[1]));
   const lowRate=v.responses?Math.round(totalIn/v.responses*100):0;
-  const byPraiseEmp={}; v.praises.forEach(p=>{ if(p.emp) byPraiseEmp[p.emp]=(byPraiseEmp[p.emp]||0)+1; });
+  const byPraiseEmp={}; v.praises.forEach(p=>{ const ov=VOCPRAISE[vocKey(p)]; const emp=(ov&&ov.emp)||p.emp; if(emp) byPraiseEmp[emp]=(byPraiseEmp[emp]||0)+1; });
   const praiseEmpRows=Object.entries(byPraiseEmp).sort((a,b)=>b[1]-a[1]);
   const peMax=Math.max(1,...praiseEmpRows.map(r=>r[1]));
   const comment=VOCCOMMENT[mkey]||'';
@@ -917,8 +949,12 @@ function renderVocMonthly(){
     </div>
     <div class="card"><div class="card-head"><h3>일별 인입 추이</h3><span class="hint">${mo+1}월</span></div>${vocDailyTrend(dates)}</div>
     <div class="card">
-      <div class="card-head"><h3>👏 직원 칭찬 · 고점</h3><span class="hint">고점(설치≥4·추천≥9) ${v.high.install+v.high.nps}건 · 칭찬 ${v.praises.length}건</span></div>
-      ${praiseEmpRows.length?`<div class="note" style="margin-bottom:10px;font-size:13px;color:var(--gray)">담당자 확인 리액션/칭찬 문구가 잡힌 건의 직원별 집계</div>`+praiseEmpRows.map(([n,c])=>barRow(n,c,peMax,'#34c759')).join(''):'<div class="empty-note">이 달 담당 표기된 칭찬 적재 건이 없습니다</div>'}
+      <div class="card-head"><h3>👏 직원별 칭찬 집계</h3><span class="hint">고점(설치≥4·추천≥9) ${v.high.install+v.high.nps}건 · 칭찬/확인 ${v.praises.length}건</span></div>
+      ${praiseEmpRows.length?`<div class="note" style="margin-bottom:10px;font-size:13px;color:var(--gray)">담당자 확인 리액션/칭찬 문구/수기지정 기준 직원별 집계</div>`+praiseEmpRows.map(([n,c])=>barRow(n,c,peMax,'#34c759')).join(''):'<div class="empty-note">이 달 담당 지정된 칭찬이 없습니다 — 아래에서 직원을 지정하세요</div>'}
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>💚 칭찬 상세 · 직원 지정</h3><span class="hint">${v.praises.length}건 · 각 카드에서 담당 직원 선택</span></div>
+      ${praiseCardsHTML(v.praises)}
     </div>
     <div class="card">
       <div class="card-head"><h3>📝 먼슬리 코멘트</h3>
