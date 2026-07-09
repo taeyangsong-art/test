@@ -619,16 +619,9 @@ function renderOverview(){
     <div class="card">
       <div class="card-head">
         <h3>직원별 처리량 (카테고리 구성)</h3>
-        <span class="hint">${viewLabel} · 막대 길이 = 총 처리량</span>
+        <span class="hint">${viewLabel} · 세로 막대 = 총 처리량 · 색 = 카테고리</span>
       </div>
-      ${empRows.map(r=>`
-        <div class="stack-row">
-          <div class="stack-name">${r.emp}</div>
-          <div class="stack-track"><div class="stack-fill" style="width:${r.total/maxEmp*100}%">
-            ${WORK_CATS.map((c,ci)=>r.cells[ci]>0?`<span style="flex:${r.cells[ci]};background:${c.color}" title="${c.name} ${r.cells[ci]}건"></span>`:'').join("")}
-          </div></div>
-          <div class="stack-total">${r.total}</div>
-        </div>`).join("")}
+      ${columnChart(empRows, maxEmp)}
       <div class="legend">
         ${WORK_CATS.map(c=>`<span><span class="swatch" style="background:${c.color}"></span>${c.name}</span>`).join("")}
       </div>
@@ -637,6 +630,32 @@ function renderOverview(){
 }
 // hex + alpha → rgba
 function hexA(hex,a){ const n=parseInt(hex.slice(1),16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`; }
+
+// 직원별 세로 스택 막대차트 (카테고리 구성) — 세그먼트에 카테고리 수치 표기
+function columnChart(empRows, maxEmp){
+  const n=empRows.length;
+  const colW=48, gap=20, padL=16, padR=16, topPad=28, botPad=44;
+  const W=Math.max(560, padL+padR + n*colW + (n-1)*gap);
+  const H=320, base=H-botPad, plotH=H-topPad-botPad;
+  const mx=Math.max(1, maxEmp);
+  const bars=empRows.map((r,i)=>{
+    const x=padL + i*(colW+gap);
+    let y=base;
+    const segs=WORK_CATS.map((c,ci)=>{
+      const v=r.cells[ci]; if(v<=0) return "";
+      const h=v/mx*plotH; y-=h;
+      const lbl = h>=15 ? `<text x="${x+colW/2}" y="${y+h/2+4}" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">${v}</text>` : "";
+      return `<rect x="${x}" y="${y.toFixed(1)}" width="${colW}" height="${h.toFixed(1)}" fill="${c.color}"><title>${c.name} ${v}건</title></rect>${lbl}`;
+    }).join("");
+    const total = r.total>0 ? `<text x="${x+colW/2}" y="${(y-8).toFixed(1)}" text-anchor="middle" font-size="14" font-weight="800" fill="#1d1d1f">${r.total}</text>` : "";
+    const name = `<text x="${x+colW/2}" y="${base+20}" text-anchor="middle" font-size="12.5" font-weight="600" fill="#424245">${r.emp}</text>`;
+    return `${segs}${total}${name}`;
+  }).join("");
+  return `<div class="chart-wrap"><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" style="max-width:100%">
+    <line x1="${padL-8}" y1="${base}" x2="${W-padR+8}" y2="${base}" stroke="#d2d2d7" stroke-width="1"/>
+    ${bars}
+  </svg></div>`;
+}
 
 /* ================= Stats page ================= */
 function renderStats(){
