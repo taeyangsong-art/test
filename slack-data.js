@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 14,
+  "version": 15,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -161,9 +161,9 @@ window.SLACK_DATA = {
         "as": {
           "송태양": 6,
           "심성현": 8,
+          "김현기": 4,
           "배선유": 9,
           "김규빈": 6,
-          "김현기": 3,
           "김동욱": 2
         },
         "onboarding": {
@@ -183,20 +183,20 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "11:57",
-          "store": "수에스테틱",
-          "biz": "3822601783",
-          "handler": "송태양",
+          "time": "12:00",
+          "store": "담백찬",
+          "biz": "7554800854",
+          "handler": "김현기",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
           ]
         },
         {
-          "time": "11:46",
-          "store": "탐휘트니스 헬스&amp;PT 길음점(문화비)",
-          "biz": "6450303534",
-          "handler": "김현기",
+          "time": "11:57",
+          "store": "수에스테틱",
+          "biz": "3822601783",
+          "handler": "송태양",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
@@ -216,14 +216,16 @@ window.SLACK_DATA = {
       "voc": {
         "responses": 5,
         "install": {
-          "count": 0,
+          "count": 1,
           "low": 0
         },
         "nps": {
-          "count": 0,
+          "count": 5,
           "low": 0
         },
-        "byIndustry": {},
+        "byIndustry": {
+          "도소매": 1
+        },
         "reasonCounts": {},
         "alerts": []
       }
