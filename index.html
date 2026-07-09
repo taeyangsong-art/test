@@ -104,6 +104,8 @@
   .rank-medal{font-size:22px; font-weight:800; color:var(--gray)}
   .rank-name{font-size:15px; font-weight:700; margin-top:4px; color:var(--ink)}
   .rank-val{font-size:13px; color:var(--gray); margin-top:2px; font-weight:600}
+  .voc-snap{display:flex; gap:24px; flex-wrap:wrap}
+  .snap-big{font-size:30px; font-weight:800; letter-spacing:-.03em; line-height:1.1; color:var(--ink); margin-top:3px}
   /* live 갱신 표시 */
   .live-dot{display:inline-block; width:9px; height:9px; border-radius:50%; background:var(--green);
     margin-left:6px; vertical-align:middle; animation:livePulse 1.8s ease-in-out infinite}
@@ -667,7 +669,10 @@ function renderOverview(){
   const viewLabel = viewLabelOf();
 
   const prevDates = prevViewDates();
-  const catTotals = WORK_CATS.map(c=>({...c, total:sumRange(c.key, viewDates), prev:sumRange(c.key, prevDates)}));
+  const workCatTotals = WORK_CATS.map(c=>({...c, total:sumRange(c.key, viewDates), prev:sumRange(c.key, prevDates)}));
+  const workGrand = workCatTotals.reduce((a,c)=>a+c.total,0);
+  const vocTot = aggVoc(viewDates).alerts.length, vocPrevN = aggVoc(prevDates).alerts.length;
+  const catTotals = [...workCatTotals, {key:'voc', name:'VOC', icon:'💬', color:'#ff2d55', total:vocTot, prev:vocPrevN}];
   const grand = catTotals.reduce((a,c)=>a+c.total,0);
   const grandPrev = catTotals.reduce((a,c)=>a+c.prev,0);
 
@@ -687,6 +692,7 @@ function renderOverview(){
   const pendByCat={};
   if(tday&&tday.pending) tday.pending.forEach(p=>{ const c=p.cat||'as'; pendByCat[c]=(pendByCat[c]||0)+1; });
   const vocToday = aggVoc([todayStr]);
+  const vns = vocNpsStats(vocToday.npsDist);
   const vocPend = vocToday.alerts.filter(a=>(VOCEDIT[vocKey(a)]||{}).status!=='처리완료').length;
   const pendTotal = Object.values(pendByCat).reduce((a,b)=>a+b,0)+vocPend;
   const alertListHTML = Object.entries(pendByCat).map(([k,n])=>`<div class="alert-item"><span>${catNameOf(k)} 미처리</span><span class="alert-cnt">${n}</span></div>`).join('')+(vocPend?`<div class="alert-item"><span>VOC 저점 미처리</span><span class="alert-cnt">${vocPend}</span></div>`:'');
@@ -752,8 +758,19 @@ function renderOverview(){
         <div class="dt-leave"><b>오늘 연차/휴가</b> · ${leaveHTML}</div></div>
     </div>
 
-    <div class="card"><div class="card-head"><h3>🏅 직원 랭킹</h3><span class="hint">${viewLabel} 처리량 TOP</span></div>
-      <div class="rank-row">${empRows.slice(0,5).map((r,i)=>`<div class="rank-item ${i<3?'top':''}"><div class="rank-medal">${medal(i)}</div><div class="rank-name">${r.emp}</div><div class="rank-val">${r.total}건</div></div>`).join('')}</div>
+    <div class="grid2">
+      <div class="card"><div class="card-head"><h3>🏅 직원 랭킹</h3><span class="hint">${viewLabel} 처리량 TOP</span></div>
+        <div class="rank-row">${empRows.slice(0,5).map((r,i)=>`<div class="rank-item ${i<3?'top':''}"><div class="rank-medal">${medal(i)}</div><div class="rank-name">${r.emp}</div><div class="rank-val">${r.total}건</div></div>`).join('')}</div>
+      </div>
+      <div class="card"><div class="card-head"><h3>💬 VOC 스냅샷</h3><span class="hint">오늘</span></div>
+        <div class="voc-snap">
+          <div><div class="hl-lab">응답</div><div class="snap-big">${vocToday.responses}</div></div>
+          <div><div class="hl-lab">저점 인입</div><div class="snap-big" style="color:var(--red)">${vocToday.alerts.length}</div></div>
+          <div><div class="hl-lab">NPS</div><div class="snap-big" style="color:${vns.nps>=0?'var(--green)':'var(--red)'}">${vns.nps}</div></div>
+          <div><div class="hl-lab">추천 평균</div><div class="snap-big">${vns.avg.toFixed(1)}</div></div>
+        </div>
+        <div class="note" style="font-size:12px;color:var(--gray2);margin-top:10px">자세한 분석은 왼쪽 <b>💬 VOC</b> 메뉴에서 확인하세요.</div>
+      </div>
     </div>
 
     <div class="card">
@@ -771,7 +788,7 @@ function renderOverview(){
               <td class="num tot">${r.total}</td>
             </tr>`).join("")}
           </tbody>
-          <tfoot><tr><td>합계</td>${catTotals.map(c=>`<td class="num">${c.total}</td>`).join("")}<td class="num tot">${grand}</td></tr></tfoot>
+          <tfoot><tr><td>합계</td>${workCatTotals.map(c=>`<td class="num">${c.total}</td>`).join("")}<td class="num tot">${workGrand}</td></tr></tfoot>
         </table>
       </div>
     </div>
@@ -793,7 +810,7 @@ function hexA(hex,a){ const n=parseInt(hex.slice(1),16); return `rgba(${n>>16&25
 
 // 전체 처리 추이 (기간 내 일별 전 카테고리 합계)
 function overviewTrend(dates){
-  const vals=dates.map(d=>WORK_CATS.reduce((a,c)=>a+sumRange(c.key,[d]),0));
+  const vals=dates.map(d=>WORK_CATS.reduce((a,c)=>a+sumRange(c.key,[d]),0)+((slackDay(d)||{}).voc?((slackDay(d).voc.alerts||[]).length):0));
   const mx=Math.max(1,...vals);
   const gapUnit=Math.min(60,Math.max(28,720/dates.length));
   const W=Math.max(520,dates.length*gapUnit), H=200, pad=26, gap=(W-pad*2)/dates.length, bw=gap*0.6;
