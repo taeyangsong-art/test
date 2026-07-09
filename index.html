@@ -225,9 +225,11 @@
   .ev-head{font-weight:800}
   .ev-time{font-weight:700; opacity:.95}
   .ev-memo{font-weight:600; opacity:.85}
-  .ev-del{flex:0 0 auto; border:none; background:transparent; color:inherit; cursor:pointer;
-    font-size:14px; line-height:1; opacity:.45; padding:0 1px; margin-top:-1px; font-weight:700}
-  .ev-del:hover{opacity:1}
+  .ev-btns{flex:0 0 auto; display:flex; gap:2px; margin-top:-1px}
+  .ev-del,.ev-edit{border:none; background:transparent; color:inherit; cursor:pointer;
+    line-height:1; opacity:.45; padding:0 1px; font-weight:700}
+  .ev-del{font-size:14px} .ev-edit{font-size:11px}
+  .ev-del:hover,.ev-edit:hover{opacity:1}
 
   /* form modal */
   .form-modal{text-align:left; width:min(440px,92vw)}
@@ -382,7 +384,7 @@
 <!-- Share event form modal -->
 <div class="overlay" id="shareOverlay">
   <div class="modal form-modal">
-    <h4 style="margin-bottom:18px">일정 공유 추가</h4>
+    <h4 id="sfHeading" style="margin-bottom:18px">일정 공유 추가</h4>
     <div class="form-row"><label>날짜</label><input type="date" id="sfDate"></div>
     <div class="form-row"><label>직원</label>
       <select id="sfEmp"></select></div>
@@ -397,7 +399,7 @@
     <div class="form-row"><label>내용</label><input type="text" id="sfTitle" placeholder="예: 거래처 미팅 (선택)"></div>
     <div class="acts">
       <button class="btn" onclick="closeShareForm()">취소</button>
-      <button class="btn primary" onclick="submitShare()">추가</button>
+      <button class="btn primary" id="sfSubmit" onclick="submitShare()">추가</button>
     </div>
   </div>
 </div>
@@ -985,7 +987,7 @@ function renderShare(){
       return `<div class="ev-chip" draggable="true" ondragstart="shareDragStart(event,'${ds}','${e.id}')" ondragend="shareDragEnd(event)" style="background:${t.soft};color:${t.color}" title="${escapeHtml(tt)} — 드래그해서 날짜 이동">
         <span class="ev-dot" style="background:${t.color}"></span>
         <span class="ev-txt"><span class="ev-head">${escapeHtml(e.emp)} · ${t.label}</span>${e.time?`<span class="ev-time">🕒 ${escapeHtml(e.time)}</span>`:''}${e.title?`<span class="ev-memo">${escapeHtml(e.title)}</span>`:''}</span>
-        <button class="ev-del" title="삭제" onclick="removeShare('${ds}','${e.id}')">×</button></div>`;
+        <span class="ev-btns"><button class="ev-edit" title="수정" onclick="openShareEdit('${ds}','${e.id}')">✎</button><button class="ev-del" title="삭제" onclick="removeShare('${ds}','${e.id}')">×</button></span></div>`;
     }).join("");
     return `<div class="daycell share ${ds===todayStr?'today':''} ${holi?'holi':''}"
       ondragover="shareDragOver(event,this)" ondragleave="shareDragLeave(this)" ondrop="shareDrop(event,'${ds}',this)">
@@ -1046,7 +1048,11 @@ function setShareFilter(v){ shareFilter=v; renderShare(); }
 function shareNav(n){ shareMonth=new Date(shareMonth.getFullYear(), shareMonth.getMonth()+n, 1); renderShare(); }
 function shareToday(){ shareMonth=new Date(today().getFullYear(), today().getMonth(), 1); renderShare(); }
 
+let shareEdit=null; // 수정 중인 일정 {ds, id} (없으면 신규 추가)
 function openShareForm(ds){
+  shareEdit=null;
+  document.getElementById("sfHeading").textContent="일정 공유 추가";
+  document.getElementById("sfSubmit").textContent="추가";
   document.getElementById("sfDate").value = ds;
   document.getElementById("sfEmp").value = shareFilter!=="all"?shareFilter:EMPLOYEES[0];
   document.getElementById("sfType").value = "annual";
@@ -1055,7 +1061,22 @@ function openShareForm(ds){
   document.getElementById("sfTitle").value = "";
   document.getElementById("shareOverlay").classList.add("show");
 }
-function closeShareForm(){ document.getElementById("shareOverlay").classList.remove("show"); }
+// 기존 일정 수정: 폼에 값 채우고 수정 모드로 열기
+function openShareEdit(ds, id){
+  const ev=(SHARE[ds]||[]).find(e=>e.id===id); if(!ev) return;
+  shareEdit={ds, id};
+  document.getElementById("sfHeading").textContent="일정 수정";
+  document.getElementById("sfSubmit").textContent="저장";
+  document.getElementById("sfDate").value = ds;
+  document.getElementById("sfEmp").value = ev.emp;
+  document.getElementById("sfType").value = ev.type;
+  const parts=(ev.time||"").split("~").map(x=>x.trim());
+  document.getElementById("sfStart").value = parts[0]||"";
+  document.getElementById("sfEnd").value = parts[1]||"";
+  document.getElementById("sfTitle").value = ev.title||"";
+  document.getElementById("shareOverlay").classList.add("show");
+}
+function closeShareForm(){ document.getElementById("shareOverlay").classList.remove("show"); shareEdit=null; }
 function submitShare(){
   const ds=document.getElementById("sfDate").value;
   const emp=document.getElementById("sfEmp").value;
@@ -1065,8 +1086,19 @@ function submitShare(){
   if(s&&e2) time=`${s} ~ ${e2}`; else if(s) time=`${s} ~`; else if(e2) time=`~ ${e2}`;
   const title=document.getElementById("sfTitle").value.trim();
   if(!ds||!emp) return;
-  if(!SHARE[ds]) SHARE[ds]=[];
-  SHARE[ds].push({ id:"e"+ds.replace(/-/g,'')+"_"+SHARE[ds].length+"_"+emp.length, emp, type, time, title });
+  if(shareEdit){
+    // 기존 일정 제거 후, (날짜 변경 가능) 갱신된 값으로 다시 추가 (id 유지)
+    const src=SHARE[shareEdit.ds]||[];
+    const idx=src.findIndex(e=>e.id===shareEdit.id);
+    const keepId = idx>=0 ? src[idx].id : ("e"+ds.replace(/-/g,'')+"_"+Date.now()%100000);
+    if(idx>=0){ src.splice(idx,1); if(src.length===0) delete SHARE[shareEdit.ds]; }
+    if(!SHARE[ds]) SHARE[ds]=[];
+    SHARE[ds].push({ id:keepId, emp, type, time, title });
+    shareEdit=null;
+  } else {
+    if(!SHARE[ds]) SHARE[ds]=[];
+    SHARE[ds].push({ id:"e"+ds.replace(/-/g,'')+"_"+SHARE[ds].length+"_"+emp.length, emp, type, time, title });
+  }
   save(LS_SHARE, SHARE);
   closeShareForm();
   renderShare();
