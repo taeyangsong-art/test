@@ -481,12 +481,13 @@
 <div class="overlay" id="shareOverlay">
   <div class="modal form-modal">
     <h4 id="sfHeading" style="margin-bottom:18px">일정 공유 추가</h4>
-    <div class="form-row"><label>날짜</label><input type="date" id="sfDate"></div>
+    <div class="form-row"><label id="sfDateLabel">날짜</label><input type="date" id="sfDate"></div>
+    <div class="form-row" id="sfEndDateRow" style="display:none"><label>종료일</label><input type="date" id="sfEndDate"></div>
     <div class="form-row"><label>직원</label>
       <select id="sfEmp"></select></div>
     <div class="form-row"><label>유형</label>
-      <select id="sfType"></select></div>
-    <div class="form-row"><label>시간</label>
+      <select id="sfType" onchange="onShareTypeChange()"></select></div>
+    <div class="form-row" id="sfTimeRow"><label>시간</label>
       <div class="time-range">
         <select id="sfStart"></select>
         <span class="tilde">~</span>
@@ -505,12 +506,7 @@
 /* ================= Config ================= */
 const EMPLOYEES = ["김기범","서상원","김규빈","김동욱","송태양","김현기","배선유","최민석","심성현"];
 const CATEGORIES = [
-  {key:"onboarding", name:"온보딩", icon:"🚀"},
-  {key:"as",         name:"AS",     icon:"🔧"},
-  {key:"transfer",   name:"명의변경", icon:"📝"},
-  {key:"menu",       name:"메뉴등록", icon:"🍱"},
   {key:"voc",        name:"VOC",    icon:"💬"},
-  {key:"delivery",   name:"배달",    icon:"🛵"},
   {key:"share",      name:"공유",    icon:"📢"},
   {key:"duty",       name:"당직근무", icon:"📅"},
 ];
@@ -530,6 +526,7 @@ const SHARE_TYPES = {
   annual:  {label:"연차",   color:"#ff3b30", soft:"#ffe5e3"},
   half:    {label:"반차",   color:"#ff9500", soft:"#fff0dc"},
   time:    {label:"시간차", color:"#ffcc00", soft:"#fff8d6"},
+  vacation:{label:"휴가",   color:"#af52de", soft:"#f4e8fb"},
   outside: {label:"외부일정", color:"#5e5ce6", soft:"#e8e7ff"},
   edu:     {label:"교육일정", color:"#0aa5b1", soft:"#d6f2f5"},
   meeting: {label:"회의",   color:"#0071e3", soft:"#e2effc"},
@@ -706,7 +703,7 @@ function renderOverview(){
   const alertListHTML = Object.entries(pendByCat).map(([k,n])=>`<div class="alert-item"><span>${catNameOf(k)} 미처리</span><span class="alert-cnt">${n}</span></div>`).join('')+(vocPend?`<div class="alert-item"><span>VOC 저점 미처리</span><span class="alert-cnt">${vocPend}</span></div>`:'');
   const duty = DUTY[todayStr]||{};
   const dutyRowsHTML = [['day','주간'],['aft','오후'],['nit','야간'],['inst','행사']].map(([t,lab])=>`<div class="dt-row"><span class="slot-tag ${t}">${lab}</span><span class="dt-name">${duty[t]?escapeHtml(duty[t]):'—'}</span></div>`).join('');
-  const leaveToday=(SHARE[todayStr]||[]).filter(e=>['annual','half','time'].includes(e.type));
+  const leaveToday=(SHARE[todayStr]||[]).filter(e=>['annual','half','time','vacation'].includes(e.type));
   const leaveHTML = leaveToday.length?leaveToday.map(e=>`${escapeHtml(e.emp)}(${typeMeta(e.type).label}${e.time?' '+escapeHtml(e.time):''})`).join(', '):'없음';
 
   document.getElementById("main").innerHTML = `
@@ -1698,11 +1695,13 @@ function openShareForm(ds){
   document.getElementById("sfHeading").textContent="일정 공유 추가";
   document.getElementById("sfSubmit").textContent="추가";
   document.getElementById("sfDate").value = ds;
+  document.getElementById("sfEndDate").value = ds;
   document.getElementById("sfEmp").value = shareFilter!=="all"?shareFilter:EMPLOYEES[0];
   document.getElementById("sfType").value = "annual";
   document.getElementById("sfStart").value = "";
   document.getElementById("sfEnd").value = "";
   document.getElementById("sfTitle").value = "";
+  onShareTypeChange();
   document.getElementById("shareOverlay").classList.add("show");
 }
 // 일정 칩 클릭 → 수정 팝업 (삭제 버튼 클릭은 제외)
@@ -1717,40 +1716,65 @@ function openShareEdit(ds, id){
   document.getElementById("sfHeading").textContent="일정 수정";
   document.getElementById("sfSubmit").textContent="저장";
   document.getElementById("sfDate").value = ds;
+  document.getElementById("sfEndDate").value = ds;
   document.getElementById("sfEmp").value = ev.emp;
   document.getElementById("sfType").value = ev.type;
   const parts=(ev.time||"").split("~").map(x=>x.trim());
   document.getElementById("sfStart").value = parts[0]||"";
   document.getElementById("sfEnd").value = parts[1]||"";
   document.getElementById("sfTitle").value = ev.title||"";
+  onShareTypeChange();
   document.getElementById("shareOverlay").classList.add("show");
+}
+// 유형이 '휴가'면 종료일(기간) 노출·시간 숨김, 그 외는 반대
+function onShareTypeChange(){
+  const isVac = document.getElementById("sfType").value==="vacation";
+  document.getElementById("sfEndDateRow").style.display = isVac?"":"none";
+  document.getElementById("sfTimeRow").style.display = isVac?"none":"";
+  document.getElementById("sfDateLabel").textContent = isVac?"시작일":"날짜";
 }
 function closeShareForm(){ document.getElementById("shareOverlay").classList.remove("show"); shareEdit=null; }
 function submitShare(){
   const ds=document.getElementById("sfDate").value;
   const emp=document.getElementById("sfEmp").value;
   const type=document.getElementById("sfType").value;
-  const s=document.getElementById("sfStart").value, e2=document.getElementById("sfEnd").value;
-  let time="";
-  if(s&&e2) time=`${s} ~ ${e2}`; else if(s) time=`${s} ~`; else if(e2) time=`~ ${e2}`;
   const title=document.getElementById("sfTitle").value.trim();
   if(!ds||!emp) return;
+
+  // 수정 모드면 기존 일정(단건) 먼저 제거
+  let keepId=null;
   if(shareEdit){
-    // 기존 일정 제거 후, (날짜 변경 가능) 갱신된 값으로 다시 추가 (id 유지)
     const src=SHARE[shareEdit.ds]||[];
     const idx=src.findIndex(e=>e.id===shareEdit.id);
-    const keepId = idx>=0 ? src[idx].id : ("e"+ds.replace(/-/g,'')+"_"+Date.now()%100000);
-    if(idx>=0){ src.splice(idx,1); if(src.length===0) delete SHARE[shareEdit.ds]; }
-    if(!SHARE[ds]) SHARE[ds]=[];
-    SHARE[ds].push({ id:keepId, emp, type, time, title });
-    shareEdit=null;
-  } else {
-    if(!SHARE[ds]) SHARE[ds]=[];
-    SHARE[ds].push({ id:"e"+ds.replace(/-/g,'')+"_"+SHARE[ds].length+"_"+emp.length, emp, type, time, title });
+    if(idx>=0){ keepId=src[idx].id; src.splice(idx,1); if(src.length===0) delete SHARE[shareEdit.ds]; }
   }
+
+  if(type==="vacation"){
+    // 휴가: 시작일~종료일 각 날짜에 하루씩 등록 (같은 grp 로 묶어 일괄 삭제 가능)
+    let a=ds, b=document.getElementById("sfEndDate").value||ds;
+    if(b<a){ const t=a; a=b; b=t; }
+    const grp="v"+ds.replace(/-/g,'')+"_"+(Date.now()%100000);
+    eachDate(a,b).forEach((d,i)=>{
+      if(!SHARE[d]) SHARE[d]=[];
+      SHARE[d].push({ id:grp+"_"+i, grp, emp, type, time:"", title });
+    });
+  } else {
+    const s=document.getElementById("sfStart").value, e2=document.getElementById("sfEnd").value;
+    let time="";
+    if(s&&e2) time=`${s} ~ ${e2}`; else if(s) time=`${s} ~`; else if(e2) time=`~ ${e2}`;
+    if(!SHARE[ds]) SHARE[ds]=[];
+    SHARE[ds].push({ id: keepId || ("e"+ds.replace(/-/g,'')+"_"+SHARE[ds].length+"_"+emp.length), emp, type, time, title });
+  }
+  shareEdit=null;
   save(LS_SHARE, SHARE);
   closeShareForm();
   renderShare();
+}
+// 시작~종료(YYYY-MM-DD) 사이 날짜 배열
+function eachDate(a,b){
+  const out=[]; let d=parseYmd(a);
+  while(ymd(d)<=b){ out.push(ymd(d)); d.setDate(d.getDate()+1); if(out.length>366) break; }
+  return out;
 }
 function timeOptions(){
   let opts = `<option value="">미지정</option>`;
@@ -1767,9 +1791,16 @@ function removeShare(ds, id){
   if(!SHARE[ds]) return;
   const ev=SHARE[ds].find(e=>e.id===id); if(!ev) return;
   const t=typeMeta(ev.type);
-  if(!confirm(`${ev.emp}님의 ${t.label}${ev.title?' ('+ev.title+')':''} 일정을 삭제할까요?`)) return;
-  SHARE[ds]=SHARE[ds].filter(e=>e.id!==id);
-  if(SHARE[ds].length===0) delete SHARE[ds];
+  if(ev.grp){
+    // 휴가(여러 날) → 그룹 전체 삭제
+    let days=0; Object.values(SHARE).forEach(arr=>arr.forEach(e=>{ if(e.grp===ev.grp) days++; }));
+    if(!confirm(`${ev.emp}님의 ${t.label}(${days}일) 전체를 삭제할까요?`)) return;
+    Object.keys(SHARE).forEach(d=>{ SHARE[d]=SHARE[d].filter(e=>e.grp!==ev.grp); if(SHARE[d].length===0) delete SHARE[d]; });
+  } else {
+    if(!confirm(`${ev.emp}님의 ${t.label}${ev.title?' ('+ev.title+')':''} 일정을 삭제할까요?`)) return;
+    SHARE[ds]=SHARE[ds].filter(e=>e.id!==id);
+    if(SHARE[ds].length===0) delete SHARE[ds];
+  }
   save(LS_SHARE, SHARE);
   renderShare();
 }
