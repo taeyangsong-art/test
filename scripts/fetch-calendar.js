@@ -18,8 +18,12 @@ if (!URL) { console.error('❌ GCAL_ICAL_URL 환경변수가 없습니다.'); pr
 // 필요 시 GCAL_KEEP 환경변수(쉼표 구분)로 덮어쓸 수 있음.
 const KEEP = (process.env.GCAL_KEEP || '정기회의,타운홀,townhall,town hall')
   .split(',').map(x => x.trim().toLowerCase().replace(/\s+/g, '')).filter(Boolean);
+// 아래 단어가 제목에 들어가면 KEEP에 맞아도 제외(예: 리허설)
+const DROP = (process.env.GCAL_DROP || '리허설,rehearsal')
+  .split(',').map(x => x.trim().toLowerCase().replace(/\s+/g, '')).filter(Boolean);
 function keepTitle(t) {
   const n = String(t || '').toLowerCase().replace(/\s+/g, '');
+  if (DROP.some(k => n.includes(k))) return false;
   return KEEP.some(k => n.includes(k));
 }
 
