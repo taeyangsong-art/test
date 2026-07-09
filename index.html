@@ -100,8 +100,10 @@
   table.matrix td:first-child{text-align:left; white-space:nowrap}
   table.matrix .mcell{font-weight:600; border-radius:4px}
   table.matrix .zero{color:var(--muted)}
-  table.matrix .tot{font-weight:800; background:var(--surface-soft)}
-  table.matrix tfoot td{font-weight:800; border-top:2px solid var(--line); background:var(--surface)}
+  table.matrix .tot{font-weight:800; font-size:17px; color:var(--blue-deep); background:var(--blue-soft)}
+  table.matrix tfoot td{font-weight:800; font-size:16px; color:var(--blue-deep); border-top:2px solid var(--blue); background:var(--blue-soft)}
+  table.matrix tfoot td:first-child{color:var(--slate,#454b54); background:var(--surface)}
+  table.matrix tfoot td.tot{font-size:19px; color:#fff; background:var(--blue)}
   table.matrix tbody tr:hover td{background:var(--surface-soft)}
 
   .stack-row{display:flex; align-items:center; gap:12px; margin-bottom:9px}
