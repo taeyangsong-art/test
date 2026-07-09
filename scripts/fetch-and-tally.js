@@ -178,7 +178,7 @@ function tallyVoc(msgs, voc) {
     const reasons = [];
     if (!isNaN(install)) { voc.install.count++; if (install <= 2) { voc.install.low++; const c = classifyReason(installReason); voc.reasonCounts[c] = (voc.reasonCounts[c] || 0) + 1; reasons.push({ q: '구매설치', score: install, text: installReason, cat: c }); } }
     if (!isNaN(nps))     { voc.nps.count++;     if (nps <= 5)     { voc.nps.low++;     const c = classifyReason(npsReason);     voc.reasonCounts[c] = (voc.reasonCounts[c] || 0) + 1; reasons.push({ q: '추천의향', score: nps, text: npsReason, cat: c }); } }
-    if (reasons.length) voc.alerts.push({ time, store, storeId, industry, install: isNaN(install) ? null : install, nps: isNaN(nps) ? null : nps, reasons });
+    if (reasons.length) voc.alerts.push({ time, store, storeId, industry, indBucket, install: isNaN(install) ? null : install, nps: isNaN(nps) ? null : nps, reasons });
   }
 }
 

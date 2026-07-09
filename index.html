@@ -171,6 +171,12 @@
   .voc-reason{font-size:12.5px; line-height:1.5; margin:2px 0; color:var(--ink-soft)}
   .voc-rcat{display:inline-block; background:var(--red-soft); color:var(--red); font-weight:700; font-size:11px;
     padding:1px 7px; border-radius:6px; margin-right:5px; white-space:nowrap}
+  .voc-rawind{font-size:11px; color:var(--gray2); margin-top:2px}
+  .voc-rawtxt{font-size:12px; color:var(--ink-soft); line-height:1.45}
+  .voc-table td{vertical-align:top}
+  .voc-sel,.voc-note{width:100%; font-family:inherit; font-size:12.5px; padding:6px 8px; border:1px solid var(--line);
+    border-radius:8px; background:var(--surface2); color:var(--ink)}
+  .voc-sel:focus,.voc-note:focus{outline:none; border-color:var(--blue); background:#fff; box-shadow:0 0 0 3px var(--blue-soft)}
 
   /* pending lookup */
   .search-box{width:100%; font-family:inherit; font-size:14px; padding:11px 14px; border:1px solid var(--line);
@@ -455,6 +461,10 @@ const SHARE_TYPES = {
   etc:     {label:"기타",   color:"#34c759", soft:"#e2f7e8"},
 };
 
+// VOC 수기 선택용 목록 (드롭다운)
+const VOC_INDUSTRIES = ["서비스[뷰티,헤어]","서비스[학원]","카페","요식업","서비스[체육]","서비스[숙박]","도소매","기타"];
+const VOC_REASONS = ["필요한 기능이 없거나 몰라서 불편","고객센터 연락이 매우 힘듦","사용중 오류가 자주 발생함","단말기 설치나 초기 과정이 어려움","구매,계약과정에서 설명이 부족","기타 이슈(정산/직원에 대한 불만/호영님출몰)"];
+
 // 2026 대한민국 공휴일 (대체공휴일 포함, 대표)
 const HOLIDAYS = {
   "2026-01-01":"신정",
@@ -472,9 +482,11 @@ const HOLIDAYS = {
 const LS_COUNT = "opcare_counts_v1";
 const LS_DUTY  = "opcare_duty_v1";
 const LS_SHARE = "opcare_share_v1";
+const LS_VOCEDIT = "opcare_vocedit_v1";
 let COUNTS = load(LS_COUNT, {});   // { cat: { "YYYY-MM-DD": { emp: n } } }
 let DUTY   = load(LS_DUTY, {});    // { "YYYY-MM-DD": { day, aft, nit } }
 let SHARE  = load(LS_SHARE, {});   // { "YYYY-MM-DD": [ {id, emp, type, title, time} ] }
+let VOCEDIT= load(LS_VOCEDIT, {}); // { "date|storeId|time": { industry, reasonCat, note } } — VOC 수기 보정
 
 function load(k, def){ try{ const v=JSON.parse(localStorage.getItem(k)); return v==null?def:v; }catch(e){ return def; } }
 function save(k, v){ localStorage.setItem(k, JSON.stringify(v)); }
@@ -729,26 +741,50 @@ function barRow(name,val,max,color){
   return `<div class="bar-row"><div class="bar-meta"><span class="nm">${escapeHtml(name)}</span><span class="ct">${val}건</span></div>
     <div class="bar-track"><div class="bar-fill" style="width:${val/max*100}%;background:${color}"></div></div></div>`;
 }
+function vocKey(a){ return (a.date||'')+'|'+(a.storeId||'')+'|'+(a.time||''); }
+function saveVocEdit(key, field, val){
+  if(!VOCEDIT[key]) VOCEDIT[key]={};
+  if(val==='') delete VOCEDIT[key][field]; else VOCEDIT[key][field]=val;
+  if(Object.keys(VOCEDIT[key]).length===0) delete VOCEDIT[key];
+  save(LS_VOCEDIT, VOCEDIT);
+  if(field==='reasonCat') renderVoc();   // 저점사유 차트 갱신
+}
 function renderVoc(){
   const viewDates=rangeDates(viewMode,selDate);
   const viewLabel=viewLabelOf();
   const v=aggVoc(viewDates);
   const indRows=Object.entries(v.byIndustry).sort((a,b)=>b[1]-a[1]);
-  const reasonRows=Object.entries(v.reasonCounts).sort((a,b)=>b[1]-a[1]);
   const indMax=Math.max(1,...indRows.map(r=>r[1]));
-  const reaMax=Math.max(1,...reasonRows.map(r=>r[1]));
   const lowTotal=v.install.low+v.nps.low;
+
+  // 저점 사유: 매장 1건당 대표 사유(수기 보정 우선)로 집계
+  const reasonCounts={};
+  v.alerts.forEach(a=>{ const ed=VOCEDIT[vocKey(a)]||{};
+    const cat=ed.reasonCat||(a.reasons[0]&&a.reasons[0].cat)||VOC_REASONS[5];
+    reasonCounts[cat]=(reasonCounts[cat]||0)+1; });
+  const reasonRows=Object.entries(reasonCounts).sort((a,b)=>b[1]-a[1]);
+  const reaMax=Math.max(1,...reasonRows.map(r=>r[1]));
+
   const alertRows=v.alerts.map(a=>{
+    const key=vocKey(a), ed=VOCEDIT[key]||{};
+    const indVal=ed.industry!=null?ed.industry:(a.indBucket||'');
+    const reaVal=ed.reasonCat!=null?ed.reasonCat:((a.reasons[0]&&a.reasons[0].cat)||'');
+    const note=ed.note||'';
     const score=`${a.install!=null?`구매설치 ${a.install}`:''}${a.install!=null&&a.nps!=null?'<br>':''}${a.nps!=null?`추천 ${a.nps}`:''}`;
-    const reasonTxt=a.reasons.map(r=>`<div class="voc-reason"><span class="voc-rcat">${escapeHtml(r.cat.split('(')[0])}</span>${escapeHtml(r.text||'-')}</div>`).join("");
-    const key=((a.store||'')+' '+(a.storeId||'')).toLowerCase();
-    return `<tr data-key="${key}">
+    const reasonTxt=a.reasons.map(r=>`<div class="voc-reason">${escapeHtml(r.text||'-')}</div>`).join("");
+    const indSel=`<select class="voc-sel" onchange="saveVocEdit('${key}','industry',this.value)"><option value="">미지정</option>${VOC_INDUSTRIES.map(x=>`<option ${x===indVal?'selected':''}>${x}</option>`).join('')}</select>`;
+    const reaSel=`<select class="voc-sel" onchange="saveVocEdit('${key}','reasonCat',this.value)"><option value="">미지정</option>${VOC_REASONS.map(x=>`<option value="${escapeHtml(x)}" ${x===reaVal?'selected':''}>${escapeHtml(x.split('(')[0])}</option>`).join('')}</select>`;
+    const noteInput=`<input class="voc-note" type="text" value="${escapeHtml(note)}" placeholder="처리 내용 입력…" onchange="saveVocEdit('${key}','note',this.value)">`;
+    const searchKey=((a.store||'')+' '+(a.storeId||'')).toLowerCase();
+    return `<tr data-key="${searchKey}">
       <td class="trow-time">${a.time||''}</td>
-      <td class="emp-name">${escapeHtml(a.store||'-')}</td>
+      <td class="emp-name">${escapeHtml(a.store||'-')}${a.industry?`<div class="voc-rawind">원본: ${escapeHtml(a.industry)}</div>`:''}</td>
       <td class="trow-biz">${a.storeId||'-'}</td>
-      <td>${escapeHtml(a.industry||'-')}</td>
+      <td>${indSel}</td>
       <td class="num" style="color:var(--red);font-weight:800;white-space:nowrap">${score||'-'}</td>
-      <td>${reasonTxt}</td>
+      <td>${reaSel}</td>
+      <td class="voc-rawtxt">${reasonTxt}</td>
+      <td>${noteInput}</td>
     </tr>`;
   }).join("");
 
@@ -772,16 +808,16 @@ function renderVoc(){
         ${indRows.length?indRows.map(([n,c])=>barRow(n,c,indMax,'#0071e3')).join(''):'<div class="empty-note">데이터 없음</div>'}
       </div>
       <div class="card">
-        <div class="card-head"><h3>저점 사유 카운트</h3><span class="hint">${viewLabel} · 자동 분류</span></div>
+        <div class="card-head"><h3>저점 사유 카운트</h3><span class="hint">${viewLabel} · 자동+수기 보정</span></div>
         ${reasonRows.length?reasonRows.map(([n,c])=>barRow(n.split('(')[0],c,reaMax,'#ff3b30')).join(''):'<div class="empty-note">저점 없음 👍</div>'}
       </div>
     </div>
 
     <div class="card">
-      <div class="card-head"><h3>🔎 저점 확인필요 매장</h3><span class="hint">${v.alerts.length}건 · 매장명/매장ID 검색</span></div>
+      <div class="card-head"><h3>🔎 저점 확인필요 매장</h3><span class="hint">${v.alerts.length}건 · 업종·저점이유 선택 + 처리내용 기록(자동 저장)</span></div>
       ${v.alerts.length?`<input class="search-box" type="text" placeholder="매장명 또는 매장ID 검색…" oninput="filterVoc(this.value)">
-      <div style="overflow-x:auto"><table style="margin-top:12px">
-        <thead><tr><th style="width:56px">시간</th><th>매장명</th><th style="width:88px">매장ID</th><th style="width:88px">업종</th><th class="num" style="width:110px">저점</th><th>사유(자동분류 · 원문)</th></tr></thead>
+      <div style="overflow-x:auto"><table class="voc-table" style="margin-top:12px">
+        <thead><tr><th style="width:52px">시간</th><th style="min-width:120px">매장명</th><th style="width:80px">매장ID</th><th style="width:150px">업종(선택)</th><th class="num" style="width:96px">저점</th><th style="width:160px">저점이유(선택)</th><th style="min-width:200px">고객 원문</th><th style="min-width:180px">처리 내용</th></tr></thead>
         <tbody id="vocBody">${alertRows}</tbody>
       </table></div>`:'<div class="empty-note">이 기간 저점 건이 없습니다 👍</div>'}
     </div>
