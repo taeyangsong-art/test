@@ -126,15 +126,15 @@
   .snap-big{font-size:30px; font-weight:800; letter-spacing:-.03em; line-height:1.1; color:var(--ink); margin-top:3px}
   .voc-proc{font-weight:700; color:var(--green,#166534)}
   /* 리프레쉬 타임 */
-  .rt-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(148px,1fr)); gap:10px}
-  .rt-slot{border:1.5px solid var(--line-soft); border-radius:14px; padding:10px 12px; background:var(--surface2); transition:.15s}
-  .rt-slot:hover{border-color:#ffd6a8}
-  .rt-slot.on{border-color:#ffcf99; background:linear-gradient(160deg,#fff3e2,#fffaf4); box-shadow:0 2px 8px rgba(255,149,0,.12)}
-  .rt-time{font-size:12.5px; font-weight:800; color:var(--gray); margin-bottom:6px; display:flex; align-items:center; gap:5px}
-  .rt-time::before{content:'⏰'; font-size:13px}
+  .rt-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:16px}
+  .rt-slot{border:2px solid var(--line-soft); border-radius:18px; padding:20px 22px; background:var(--surface2); transition:.15s}
+  .rt-slot:hover{border-color:#ffd6a8; transform:translateY(-2px)}
+  .rt-slot.on{border-color:#ffcf99; background:linear-gradient(160deg,#fff3e2,#fffaf4); box-shadow:0 4px 14px rgba(255,149,0,.15)}
+  .rt-time{font-size:16px; font-weight:800; color:var(--gray); margin-bottom:12px; display:flex; align-items:center; gap:6px}
+  .rt-time::before{content:'⏰'; font-size:18px}
   .rt-slot.on .rt-time{color:#c2410c}
   .rt-slot.on .rt-time::before{content:'☕'}
-  .rt-name{width:100%; border:none; background:transparent; font-family:inherit; font-size:14.5px; font-weight:700; color:var(--ink); padding:2px 0}
+  .rt-name{width:100%; border:none; background:transparent; font-family:inherit; font-size:20px; font-weight:800; color:var(--ink); padding:3px 0}
   .rt-name:focus{outline:none}
   .rt-name::placeholder{color:var(--gray2); font-weight:500}
   /* live 갱신 표시 */
@@ -750,10 +750,10 @@ function dutyPersonAt(key, mapVal){ return DUTYOVER[key] || mapVal || ''; }
 const LS_REFRESH = "opcare_refresh_v1";
 let REFRESH = load(LS_REFRESH, {});   // { "0900": "이름" } — 리프레쉬(휴게) 타임
 function saveRefresh(key, val, inp){ val=(val||'').trim(); if(val) REFRESH[key]=val; else delete REFRESH[key]; save(LS_REFRESH, REFRESH); if(inp&&inp.closest('.rt-slot')) inp.closest('.rt-slot').classList.toggle('on', !!val); }
-function refreshSlots(){ const out=[]; for(let h=9; h<18; h++){ if(h===12||h===13) continue; for(const mm of ['00','30']){ const s=(''+h).padStart(2,'0')+':'+mm; const eh=mm==='00'?h:h+1, em=mm==='00'?'30':'00'; out.push({key:(''+h).padStart(2,'0')+mm, label:s+'~'+(''+eh).padStart(2,'0')+':'+em}); } } return out; }
+function refreshSlots(){ const out=[]; for(let h=14; h<18; h++){ for(const mm of ['00','30']){ const s=(''+h).padStart(2,'0')+':'+mm; const eh=mm==='00'?h:h+1, em=mm==='00'?'30':'00'; out.push({key:(''+h).padStart(2,'0')+mm, label:s+'~'+(''+eh).padStart(2,'0')+':'+em}); } } return out; }
 function refreshTimeCard(){
   return `<div class="card rt-card">
-    <div class="card-head"><h3>☕ 원격팀 리프레쉬 타임</h3><span class="hint">09:00~18:00 · 30분 단위 · 원하는 칸에 이름</span></div>
+    <div class="card-head"><h3>☕ 원격팀 리프레쉬 타임</h3><span class="hint">14:00~18:00 · 30분 단위 · 원하는 칸에 이름</span></div>
     <div class="rt-grid">${refreshSlots().map(s=>`<div class="rt-slot${REFRESH[s.key]?' on':''}"><div class="rt-time">${s.label}</div><input class="rt-name" type="text" value="${escapeHtml(REFRESH[s.key]||'')}" placeholder="이름" onchange="saveRefresh('${s.key}',this.value,this)"></div>`).join('')}</div>
   </div>`;
 }
