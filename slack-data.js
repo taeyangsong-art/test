@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 39,
+  "version": 40,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -880,10 +880,10 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-10": {
-      "updatedAt": "15:29",
+      "updatedAt": "15:44",
       "counts": {
         "as": {
-          "서상원": 14,
+          "서상원": 15,
           "심성현": 24,
           "송태양": 7,
           "김현기": 17,
@@ -895,9 +895,9 @@ window.SLACK_DATA = {
           "김동욱": 2
         },
         "onboarding": {
+          "심성현": 5,
           "최민석": 1,
           "김현기": 3,
-          "심성현": 3,
           "김동욱": 3,
           "송태양": 3,
           "김규빈": 3,
@@ -907,10 +907,10 @@ window.SLACK_DATA = {
           "송태양": 16
         },
         "menu": {
-          "김규빈": 9
+          "김규빈": 10
         },
         "delivery": {
-          "최민석": 1,
+          "최민석": 3,
           "서상원": 3
         }
       },
@@ -937,9 +937,9 @@ window.SLACK_DATA = {
         },
         {
           "time": "15:00",
-          "store": "더프레시달달 검단신도시점",
-          "biz": "5801103149",
-          "handler": "심성현",
+          "store": "책방, 쉼이 있는",
+          "biz": "7579502148",
+          "handler": "김규빈",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
@@ -956,10 +956,10 @@ window.SLACK_DATA = {
           ]
         },
         {
-          "time": "14:34",
-          "store": "폴라리스 심리상담연구소",
-          "biz": "3101017125",
-          "handler": "심성현",
+          "time": "14:59",
+          "store": "미꼬찬는붙임머리 부산앞머리붙임머리",
+          "biz": "8475500734",
+          "handler": "김현기",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
@@ -1007,27 +1007,28 @@ window.SLACK_DATA = {
         }
       ],
       "voc": {
-        "responses": 13,
+        "responses": 20,
         "install": {
           "count": 4,
           "low": 0
         },
         "nps": {
-          "count": 13,
-          "low": 4
+          "count": 20,
+          "low": 7
         },
         "high": {
           "install": 3,
-          "nps": 3
+          "nps": 6
         },
         "npsDist": {
-          "0": 1,
+          "0": 3,
+          "3": 1,
           "5": 3,
           "6": 1,
           "7": 1,
           "8": 2,
-          "9": 2,
-          "10": 3
+          "9": 3,
+          "10": 6
         },
         "installDist": {
           "3": 1,
@@ -1039,6 +1040,14 @@ window.SLACK_DATA = {
           "서비스[뷰티,헤어]": 1
         },
         "byTenure": {
+          "3개월": {
+            "total": 10,
+            "low": 3
+          },
+          "1개월": {
+            "total": 4,
+            "low": 3
+          },
           "12개월": {
             "total": 1,
             "low": 0
@@ -1047,26 +1056,30 @@ window.SLACK_DATA = {
             "total": 4,
             "low": 1
           },
-          "3개월": {
-            "total": 6,
-            "low": 2
-          },
-          "1개월": {
-            "total": 1,
-            "low": 1
-          },
           "6개월": {
             "total": 1,
             "low": 0
           }
         },
         "byVan": {
-          "KSNET": {
+          "KIS": {
+            "total": 8,
+            "low": 2
+          },
+          "SMARTRO": {
             "total": 2,
             "low": 1
           },
-          "KIS": {
-            "total": 4,
+          "DAOU": {
+            "total": 2,
+            "low": 1
+          },
+          "KPN": {
+            "total": 1,
+            "low": 0
+          },
+          "KSNET": {
+            "total": 2,
             "low": 1
           },
           "SECTA9": {
@@ -1076,21 +1089,69 @@ window.SLACK_DATA = {
           "NICE": {
             "total": 1,
             "low": 0
-          },
-          "SMARTRO": {
-            "total": 1,
-            "low": 0
-          },
-          "DAOU": {
-            "total": 1,
-            "low": 0
           }
         },
         "reasonCounts": {
+          "고객센터 연락이 매우 힘듦": 2,
+          "사용중 오류가 자주 발생함": 1,
           "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 2,
           "단말기 설치나 초기 과정이 어려움": 2
         },
         "alerts": [
+          {
+            "time": "15:44",
+            "store": "씨앤스카이리조트2",
+            "storeId": "436211",
+            "industry": "",
+            "indBucket": "",
+            "install": null,
+            "nps": 0,
+            "reasons": [
+              {
+                "q": "추천의향",
+                "score": 0,
+                "text": "상담할려고 전화를 수십번해도 안받음 애로사항은 어디다 접수합니까",
+                "cat": "고객센터 연락이 매우 힘듦"
+              }
+            ],
+            "emp": ""
+          },
+          {
+            "time": "15:34",
+            "store": "갓프라이스 양평역점",
+            "storeId": "485243",
+            "industry": "",
+            "indBucket": "",
+            "install": null,
+            "nps": 3,
+            "reasons": [
+              {
+                "q": "추천의향",
+                "score": 3,
+                "text": "바코드 결제를 많이 하는데 카메라 인식으로는 촛점 거리가 멀어서 작은 바코드 인식이 안됩니다. 블루투스 바코드 리더를 붙이면 간단한데 프론트에 블루투스 내장으로 알고 있는데... 간단하게 안되나보죠? 여러번 문의 했는데... 빠른 S/W 업그레이드 바랍니다.",
+                "cat": "고객센터 연락이 매우 힘듦"
+              }
+            ],
+            "emp": ""
+          },
+          {
+            "time": "15:34",
+            "store": "라 플라스 말흘",
+            "storeId": "496906",
+            "industry": "",
+            "indBucket": "",
+            "install": null,
+            "nps": 0,
+            "reasons": [
+              {
+                "q": "추천의향",
+                "score": 0,
+                "text": "오류",
+                "cat": "사용중 오류가 자주 발생함"
+              }
+            ],
+            "emp": ""
+          },
           {
             "time": "15:21",
             "store": "깜밥 누룽지",
@@ -1165,6 +1226,28 @@ window.SLACK_DATA = {
           }
         ],
         "praises": [
+          {
+            "time": "15:44",
+            "store": "금석",
+            "storeId": "434320",
+            "indBucket": "",
+            "emp": "",
+            "install": null,
+            "nps": 10,
+            "text": "편리함",
+            "byReaction": false
+          },
+          {
+            "time": "15:34",
+            "store": "작은네일",
+            "storeId": "463780",
+            "indBucket": "",
+            "emp": "",
+            "install": null,
+            "nps": 10,
+            "text": "편리하고 디자인도 예뻐서 만족도 100프로입니다",
+            "byReaction": false
+          },
           {
             "time": "15:21",
             "store": "비상잉글리시아이동광영어교습소",
