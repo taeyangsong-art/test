@@ -186,10 +186,10 @@ function tallyVoc(msgs, voc) {
     const attr = (name) => { const mm = text.match(new RegExp('\\*' + name + '\\*\\s*\\n\\s*([^\\n]+)')); return mm ? mm[1].trim() : ''; };
     const store = attr('매장명'), storeId = attr('매장ID'), tenure = attr('수집 유형'), van = attr('밴');
 
-    // 리액션에서 담당 직원(원격OOO 또는 OOO_확인) 추출
+    // VOC 담당자 = '원격voc' 이모지 + '원격OOO'(완료 담당자)가 둘 다 찍힌 경우 그 사람 (설문 적재는 점수대로 유지, 담당자만 이 기준)
     const names = (m.reactions || []).map(r => r.name);
     let praiseEmp = null;
-    for (const nm of names) { const pm = nm.match(/^원격(규빈|선유|성현|동욱|현기|태양|기범|상원|민석)$/); if (pm) { praiseEmp = personMap[pm[1]]; break; } const cm = nm.match(/^(규빈|선유|성현|동욱|현기|태양|기범|상원|민석)(_확인.*)?$/); if (cm) { praiseEmp = personMap[cm[1]]; break; } }
+    if (names.includes('원격voc')) { for (const nm of names) { const pm = nm.match(/^원격(규빈|선유|성현|동욱|현기|태양|기범|상원|민석)$/); if (pm) { praiseEmp = personMap[pm[1]]; break; } } }
     const allAns = qa.map(x => x[1]).join(' ');
     const hasPraiseWord = VOC_PRAISE_KW.some(k => allAns.includes(k));
 
