@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 43,
+  "version": 44,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -880,15 +880,15 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-10": {
-      "updatedAt": "16:30",
+      "updatedAt": "16:45",
       "counts": {
         "as": {
-          "심성현": 29,
+          "서상원": 18,
+          "심성현": 30,
+          "김현기": 21,
           "김규빈": 14,
-          "서상원": 17,
+          "최민석": 3,
           "김동욱": 16,
-          "최민석": 2,
-          "김현기": 19,
           "송태양": 8
         },
         "extern": {
@@ -896,19 +896,19 @@ window.SLACK_DATA = {
           "서상원": 4
         },
         "onboarding": {
+          "김동욱": 4,
           "김현기": 5,
           "서상원": 2,
           "김규빈": 5,
           "심성현": 5,
           "최민석": 2,
-          "김동욱": 3,
           "송태양": 3
         },
         "transfer": {
-          "송태양": 17
+          "송태양": 18
         },
         "menu": {
-          "김규빈": 10
+          "김규빈": 12
         },
         "delivery": {
           "최민석": 3,
@@ -917,61 +917,11 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "16:24",
-          "store": "용용선생 청주지웰복대점",
-          "biz": "6531002169",
+          "time": "16:29",
+          "store": "준스(JOONS)",
+          "biz": "1052185328",
           "handler": "김규빈",
           "cat": "menu",
-          "reasons": [
-            "확인 후 미완료"
-          ]
-        },
-        {
-          "time": "16:19",
-          "store": "아터테인",
-          "biz": "4919900122",
-          "handler": "심성현",
-          "cat": "as",
-          "reasons": [
-            "1차 부재"
-          ]
-        },
-        {
-          "time": "16:17",
-          "store": "츠하오",
-          "biz": "1561402744",
-          "handler": "김규빈",
-          "cat": "menu",
-          "reasons": [
-            "확인 후 미완료"
-          ]
-        },
-        {
-          "time": "16:15",
-          "store": "에밋 복싱",
-          "biz": "7209001889",
-          "handler": "김현기",
-          "cat": "as",
-          "reasons": [
-            "확인 후 미완료"
-          ]
-        },
-        {
-          "time": "16:05",
-          "store": "쿠아이",
-          "biz": "7253102076",
-          "handler": "김동욱",
-          "cat": "as",
-          "reasons": [
-            "확인 후 미완료"
-          ]
-        },
-        {
-          "time": "16:00",
-          "store": "오자뷰티샵",
-          "biz": "",
-          "handler": "송태양",
-          "cat": "transfer",
           "reasons": [
             "확인 후 미완료"
           ]
@@ -1038,14 +988,14 @@ window.SLACK_DATA = {
         }
       ],
       "voc": {
-        "responses": 21,
+        "responses": 23,
         "install": {
           "count": 4,
           "low": 0
         },
         "nps": {
-          "count": 21,
-          "low": 7
+          "count": 23,
+          "low": 8
         },
         "high": {
           "install": 3,
@@ -1053,12 +1003,13 @@ window.SLACK_DATA = {
         },
         "npsDist": {
           "0": 3,
+          "2": 1,
           "3": 1,
           "5": 3,
           "6": 1,
           "7": 1,
           "8": 3,
-          "9": 3,
+          "9": 4,
           "10": 6
         },
         "installDist": {
@@ -1072,8 +1023,8 @@ window.SLACK_DATA = {
         },
         "byTenure": {
           "6개월": {
-            "total": 2,
-            "low": 0
+            "total": 4,
+            "low": 1
           },
           "3개월": {
             "total": 10,
@@ -1094,8 +1045,8 @@ window.SLACK_DATA = {
         },
         "byVan": {
           "NICE": {
-            "total": 2,
-            "low": 0
+            "total": 4,
+            "low": 1
           },
           "KIS": {
             "total": 8,
@@ -1123,12 +1074,30 @@ window.SLACK_DATA = {
           }
         },
         "reasonCounts": {
+          "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 3,
           "고객센터 연락이 매우 힘듦": 2,
           "사용중 오류가 자주 발생함": 1,
-          "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 2,
           "단말기 설치나 초기 과정이 어려움": 2
         },
         "alerts": [
+          {
+            "time": "16:39",
+            "store": "스낵팩멜번 야당",
+            "storeId": "325793",
+            "industry": "",
+            "indBucket": "",
+            "install": null,
+            "nps": 2,
+            "reasons": [
+              {
+                "q": "추천의향",
+                "score": 2,
+                "text": "일년에 1번씩 꼭 서버가 다운됨",
+                "cat": "기타 이슈(정산/직원에 대한 불만/호영님출몰)"
+              }
+            ],
+            "emp": ""
+          },
           {
             "time": "15:44",
             "store": "씨앤스카이리조트2",
@@ -1257,6 +1226,17 @@ window.SLACK_DATA = {
           }
         ],
         "praises": [
+          {
+            "time": "16:39",
+            "store": "명량꽈배기",
+            "storeId": "329806",
+            "indBucket": "",
+            "emp": "",
+            "install": null,
+            "nps": 9,
+            "text": "간편하고 초보자들도 잘 따라서 할수있어서 좋아요",
+            "byReaction": false
+          },
           {
             "time": "16:09",
             "store": "명량꽈배기",
