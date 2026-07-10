@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 33,
+  "version": 34,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -878,15 +878,15 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-10": {
-      "updatedAt": "14:13",
+      "updatedAt": "14:30",
       "counts": {
         "as": {
+          "김현기": 15,
           "서상원": 10,
-          "심성현": 15,
+          "심성현": 14,
           "김동욱": 10,
           "김규빈": 12,
-          "송태양": 4,
-          "김현기": 12
+          "송태양": 4
         },
         "extern": {
           "서상원": 2,
@@ -901,31 +901,31 @@ window.SLACK_DATA = {
           "서상원": 1
         },
         "transfer": {
-          "송태양": 11
+          "송태양": 12
         },
         "menu": {
           "김규빈": 4
         },
         "delivery": {
-          "서상원": 3
+          "서상원": 2
         }
       },
       "pending": [
         {
-          "time": "13:43",
-          "store": "제이바이 끌림",
-          "biz": "7252602067",
-          "handler": "김동욱",
+          "time": "13:46",
+          "store": "오카에시",
+          "biz": "7620403383",
+          "handler": "김현기",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
           ]
         },
         {
-          "time": "13:34",
-          "store": "에그힙",
-          "biz": "5011894307",
-          "handler": "김현기",
+          "time": "13:43",
+          "store": "제이바이 끌림",
+          "biz": "7252602067",
+          "handler": "김동욱",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
@@ -968,7 +968,7 @@ window.SLACK_DATA = {
           "handler": "송태양",
           "cat": "transfer",
           "reasons": [
-            "확인 후 미완료"
+            "1차 부재"
           ]
         },
         {
