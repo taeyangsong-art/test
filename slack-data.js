@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 34,
+  "version": 35,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -878,19 +878,19 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-10": {
-      "updatedAt": "14:30",
+      "updatedAt": "14:42",
       "counts": {
+        "extern": {
+          "김동욱": 2,
+          "서상원": 2
+        },
         "as": {
+          "김동욱": 12,
           "김현기": 15,
           "서상원": 10,
-          "심성현": 14,
-          "김동욱": 10,
+          "심성현": 16,
           "김규빈": 12,
           "송태양": 4
-        },
-        "extern": {
-          "서상원": 2,
-          "김동욱": 1
         },
         "onboarding": {
           "김동욱": 2,
@@ -901,7 +901,7 @@ window.SLACK_DATA = {
           "서상원": 1
         },
         "transfer": {
-          "송태양": 12
+          "송태양": 13
         },
         "menu": {
           "김규빈": 4
@@ -911,6 +911,26 @@ window.SLACK_DATA = {
         }
       },
       "pending": [
+        {
+          "time": "14:36",
+          "store": ") 변경 ]*",
+          "biz": "7444401006",
+          "handler": "송태양",
+          "cat": "transfer",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "14:20",
+          "store": "탐휘트니스 헬스&amp;PT 길음점(문화비)",
+          "biz": "6450303534",
+          "handler": "송태양",
+          "cat": "transfer",
+          "reasons": [
+            "1차 부재"
+          ]
+        },
         {
           "time": "13:46",
           "store": "오카에시",
@@ -922,51 +942,11 @@ window.SLACK_DATA = {
           ]
         },
         {
-          "time": "13:43",
-          "store": "제이바이 끌림",
-          "biz": "7252602067",
-          "handler": "김동욱",
-          "cat": "as",
-          "reasons": [
-            "확인 후 미완료"
-          ]
-        },
-        {
-          "time": "13:30",
-          "store": "홍콩가",
-          "biz": "1140497646",
-          "handler": "심성현",
-          "cat": "as",
-          "reasons": [
-            "확인 후 미완료"
-          ]
-        },
-        {
           "time": "13:30",
           "store": "바른양생테라피",
           "biz": "4822602141",
           "handler": "심성현",
           "cat": "as",
-          "reasons": [
-            "1차 부재"
-          ]
-        },
-        {
-          "time": "12:56",
-          "store": "명인카츠",
-          "biz": "5853301599",
-          "handler": "심성현",
-          "cat": "as",
-          "reasons": [
-            "확인 후 미완료"
-          ]
-        },
-        {
-          "time": "12:30",
-          "store": "포아유 에스테틱 상암DMC점",
-          "biz": "",
-          "handler": "송태양",
-          "cat": "transfer",
           "reasons": [
             "1차 부재"
           ]
