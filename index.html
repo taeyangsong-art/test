@@ -127,7 +127,8 @@
   .light-rank{background:linear-gradient(165deg,#eef5ff,#fff5fb); border:1px solid #dbe8ff}
   .light-rank .rank-sub{color:#ff86c2}
   .rank-item.light{background:#fff; border:1px solid #e6eeff}
-  .rank-item.light.top{background:linear-gradient(180deg,#fff8e6,#fffdf7); border-color:#ffe6a0; box-shadow:0 3px 12px rgba(255,200,60,.18)}
+  .rank-item.light.top{background:linear-gradient(180deg,#fff8e6,#fffdf7); border-color:#ffd766; animation:lightpulse 2.2s ease-in-out infinite}
+  @keyframes lightpulse{0%,100%{box-shadow:0 0 8px rgba(255,205,70,.45); border-color:#ffe6a0}50%{box-shadow:0 0 24px rgba(255,214,90,.95); border-color:#ffcf4d}}
   .dark-rank{background:linear-gradient(165deg,#edeef4,#f6f2fa); border:1px solid #d6cae8}
   .dark-rank .card-head h3{color:var(--ink)}
   .dark-rank .hint{color:var(--gray2)}
@@ -1058,7 +1059,7 @@ function renderOverview(){
 
     <div class="grid2">
       <div class="card light-rank"><div class="card-head"><h3>😇 직원 랭킹 <span class="rank-sub">🍭 천국의 명단</span></h3><span class="hint">${viewLabel} 처리량 TOP</span></div>
-        <div class="rank-row">${empRows.slice(0,5).map((r,i)=>`<div class="rank-item light ${i<3?'top':''}"><div class="rank-medal">${['👑','😇','🍭','🍬','⭐'][i]||'⭐'}</div><div class="rank-name">${r.emp}</div><div class="rank-val">${r.total}건</div></div>`).join('')}</div>
+        <div class="rank-row">${empRows.slice(0,5).map((r,i)=>`<div class="rank-item light ${i<3?'top':''}"${i<3?` style="animation-delay:${(i*0.4).toFixed(2)}s"`:''}><div class="rank-medal">${['👑','😇','🍭','🍬','⭐'][i]||'⭐'}</div><div class="rank-name">${r.emp}</div><div class="rank-val">${r.total}건</div></div>`).join('')}</div>
       </div>
       <div class="card dark-rank"><div class="card-head"><h3>⚡ 누락 랭킹 <span class="rank-sub">💀 어둠의 명단</span></h3><span class="hint">미처리·확인필요 담당</span></div>
         <div class="rank-row">${missRows.length?missRows.map((r,i)=>`<div class="rank-item dark ${i===0?'worst':''}"><div class="rank-medal">${['💀','☠️','⚰️','🦇','👻'][i]||'🕸️'}</div><div class="rank-name">${escapeHtml(r[0])}</div><div class="rank-val">${r[1]}건 누락</div></div>`).join(''):'<div class="empty-note" style="color:#b8a8d8">누락 없음 — 평화롭습니다 🕊️</div>'}</div>
