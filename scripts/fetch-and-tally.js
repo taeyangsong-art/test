@@ -130,8 +130,9 @@ function tallyInto(msgs, ch, counts, pending) {
       const who = emp || confirmPerson || '미지정';
       counts[catKey] = counts[catKey] || {};
       counts[catKey][who] = (counts[catKey][who] || 0) + 1; completed++;
-    } else if (hasAbsent) {                  // 완료·카테고리 이모지 없이 '부재만' → 확인필요(처리 제외)
-      pending.push({ time, store, biz, handler: doer || '미지정', cat: ch.forceCat || ch.defaultCat, reasons: [absTag] });
+    } else if (hasAbsent) {                  // 완료·카테고리 이모지 없이 '부재만'
+      // 2차부재(재부재=연락 불가)는 확인필요에서 제외, 1차부재만 확인필요로 남김
+      if (absTag !== '2차 부재') pending.push({ time, store, biz, handler: doer || '미지정', cat: ch.forceCat || ch.defaultCat, reasons: [absTag] });
     } else if (confirmPerson) {              // 확인만 → 확인필요
       pending.push({ time, store, biz, handler: confirmPerson, cat: ch.forceCat || ch.defaultCat, reasons: ['확인 후 미완료'] });
     }
