@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 148,
+  "version": 149,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1280,12 +1280,12 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-11": {
-      "updatedAt": "16:45",
+      "updatedAt": "16:59",
       "counts": {
         "as": {
-          "김동욱": 34,
-          "미지정": 10,
-          "서상원": 5
+          "서상원": 6,
+          "김동욱": 35,
+          "미지정": 10
         },
         "extern": {
           "김동욱": 1
@@ -1304,20 +1304,31 @@ window.SLACK_DATA = {
           "김동욱": 1
         }
       },
-      "pending": [],
+      "pending": [
+        {
+          "time": "16:54",
+          "store": "와밥",
+          "biz": "6690403838",
+          "handler": "김동욱",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        }
+      ],
       "voc": {
-        "responses": 15,
+        "responses": 19,
         "install": {
-          "count": 3,
+          "count": 7,
           "low": 0
         },
         "nps": {
-          "count": 15,
+          "count": 19,
           "low": 4
         },
         "high": {
-          "install": 3,
-          "nps": 7
+          "install": 4,
+          "nps": 9
         },
         "npsDist": {
           "1": 1,
@@ -1325,24 +1336,28 @@ window.SLACK_DATA = {
           "3": 1,
           "4": 1,
           "6": 2,
-          "8": 2,
-          "10": 7
+          "8": 3,
+          "9": 1,
+          "10": 9
         },
         "installDist": {
-          "5": 3
+          "4": 3,
+          "5": 4
         },
         "byIndustry": {
-          "서비스[학원]": 1,
-          "도소매": 2
+          "서비스[학원]": 2,
+          "카페": 1,
+          "기타": 1,
+          "도소매": 3
         },
         "byTenure": {
+          "구매설치": {
+            "total": 7,
+            "low": 0
+          },
           "12개월": {
             "total": 4,
             "low": 1
-          },
-          "구매설치": {
-            "total": 3,
-            "low": 0
           },
           "1개월": {
             "total": 3,
@@ -1359,15 +1374,15 @@ window.SLACK_DATA = {
         },
         "byVan": {
           "NICE": {
-            "total": 2,
-            "low": 1
-          },
-          "KPN": {
             "total": 3,
             "low": 1
           },
           "KIS": {
-            "total": 4,
+            "total": 7,
+            "low": 1
+          },
+          "KPN": {
+            "total": 3,
             "low": 1
           },
           "DAOU": {
@@ -1467,6 +1482,28 @@ window.SLACK_DATA = {
           }
         ],
         "praises": [
+          {
+            "time": "16:59",
+            "store": "엘로타로사주",
+            "storeId": "332964",
+            "indBucket": "서비스[학원]",
+            "emp": "",
+            "install": 4,
+            "nps": 9,
+            "text": "퍈리하게 이용함 사영퍈리",
+            "byReaction": false
+          },
+          {
+            "time": "16:59",
+            "store": "와비사비",
+            "storeId": "531301",
+            "indBucket": "도소매",
+            "emp": "",
+            "install": 5,
+            "nps": 10,
+            "text": "아쉬운건 있습니다. 토스포스를 컴퓨터로 하고싶은데.. 랜과 와이파이가 엇갈려있어서.. 좀 아쉽긴했습니다! 다른 UX,UI 다 좋습니다. 넘어가는 트렌지션도 너무 완벽해요. 토스가.. 최곱니다.",
+            "byReaction": false
+          },
           {
             "time": "16:37",
             "store": "아담리즈수학학원 시흥배곧센터",
