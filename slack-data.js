@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 146,
+  "version": 147,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1280,12 +1280,12 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-11": {
-      "updatedAt": "16:12",
+      "updatedAt": "16:28",
       "counts": {
         "as": {
-          "김동욱": 33,
-          "서상원": 4,
-          "미지정": 8
+          "서상원": 5,
+          "미지정": 9,
+          "김동욱": 33
         },
         "extern": {
           "김동욱": 1
@@ -1306,18 +1306,18 @@ window.SLACK_DATA = {
       },
       "pending": [],
       "voc": {
-        "responses": 12,
+        "responses": 13,
         "install": {
-          "count": 2,
+          "count": 3,
           "low": 0
         },
         "nps": {
-          "count": 12,
+          "count": 13,
           "low": 4
         },
         "high": {
-          "install": 2,
-          "nps": 5
+          "install": 3,
+          "nps": 6
         },
         "npsDist": {
           "1": 1,
@@ -1326,25 +1326,26 @@ window.SLACK_DATA = {
           "4": 1,
           "6": 1,
           "8": 2,
-          "10": 5
+          "10": 6
         },
         "installDist": {
-          "5": 2
+          "5": 3
         },
         "byIndustry": {
+          "서비스[학원]": 1,
           "도소매": 2
         },
         "byTenure": {
+          "구매설치": {
+            "total": 3,
+            "low": 0
+          },
           "1개월": {
             "total": 3,
             "low": 1
           },
           "6개월": {
             "total": 3,
-            "low": 0
-          },
-          "구매설치": {
-            "total": 2,
             "low": 0
           },
           "3개월": {
@@ -1358,7 +1359,7 @@ window.SLACK_DATA = {
         },
         "byVan": {
           "KIS": {
-            "total": 3,
+            "total": 4,
             "low": 1
           },
           "DAOU": {
@@ -1466,6 +1467,17 @@ window.SLACK_DATA = {
           }
         ],
         "praises": [
+          {
+            "time": "16:28",
+            "store": "명지탁구클럽",
+            "storeId": "542770",
+            "indBucket": "서비스[학원]",
+            "emp": "",
+            "install": 5,
+            "nps": 10,
+            "text": "하라는대로 하니 되던데요? ㅎ 편리한거 같아요",
+            "byReaction": false
+          },
           {
             "time": "15:41",
             "store": "에끌레레(Eclele)",
