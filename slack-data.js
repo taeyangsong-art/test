@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 142,
+  "version": 143,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1280,12 +1280,12 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-11": {
-      "updatedAt": "15:28",
+      "updatedAt": "15:41",
       "counts": {
         "as": {
+          "김동욱": 30,
           "서상원": 3,
-          "미지정": 6,
-          "김동욱": 28
+          "미지정": 7
         },
         "extern": {
           "김동욱": 1
@@ -1306,13 +1306,23 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "15:23",
-          "store": "럭셔리노래연습장",
-          "biz": "7843500420",
-          "handler": "김동욱",
+          "time": "15:40",
+          "store": "다길김밥",
+          "biz": "6732601675",
+          "handler": "서상원",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "15:39",
+          "store": "청담각 짜장짬뽕전문점",
+          "biz": "4832802003",
+          "handler": "김동욱",
+          "cat": "as",
+          "reasons": [
+            "1차 부재"
           ]
         },
         {
@@ -1337,25 +1347,25 @@ window.SLACK_DATA = {
         }
       ],
       "voc": {
-        "responses": 7,
+        "responses": 9,
         "install": {
           "count": 2,
           "low": 0
         },
         "nps": {
-          "count": 7,
+          "count": 9,
           "low": 3
         },
         "high": {
           "install": 2,
-          "nps": 2
+          "nps": 4
         },
         "npsDist": {
           "1": 1,
           "2": 1,
           "4": 1,
           "8": 2,
-          "10": 2
+          "10": 4
         },
         "installDist": {
           "5": 2
@@ -1364,6 +1374,10 @@ window.SLACK_DATA = {
           "도소매": 2
         },
         "byTenure": {
+          "1개월": {
+            "total": 2,
+            "low": 0
+          },
           "구매설치": {
             "total": 2,
             "low": 0
@@ -1382,6 +1396,14 @@ window.SLACK_DATA = {
           }
         },
         "byVan": {
+          "SECTA9": {
+            "total": 2,
+            "low": 1
+          },
+          "KIS": {
+            "total": 2,
+            "low": 0
+          },
           "SMARTRO": {
             "total": 1,
             "low": 0
@@ -1389,14 +1411,6 @@ window.SLACK_DATA = {
           "KPN": {
             "total": 2,
             "low": 1
-          },
-          "SECTA9": {
-            "total": 1,
-            "low": 1
-          },
-          "KIS": {
-            "total": 1,
-            "low": 0
           },
           "NICE": {
             "total": 1,
@@ -1468,6 +1482,28 @@ window.SLACK_DATA = {
           }
         ],
         "praises": [
+          {
+            "time": "15:41",
+            "store": "에끌레레(Eclele)",
+            "storeId": "483444",
+            "indBucket": "",
+            "emp": "",
+            "install": null,
+            "nps": 10,
+            "text": "결제도  편하고 기능도  많고 간편해서  좋아요",
+            "byReaction": false
+          },
+          {
+            "time": "15:41",
+            "store": "황소쌤개념수학",
+            "storeId": "499159",
+            "indBucket": "",
+            "emp": "",
+            "install": null,
+            "nps": 10,
+            "text": "일단공짜고 쓰기편하고 너무좋아요 디자인도 완전짱이쁘고 페이스페이도되고요",
+            "byReaction": false
+          },
           {
             "time": "15:28",
             "store": "에코샷 골프",
