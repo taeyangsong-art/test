@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 133,
+  "version": 134,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1280,11 +1280,11 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-11": {
-      "updatedAt": "13:10",
+      "updatedAt": "13:28",
       "counts": {
         "as": {
           "김동욱": 24,
-          "미지정": 2
+          "미지정": 3
         },
         "onboarding": {
           "김동욱": 1
@@ -1296,7 +1296,58 @@ window.SLACK_DATA = {
           "김동욱": 1
         }
       },
-      "pending": []
+      "pending": [],
+      "voc": {
+        "responses": 1,
+        "install": {
+          "count": 1,
+          "low": 0
+        },
+        "nps": {
+          "count": 1,
+          "low": 0
+        },
+        "high": {
+          "install": 1,
+          "nps": 1
+        },
+        "npsDist": {
+          "10": 1
+        },
+        "installDist": {
+          "5": 1
+        },
+        "byIndustry": {
+          "도소매": 1
+        },
+        "byTenure": {
+          "구매설치": {
+            "total": 1,
+            "low": 0
+          }
+        },
+        "byVan": {
+          "KPN": {
+            "total": 1,
+            "low": 0
+          }
+        },
+        "reasonCounts": {},
+        "alerts": [],
+        "praises": [
+          {
+            "time": "13:28",
+            "store": "브로스커스텀",
+            "storeId": "523182",
+            "indBucket": "도소매",
+            "emp": "",
+            "install": 5,
+            "nps": 10,
+            "text": "유선으로 설명들으며 설치가 매우친절했어요 간단한조작, 작은크기의 기계",
+            "byReaction": false
+          }
+        ]
+      }
     }
   }
 };
