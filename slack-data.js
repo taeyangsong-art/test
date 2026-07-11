@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 155,
+  "version": 156,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1280,16 +1280,16 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-11": {
-      "updatedAt": "18:14",
+      "updatedAt": "18:42",
       "counts": {
+        "as": {
+          "서상원": 7,
+          "김동욱": 42,
+          "미지정": 14
+        },
         "onboarding": {
           "서상원": 1,
           "김동욱": 1
-        },
-        "as": {
-          "김동욱": 42,
-          "미지정": 14,
-          "서상원": 6
         },
         "extern": {
           "김동욱": 1
@@ -1307,13 +1307,13 @@ window.SLACK_DATA = {
       },
       "pending": [],
       "voc": {
-        "responses": 20,
+        "responses": 21,
         "install": {
           "count": 8,
           "low": 0
         },
         "nps": {
-          "count": 20,
+          "count": 21,
           "low": 4
         },
         "high": {
@@ -1326,6 +1326,7 @@ window.SLACK_DATA = {
           "3": 1,
           "4": 1,
           "6": 2,
+          "7": 1,
           "8": 3,
           "9": 1,
           "10": 10
@@ -1341,16 +1342,16 @@ window.SLACK_DATA = {
           "도소매": 3
         },
         "byTenure": {
+          "1개월": {
+            "total": 4,
+            "low": 1
+          },
           "구매설치": {
             "total": 8,
             "low": 0
           },
           "12개월": {
             "total": 4,
-            "low": 1
-          },
-          "1개월": {
-            "total": 3,
             "low": 1
           },
           "6개월": {
@@ -1363,16 +1364,16 @@ window.SLACK_DATA = {
           }
         },
         "byVan": {
+          "KIS": {
+            "total": 8,
+            "low": 1
+          },
           "SMARTRO": {
             "total": 2,
             "low": 0
           },
           "NICE": {
             "total": 3,
-            "low": 1
-          },
-          "KIS": {
-            "total": 7,
             "low": 1
           },
           "KPN": {
