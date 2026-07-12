@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 218,
+  "version": 219,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1609,39 +1609,44 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-12": {
-      "updatedAt": "00:01",
+      "updatedAt": "09:34",
       "counts": {},
       "pending": [],
       "voc": {
-        "responses": 1,
+        "responses": 2,
         "install": {
-          "count": 1,
+          "count": 2,
           "low": 0
         },
         "nps": {
-          "count": 1,
+          "count": 2,
           "low": 0
         },
         "high": {
           "install": 1,
-          "nps": 1
+          "nps": 2
         },
         "npsDist": {
-          "10": 1
+          "10": 2
         },
         "installDist": {
+          "3": 1,
           "5": 1
         },
         "byIndustry": {
-          "요식업": 1
+          "요식업": 2
         },
         "byTenure": {
           "구매설치": {
-            "total": 1,
+            "total": 2,
             "low": 0
           }
         },
         "byVan": {
+          "SECTA9": {
+            "total": 1,
+            "low": 0
+          },
           "SMARTRO": {
             "total": 1,
             "low": 0
@@ -1650,6 +1655,17 @@ window.SLACK_DATA = {
         "reasonCounts": {},
         "alerts": [],
         "praises": [
+          {
+            "time": "09:34",
+            "store": "온정(시부야함바그)",
+            "storeId": "521389",
+            "indBucket": "요식업",
+            "emp": "",
+            "install": 3,
+            "nps": 10,
+            "text": "프린크 연결 동영상이 허접함 깔끔하다",
+            "byReaction": false
+          },
           {
             "time": "00:01",
             "store": "권선반찬",
