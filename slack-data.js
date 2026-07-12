@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 245,
+  "version": 246,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1609,29 +1609,30 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-12": {
-      "updatedAt": "16:06",
+      "updatedAt": "16:29",
       "counts": {},
       "pending": [],
       "voc": {
-        "responses": 18,
+        "responses": 21,
         "install": {
           "count": 6,
           "low": 1
         },
         "nps": {
-          "count": 18,
-          "low": 4
+          "count": 21,
+          "low": 5
         },
         "high": {
           "install": 1,
-          "nps": 10
+          "nps": 11
         },
         "npsDist": {
           "0": 2,
-          "3": 2,
+          "3": 3,
+          "6": 1,
           "8": 1,
           "9": 3,
-          "10": 10
+          "10": 11
         },
         "installDist": {
           "2": 1,
@@ -1645,13 +1646,17 @@ window.SLACK_DATA = {
           "도소매": 1
         },
         "byTenure": {
+          "3개월": {
+            "total": 8,
+            "low": 2
+          },
+          "6개월": {
+            "total": 2,
+            "low": 0
+          },
           "구매설치": {
             "total": 6,
             "low": 2
-          },
-          "3개월": {
-            "total": 6,
-            "low": 1
           },
           "1개월": {
             "total": 1,
@@ -1660,20 +1665,20 @@ window.SLACK_DATA = {
           "12개월": {
             "total": 4,
             "low": 1
-          },
-          "6개월": {
-            "total": 1,
-            "low": 0
           }
         },
         "byVan": {
+          "KIS": {
+            "total": 6,
+            "low": 3
+          },
+          "KOVAN": {
+            "total": 1,
+            "low": 1
+          },
           "KPN": {
             "total": 4,
             "low": 0
-          },
-          "KIS": {
-            "total": 4,
-            "low": 3
           },
           "SECTA9": {
             "total": 5,
@@ -1693,10 +1698,28 @@ window.SLACK_DATA = {
           }
         },
         "reasonCounts": {
-          "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 3,
-          "사용중 오류가 자주 발생함": 2
+          "사용중 오류가 자주 발생함": 3,
+          "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 3
         },
         "alerts": [
+          {
+            "time": "16:29",
+            "store": "함양군농촌마을관광협동조합 산삼주제관점",
+            "storeId": "334272",
+            "industry": "",
+            "indBucket": "",
+            "install": null,
+            "nps": 3,
+            "reasons": [
+              {
+                "q": "추천의향",
+                "score": 3,
+                "text": "계속 에러가 나는데 해결이 안ㄷㆍ니요",
+                "cat": "사용중 오류가 자주 발생함"
+              }
+            ],
+            "emp": ""
+          },
           {
             "time": "16:06",
             "store": "황금상황버섯삼계탕,오리",
@@ -1789,6 +1812,17 @@ window.SLACK_DATA = {
           }
         ],
         "praises": [
+          {
+            "time": "16:29",
+            "store": "자스민영어문해력학원",
+            "storeId": "423296",
+            "indBucket": "",
+            "emp": "",
+            "install": null,
+            "nps": 10,
+            "text": "간편하고 깔끔하다",
+            "byReaction": false
+          },
           {
             "time": "16:06",
             "store": "레이나 에스테틱",
