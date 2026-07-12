@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 270,
+  "version": 271,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1609,17 +1609,17 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-12": {
-      "updatedAt": "21:21",
+      "updatedAt": "22:08",
       "counts": {},
       "pending": [],
       "voc": {
-        "responses": 25,
+        "responses": 26,
         "install": {
-          "count": 6,
-          "low": 1
+          "count": 7,
+          "low": 2
         },
         "nps": {
-          "count": 25,
+          "count": 26,
           "low": 6
         },
         "high": {
@@ -1633,21 +1633,25 @@ window.SLACK_DATA = {
           "6": 1,
           "7": 1,
           "8": 2,
-          "9": 3,
+          "9": 4,
           "10": 12
         },
         "installDist": {
-          "2": 1,
+          "2": 2,
           "3": 4,
           "5": 1
         },
         "byIndustry": {
-          "서비스[뷰티,헤어]": 1,
+          "서비스[뷰티,헤어]": 2,
           "요식업": 3,
           "기타": 1,
           "도소매": 1
         },
         "byTenure": {
+          "구매설치": {
+            "total": 7,
+            "low": 3
+          },
           "1개월": {
             "total": 2,
             "low": 1
@@ -1663,13 +1667,13 @@ window.SLACK_DATA = {
           "3개월": {
             "total": 8,
             "low": 2
-          },
-          "구매설치": {
-            "total": 6,
-            "low": 2
           }
         },
         "byVan": {
+          "KPN": {
+            "total": 5,
+            "low": 1
+          },
           "KSNET": {
             "total": 4,
             "low": 0
@@ -1686,10 +1690,6 @@ window.SLACK_DATA = {
             "total": 1,
             "low": 1
           },
-          "KPN": {
-            "total": 4,
-            "low": 0
-          },
           "NICE": {
             "total": 2,
             "low": 1
@@ -1700,10 +1700,29 @@ window.SLACK_DATA = {
           }
         },
         "reasonCounts": {
+          "단말기 설치나 초기 과정이 어려움": 1,
           "사용중 오류가 자주 발생함": 4,
           "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 3
         },
         "alerts": [
+          {
+            "time": "22:08",
+            "store": "인네일",
+            "storeId": "534735",
+            "industry": "뷰티",
+            "indBucket": "서비스[뷰티,헤어]",
+            "install": 2,
+            "nps": 9,
+            "reasons": [
+              {
+                "q": "구매설치",
+                "score": 2,
+                "text": "모르는 부분이 너무 많아서 헷갈려요 직접 설치하는 부분에 헷갈려요",
+                "cat": "단말기 설치나 초기 과정이 어려움"
+              }
+            ],
+            "emp": ""
+          },
           {
             "time": "18:55",
             "store": "아야서울(ayaseoul)",
