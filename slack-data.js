@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 243,
+  "version": 244,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1609,29 +1609,29 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-12": {
-      "updatedAt": "15:49",
+      "updatedAt": "15:59",
       "counts": {},
       "pending": [],
       "voc": {
-        "responses": 14,
+        "responses": 16,
         "install": {
           "count": 4,
           "low": 1
         },
         "nps": {
-          "count": 14,
-          "low": 2
+          "count": 16,
+          "low": 3
         },
         "high": {
           "install": 1,
-          "nps": 8
+          "nps": 9
         },
         "npsDist": {
-          "0": 1,
+          "0": 2,
           "3": 1,
           "8": 1,
           "9": 3,
-          "10": 8
+          "10": 9
         },
         "installDist": {
           "2": 1,
@@ -1644,6 +1644,10 @@ window.SLACK_DATA = {
           "요식업": 2
         },
         "byTenure": {
+          "3개월": {
+            "total": 6,
+            "low": 1
+          },
           "1개월": {
             "total": 1,
             "low": 1
@@ -1651,10 +1655,6 @@ window.SLACK_DATA = {
           "12개월": {
             "total": 4,
             "low": 1
-          },
-          "3개월": {
-            "total": 4,
-            "low": 0
           },
           "6개월": {
             "total": 1,
@@ -1666,20 +1666,20 @@ window.SLACK_DATA = {
           }
         },
         "byVan": {
+          "SECTA9": {
+            "total": 5,
+            "low": 1
+          },
+          "NICE": {
+            "total": 2,
+            "low": 1
+          },
           "KIS": {
             "total": 3,
             "low": 2
           },
           "KSNET": {
             "total": 1,
-            "low": 0
-          },
-          "NICE": {
-            "total": 1,
-            "low": 1
-          },
-          "SECTA9": {
-            "total": 4,
             "low": 0
           },
           "SMARTRO": {
@@ -1692,10 +1692,28 @@ window.SLACK_DATA = {
           }
         },
         "reasonCounts": {
-          "사용중 오류가 자주 발생함": 2,
-          "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 1
+          "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 2,
+          "사용중 오류가 자주 발생함": 2
         },
         "alerts": [
+          {
+            "time": "15:59",
+            "store": "마싯",
+            "storeId": "437465",
+            "industry": "",
+            "indBucket": "",
+            "install": null,
+            "nps": 0,
+            "reasons": [
+              {
+                "q": "추천의향",
+                "score": 0,
+                "text": "본인들이더잘알겠죠",
+                "cat": "기타 이슈(정산/직원에 대한 불만/호영님출몰)"
+              }
+            ],
+            "emp": ""
+          },
           {
             "time": "15:49",
             "store": "다인카페",
@@ -1752,6 +1770,17 @@ window.SLACK_DATA = {
           }
         ],
         "praises": [
+          {
+            "time": "15:59",
+            "store": "롱롱래쉬뷰티",
+            "storeId": "369339",
+            "indBucket": "",
+            "emp": "",
+            "install": null,
+            "nps": 10,
+            "text": "뷰티샵운영에  예약스스템  안내자동카톡 보내주는기능도 편하고  결제시스템 도 너무좋습니다",
+            "byReaction": false
+          },
           {
             "time": "15:44",
             "store": "파노라마",
