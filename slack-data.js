@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 241,
+  "version": 242,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1609,27 +1609,27 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-12": {
-      "updatedAt": "15:14",
+      "updatedAt": "15:29",
       "counts": {},
       "pending": [],
       "voc": {
-        "responses": 6,
+        "responses": 11,
         "install": {
           "count": 4,
           "low": 1
         },
         "nps": {
-          "count": 6,
+          "count": 11,
           "low": 0
         },
         "high": {
           "install": 1,
-          "nps": 3
+          "nps": 7
         },
         "npsDist": {
           "8": 1,
-          "9": 2,
-          "10": 3
+          "9": 3,
+          "10": 7
         },
         "installDist": {
           "2": 1,
@@ -1642,6 +1642,14 @@ window.SLACK_DATA = {
           "요식업": 2
         },
         "byTenure": {
+          "3개월": {
+            "total": 4,
+            "low": 0
+          },
+          "6개월": {
+            "total": 1,
+            "low": 0
+          },
           "12개월": {
             "total": 2,
             "low": 0
@@ -1652,20 +1660,20 @@ window.SLACK_DATA = {
           }
         },
         "byVan": {
-          "KPN": {
-            "total": 3,
+          "SECTA9": {
+            "total": 4,
             "low": 0
           },
           "KIS": {
-            "total": 1,
+            "total": 2,
             "low": 1
           },
-          "SECTA9": {
-            "total": 1,
+          "SMARTRO": {
+            "total": 2,
             "low": 0
           },
-          "SMARTRO": {
-            "total": 1,
+          "KPN": {
+            "total": 3,
             "low": 0
           }
         },
@@ -1693,6 +1701,28 @@ window.SLACK_DATA = {
           }
         ],
         "praises": [
+          {
+            "time": "15:29",
+            "store": "블랙카페",
+            "storeId": "435931",
+            "indBucket": "",
+            "emp": "",
+            "install": null,
+            "nps": 10,
+            "text": "편하고좋아요",
+            "byReaction": false
+          },
+          {
+            "time": "15:24",
+            "store": "아름다운이야기",
+            "storeId": "321340",
+            "indBucket": "",
+            "emp": "",
+            "install": null,
+            "nps": 10,
+            "text": "간편하고 쓰기도도편해요",
+            "byReaction": false
+          },
           {
             "time": "15:14",
             "store": "유원헤어",
