@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 314,
+  "version": 315,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1987,17 +1987,17 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-13": {
-      "updatedAt": "08:28",
+      "updatedAt": "08:45",
       "counts": {},
       "pending": [],
       "voc": {
-        "responses": 1,
+        "responses": 2,
         "install": {
-          "count": 0,
+          "count": 1,
           "low": 0
         },
         "nps": {
-          "count": 1,
+          "count": 2,
           "low": 0
         },
         "high": {
@@ -2005,11 +2005,20 @@ window.SLACK_DATA = {
           "nps": 1
         },
         "npsDist": {
+          "9": 1,
           "10": 1
         },
-        "installDist": {},
-        "byIndustry": {},
+        "installDist": {
+          "4": 1
+        },
+        "byIndustry": {
+          "기타": 1
+        },
         "byTenure": {
+          "구매설치": {
+            "total": 1,
+            "low": 0
+          },
           "3개월": {
             "total": 1,
             "low": 0
@@ -2017,13 +2026,24 @@ window.SLACK_DATA = {
         },
         "byVan": {
           "SMARTRO": {
-            "total": 1,
+            "total": 2,
             "low": 0
           }
         },
         "reasonCounts": {},
         "alerts": [],
         "praises": [
+          {
+            "time": "08:41",
+            "store": "씨엔 엔터테인먼트(C. N Entertainment)",
+            "storeId": "486554",
+            "indBucket": "기타",
+            "emp": "",
+            "install": 4,
+            "nps": 9,
+            "text": "설치하기 편리함 깔끔하고 마음에 듬",
+            "byReaction": false
+          },
           {
             "time": "00:01",
             "store": "애플아이",
