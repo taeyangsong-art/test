@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 251,
+  "version": 252,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1609,22 +1609,22 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-12": {
-      "updatedAt": "17:17",
+      "updatedAt": "17:44",
       "counts": {},
       "pending": [],
       "voc": {
-        "responses": 21,
+        "responses": 22,
         "install": {
           "count": 6,
           "low": 1
         },
         "nps": {
-          "count": 21,
+          "count": 22,
           "low": 5
         },
         "high": {
           "install": 1,
-          "nps": 11
+          "nps": 12
         },
         "npsDist": {
           "0": 2,
@@ -1632,7 +1632,7 @@ window.SLACK_DATA = {
           "6": 1,
           "8": 1,
           "9": 3,
-          "10": 11
+          "10": 12
         },
         "installDist": {
           "2": 1,
@@ -1646,6 +1646,10 @@ window.SLACK_DATA = {
           "도소매": 1
         },
         "byTenure": {
+          "12개월": {
+            "total": 5,
+            "low": 1
+          },
           "3개월": {
             "total": 8,
             "low": 2
@@ -1661,13 +1665,13 @@ window.SLACK_DATA = {
           "1개월": {
             "total": 1,
             "low": 1
-          },
-          "12개월": {
-            "total": 4,
-            "low": 1
           }
         },
         "byVan": {
+          "KSNET": {
+            "total": 2,
+            "low": 0
+          },
           "KIS": {
             "total": 6,
             "low": 3
@@ -1687,10 +1691,6 @@ window.SLACK_DATA = {
           "NICE": {
             "total": 2,
             "low": 1
-          },
-          "KSNET": {
-            "total": 1,
-            "low": 0
           },
           "SMARTRO": {
             "total": 2,
@@ -1812,6 +1812,17 @@ window.SLACK_DATA = {
           }
         ],
         "praises": [
+          {
+            "time": "17:44",
+            "store": "스파피부관리샵",
+            "storeId": "193266",
+            "indBucket": "",
+            "emp": "",
+            "install": null,
+            "nps": 10,
+            "text": "감사합니다",
+            "byReaction": false
+          },
           {
             "time": "16:29",
             "store": "자스민영어문해력학원",
