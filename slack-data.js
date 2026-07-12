@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 244,
+  "version": 245,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1609,41 +1609,46 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-12": {
-      "updatedAt": "15:59",
+      "updatedAt": "16:06",
       "counts": {},
       "pending": [],
       "voc": {
-        "responses": 16,
+        "responses": 18,
         "install": {
-          "count": 4,
+          "count": 6,
           "low": 1
         },
         "nps": {
-          "count": 16,
-          "low": 3
+          "count": 18,
+          "low": 4
         },
         "high": {
           "install": 1,
-          "nps": 9
+          "nps": 10
         },
         "npsDist": {
           "0": 2,
-          "3": 1,
+          "3": 2,
           "8": 1,
           "9": 3,
-          "10": 9
+          "10": 10
         },
         "installDist": {
           "2": 1,
-          "3": 2,
+          "3": 4,
           "5": 1
         },
         "byIndustry": {
+          "서비스[뷰티,헤어]": 1,
+          "요식업": 3,
           "기타": 1,
-          "도소매": 1,
-          "요식업": 2
+          "도소매": 1
         },
         "byTenure": {
+          "구매설치": {
+            "total": 6,
+            "low": 2
+          },
           "3개월": {
             "total": 6,
             "low": 1
@@ -1659,13 +1664,17 @@ window.SLACK_DATA = {
           "6개월": {
             "total": 1,
             "low": 0
-          },
-          "구매설치": {
-            "total": 4,
-            "low": 1
           }
         },
         "byVan": {
+          "KPN": {
+            "total": 4,
+            "low": 0
+          },
+          "KIS": {
+            "total": 4,
+            "low": 3
+          },
           "SECTA9": {
             "total": 5,
             "low": 1
@@ -1674,10 +1683,6 @@ window.SLACK_DATA = {
             "total": 2,
             "low": 1
           },
-          "KIS": {
-            "total": 3,
-            "low": 2
-          },
           "KSNET": {
             "total": 1,
             "low": 0
@@ -1685,17 +1690,31 @@ window.SLACK_DATA = {
           "SMARTRO": {
             "total": 2,
             "low": 0
-          },
-          "KPN": {
-            "total": 3,
-            "low": 0
           }
         },
         "reasonCounts": {
-          "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 2,
+          "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 3,
           "사용중 오류가 자주 발생함": 2
         },
         "alerts": [
+          {
+            "time": "16:06",
+            "store": "황금상황버섯삼계탕,오리",
+            "storeId": "543217",
+            "industry": "음식점/주점",
+            "indBucket": "요식업",
+            "install": 3,
+            "nps": 3,
+            "reasons": [
+              {
+                "q": "추천의향",
+                "score": 3,
+                "text": "주방 포스키 영수증 반대로 나오는데 그낭 써야함",
+                "cat": "기타 이슈(정산/직원에 대한 불만/호영님출몰)"
+              }
+            ],
+            "emp": ""
+          },
           {
             "time": "15:59",
             "store": "마싯",
@@ -1770,6 +1789,17 @@ window.SLACK_DATA = {
           }
         ],
         "praises": [
+          {
+            "time": "16:06",
+            "store": "레이나 에스테틱",
+            "storeId": "538698",
+            "indBucket": "서비스[뷰티,헤어]",
+            "emp": "",
+            "install": 3,
+            "nps": 10,
+            "text": "혼자하깃힘들어서 도움받아서하느라 그래도 디쟌이나 월사요료부분",
+            "byReaction": false
+          },
           {
             "time": "15:59",
             "store": "롱롱래쉬뷰티",
