@@ -1679,7 +1679,7 @@ function vocAlertRow(a){
 }
 const VOC_ALERT_HEAD=`<tr><th style="width:52px">시간</th><th style="min-width:110px">매장명</th><th style="width:76px">매장ID</th><th style="width:140px">업종</th><th class="num" style="width:92px">저점</th><th style="width:150px">저점이유</th><th style="min-width:180px">고객 원문</th><th style="min-width:160px">처리 내용</th><th style="width:108px">상태</th></tr>`;
 // 저점 alert 정규화(매장명·업종·사유·저점내용·해결내용·상태) — renderVoc/먼슬리 공용
-function vocDone(s){ return s==='처리완료' || s==='OB필요없음'; }   // 확인필요에서 빠지는(해결) 상태
+function vocDone(s){ return s==='처리완료' || s==='OB필요없음' || s==='부재' || s==='통화거부'; }   // 확인필요에서 빠지는(해결) 상태 — 부재·통화거부도 처리완료로 간주
 function vocStatCls(s){ return vocDone(s)?'done':(s==='처리중'?'':'hold'); }
 function vocAlertInfo(alerts){
   return (alerts||[]).map(a=>{ const ed=VOCEDIT[vocKey(a)]||{}; const st=ed.status||'처리중';
@@ -1740,7 +1740,11 @@ function renderVoc(){
   const indDMax=Math.max(1,...indEntries.map(e=>e[1].length)), reaDMax=Math.max(1,...reaEntries.map(e=>e[1].length));
 
   const isDone=a=>vocDone((VOCEDIT[vocKey(a)]||{}).status);
-  const pendingAlerts=v.alerts.filter(a=>!isDone(a));
+  // 미처리(처리중) 저점 건은 날짜가 지나도 계속 누적 표시 — 조회기간 종료일까지의 전체 미처리 건
+  const rangeEnd=viewDates[viewDates.length-1];
+  const carryDates=allSlackDates().filter(d=>d<=rangeEnd);
+  const carryAgg=aggVoc(carryDates);
+  const pendingAlerts=carryAgg.alerts.filter(a=>!isDone(a)).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
   const doneAlerts=v.alerts.filter(isDone);
 
   document.getElementById("main").innerHTML=`
@@ -1769,8 +1773,8 @@ function renderVoc(){
     </div>
 
     <div class="card">
-      <div class="card-head"><h3>🔎 저점 확인필요 매장 <span class="cnt-badge">${pendingAlerts.length}</span></h3><span class="hint">업종·저점이유·처리내용·상태 편집 · '처리완료' 선택 시 아래로 이동</span></div>
-      ${v.alerts.length?`<input class="search-box" type="text" placeholder="매장명 또는 매장ID 검색…" oninput="filterVoc(this.value)">
+      <div class="card-head"><h3>🔎 저점 확인필요 매장 <span class="cnt-badge">${pendingAlerts.length}</span></h3><span class="hint">미처리 건은 날짜가 지나도 누적 표시 · 처리완료/부재/통화거부/OB필요없음 선택 시 아래로 이동</span></div>
+      ${pendingAlerts.length||v.alerts.length?`<input class="search-box" type="text" placeholder="매장명 또는 매장ID 검색…" oninput="filterVoc(this.value)">
       <div style="overflow-x:auto"><table class="voc-table" style="margin-top:12px">
         <thead>${VOC_ALERT_HEAD}</thead>
         <tbody>${pendingAlerts.length?pendingAlerts.map(vocAlertRow).join(''):`<tr><td colspan="9" style="text-align:center;color:var(--gray2);padding:22px 0">처리중인 저점 건이 없습니다 👍</td></tr>`}</tbody>
@@ -2725,6 +2729,7 @@ function applySlackData(){
 }
 // 선택한 날짜의 슬랙 집계 항목 (없으면 null)
 function slackDay(date){ return (window.SLACK_DATA&&window.SLACK_DATA.days&&window.SLACK_DATA.days[date])||null; }
+function allSlackDates(){ return (window.SLACK_DATA&&window.SLACK_DATA.days)?Object.keys(window.SLACK_DATA.days).sort():[]; }
 
 function seedShare(){
   const base=today();
