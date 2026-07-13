@@ -93,16 +93,24 @@ async function fetchAll(channelId) {
   return msgs;
 }
 
-// 스레드 답글 읽기 (VOC 처리내용 자동 수집용)
+// 스레드 답글 읽기 (VOC 처리내용 자동 수집용). rate-limit/scope 문제로 실패해도 절대 throw하지 않음.
+let repliesFetched = 0, repliesWarned = false;
+const MAX_REPLY_FETCH = 80;   // 과도한 API 호출/rate-limit 방지 상한
 async function fetchReplies(channelId, ts) {
+  if (repliesFetched >= MAX_REPLY_FETCH) {
+    if (!repliesWarned) { console.log(`  (처리내용 자동수집 상한 ${MAX_REPLY_FETCH}건 도달 — 이후 생략)`); repliesWarned = true; }
+    return [];
+  }
+  repliesFetched++;
   try {
     const url = new URL('https://slack.com/api/conversations.replies');
     url.searchParams.set('channel', channelId);
     url.searchParams.set('ts', ts);
     url.searchParams.set('limit', '50');
     const res = await fetch(url, { headers: { Authorization: 'Bearer ' + TOKEN } });
-    const j = await res.json();
-    if (!j.ok) return [];
+    if (!res.ok) return [];                       // 429 등 HTTP 오류
+    const j = await res.json().catch(() => ({})); // JSON 파싱 실패 방어
+    if (!j.ok) return [];                          // missing_scope 등
     return (j.messages || []).slice(1); // 첫 메시지(부모=설문)는 제외
   } catch (e) { return []; }
 }
@@ -262,7 +270,8 @@ async function tallyVoc(msgs, voc, channelId) {
     try { msgs = await fetchAll(ch.id); }
     catch (e) { console.error(`  ⚠ [${ch.label}] 읽기 실패(${e.message}) — 건너뜀 (봇 초대/권한 확인)`); continue; }
     if (ch.type === 'voc') {
-      await tallyVoc(msgs, voc, ch.id); hasVoc = true;
+      try { await tallyVoc(msgs, voc, ch.id); hasVoc = true; }
+      catch (e) { console.error(`  ⚠ [${ch.label}] VOC 파싱 실패(${e.message}) — VOC만 건너뜀, 나머지 집계는 계속`); }
       console.log(`  [${ch.label}] 응답 ${voc.responses} · 구매설치저점 ${voc.install.low} · NPS저점 ${voc.nps.low}`);
     } else {
       const r = tallyInto(msgs, ch, counts, pending);
