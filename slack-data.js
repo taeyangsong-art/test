@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 355,
+  "version": 356,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -2570,36 +2570,36 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-13": {
-      "updatedAt": "17:00",
+      "updatedAt": "17:10",
       "counts": {
         "as": {
-          "심성현": 22,
+          "심성현": 23,
+          "김기범": 7,
+          "서상원": 11,
+          "김현기": 25,
           "최민석": 4,
           "배선유": 21,
-          "김현기": 24,
-          "서상원": 10,
           "송태양": 8,
-          "김기범": 6,
           "김규빈": 5
         },
-        "extern": {
-          "서상원": 6
-        },
         "onboarding": {
+          "심성현": 8,
           "송태양": 2,
           "최민석": 1,
-          "심성현": 7,
           "배선유": 4,
           "서상원": 3,
           "김현기": 2,
           "김규빈": 1
+        },
+        "extern": {
+          "서상원": 6
         },
         "transfer": {
           "송태양": 14,
           "심성현": 3
         },
         "menu": {
-          "배선유": 9,
+          "배선유": 11,
           "김규빈": 11,
           "서상원": 2
         },
@@ -2609,29 +2609,9 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "17:00",
-          "store": "가장맛있는 후라이드 안동점",
-          "biz": "1535400985",
-          "handler": "배선유",
-          "cat": "menu",
-          "reasons": [
-            "확인 후 미완료"
-          ]
-        },
-        {
-          "time": "16:50",
-          "store": "디오프",
-          "biz": "4022698409",
-          "handler": "심성현",
-          "cat": "as",
-          "reasons": [
-            "확인 후 미완료"
-          ]
-        },
-        {
-          "time": "16:37",
-          "store": "불정반점",
-          "biz": "6571502472",
+          "time": "17:08",
+          "store": "비케이아카데미",
+          "biz": "4040836647",
           "handler": "김현기",
           "cat": "as",
           "reasons": [
@@ -2656,16 +2636,6 @@ window.SLACK_DATA = {
           "cat": "transfer",
           "reasons": [
             "1차 부재"
-          ]
-        },
-        {
-          "time": "16:17",
-          "store": "카페노아",
-          "biz": "6721402678",
-          "handler": "배선유",
-          "cat": "menu",
-          "reasons": [
-            "확인 후 미완료"
           ]
         },
         {
@@ -2700,13 +2670,13 @@ window.SLACK_DATA = {
         }
       ],
       "voc": {
-        "responses": 16,
+        "responses": 17,
         "install": {
           "count": 5,
           "low": 2
         },
         "nps": {
-          "count": 16,
+          "count": 17,
           "low": 5
         },
         "high": {
@@ -2718,7 +2688,7 @@ window.SLACK_DATA = {
           "5": 3,
           "7": 1,
           "8": 1,
-          "9": 3,
+          "9": 4,
           "10": 6
         },
         "installDist": {
@@ -2732,6 +2702,10 @@ window.SLACK_DATA = {
           "서비스[뷰티,헤어]": 1
         },
         "byTenure": {
+          "6개월": {
+            "total": 4,
+            "low": 1
+          },
           "1개월": {
             "total": 3,
             "low": 0
@@ -2744,16 +2718,16 @@ window.SLACK_DATA = {
             "total": 4,
             "low": 2
           },
-          "6개월": {
-            "total": 3,
-            "low": 1
-          },
           "구매설치": {
             "total": 5,
             "low": 2
           }
         },
         "byVan": {
+          "SMARTRO": {
+            "total": 4,
+            "low": 0
+          },
           "KIS": {
             "total": 5,
             "low": 2
@@ -2773,10 +2747,6 @@ window.SLACK_DATA = {
           "DAOU": {
             "total": 1,
             "low": 1
-          },
-          "SMARTRO": {
-            "total": 3,
-            "low": 0
           }
         },
         "reasonCounts": {
@@ -2925,6 +2895,18 @@ window.SLACK_DATA = {
           }
         ],
         "praises": [
+          {
+            "time": "17:02",
+            "store": "온담 PT",
+            "storeId": "321658",
+            "indBucket": "",
+            "emp": "",
+            "install": null,
+            "nps": 9,
+            "text": "불편함을 느끼지못함",
+            "byReaction": false,
+            "doneDate": ""
+          },
           {
             "time": "16:27",
             "store": "린다 스칼프앤뷰티",
