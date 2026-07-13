@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 321,
+  "version": 322,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1987,7 +1987,7 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-13": {
-      "updatedAt": "10:15",
+      "updatedAt": "10:21",
       "counts": {
         "as": {
           "배선유": 2,
@@ -2004,10 +2004,30 @@ window.SLACK_DATA = {
           "심성현": 1
         },
         "menu": {
-          "배선유": 4
+          "배선유": 5
         }
       },
       "pending": [
+        {
+          "time": "10:20",
+          "store": "인네일",
+          "biz": "6974900915",
+          "handler": "송태양",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "10:15",
+          "store": "주디마리 홍대점(JUDYMARY)",
+          "biz": "4858502579",
+          "handler": "김현기",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
         {
           "time": "10:13",
           "store": "가장맛있는 후라이드 안동점",
@@ -2029,9 +2049,9 @@ window.SLACK_DATA = {
           ]
         },
         {
-          "time": "10:03",
-          "store": "태국 팟타이",
-          "biz": "1160672325",
+          "time": "10:05",
+          "store": "요거트가족",
+          "biz": "1891602210",
           "handler": "배선유",
           "cat": "menu",
           "reasons": [
