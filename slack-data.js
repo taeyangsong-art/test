@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 377,
+  "version": 378,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -9712,7 +9712,7 @@ window.SLACK_DATA = {
       "dup": []
     },
     "2026-07-13": {
-      "updatedAt": "19:38",
+      "updatedAt": "21:33",
       "counts": {
         "as": {
           "최민석": 14,
@@ -9753,18 +9753,18 @@ window.SLACK_DATA = {
       },
       "pending": [],
       "voc": {
-        "responses": 19,
+        "responses": 20,
         "install": {
           "count": 6,
           "low": 2
         },
         "nps": {
-          "count": 19,
+          "count": 20,
           "low": 5
         },
         "high": {
           "install": 3,
-          "nps": 8
+          "nps": 9
         },
         "npsDist": {
           "0": 2,
@@ -9772,7 +9772,7 @@ window.SLACK_DATA = {
           "7": 1,
           "8": 1,
           "9": 4,
-          "10": 8
+          "10": 9
         },
         "installDist": {
           "1": 2,
@@ -9786,6 +9786,10 @@ window.SLACK_DATA = {
           "서비스[뷰티,헤어]": 1
         },
         "byTenure": {
+          "6개월": {
+            "total": 5,
+            "low": 1
+          },
           "3개월": {
             "total": 5,
             "low": 2
@@ -9793,10 +9797,6 @@ window.SLACK_DATA = {
           "구매설치": {
             "total": 6,
             "low": 2
-          },
-          "6개월": {
-            "total": 4,
-            "low": 1
           },
           "1개월": {
             "total": 3,
@@ -9808,6 +9808,10 @@ window.SLACK_DATA = {
           }
         },
         "byVan": {
+          "DAOU": {
+            "total": 2,
+            "low": 1
+          },
           "SMARTRO": {
             "total": 5,
             "low": 0
@@ -9827,10 +9831,6 @@ window.SLACK_DATA = {
           "KSNET": {
             "total": 1,
             "low": 0
-          },
-          "DAOU": {
-            "total": 1,
-            "low": 1
           }
         },
         "reasonCounts": {
@@ -9979,6 +9979,18 @@ window.SLACK_DATA = {
           }
         ],
         "praises": [
+          {
+            "time": "21:33",
+            "store": "깍까보까",
+            "storeId": "332387",
+            "indBucket": "",
+            "emp": "",
+            "install": null,
+            "nps": 10,
+            "text": "편리하고 너무 좋아요~^^",
+            "byReaction": false,
+            "doneDate": ""
+          },
           {
             "time": "18:07",
             "store": "뮤. muu.",
