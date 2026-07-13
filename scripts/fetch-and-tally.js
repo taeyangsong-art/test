@@ -165,8 +165,9 @@ function cleanNote(s) {
     .replace(/\s+/g, ' ').trim().slice(0, 200);
 }
 
-// 한 채널의 메시지를 공유 counts/pending 에 누적
-function tallyInto(msgs, ch, counts, pending) {
+// 한 채널의 메시지를 공유 counts/pending/done 에 누적
+function tallyInto(msgs, ch, counts, pending, done) {
+  done = done || [];
   let completed = 0, externCount = 0, dup = 0, latest = '';
   for (const m of msgs) {
     if (m.subtype && m.subtype !== 'bot_message') continue; // 봇 접수 메시지(메뉴채널)는 집계, 시스템 메시지는 제외
@@ -200,11 +201,13 @@ function tallyInto(msgs, ch, counts, pending) {
       const who = doer || '미지정';
       counts.extern = counts.extern || {};
       counts.extern[who] = (counts.extern[who] || 0) + 1; externCount++;
+      done.push({ time, store, biz, cat: 'extern', emp: who });
     } else if (emojiCat || (emp && !ch.requireCat)) {   // 카테고리 이모지 있음, 또는 AS채널에서 완료담당자만(→defaultCat). requireCat 채널은 이모지 필수
       const catKey = emojiCat || ch.defaultCat;
       const who = emp || confirmPerson || '미지정';
       counts[catKey] = counts[catKey] || {};
       counts[catKey][who] = (counts[catKey][who] || 0) + 1; completed++;
+      done.push({ time, store, biz, cat: catKey, emp: who });
     } else if (hasAbsent) {                  // 완료·카테고리 이모지 없이 '부재만'
       // 2차부재(재부재=연락 불가)는 확인필요에서 제외, 1차부재만 확인필요로 남김
       if (absTag !== '2차 부재') pending.push({ time, store, biz, handler: doer || '미지정', cat: ch.defaultCat, reasons: [absTag] });
@@ -335,18 +338,19 @@ async function tallyVoc(msgs, voc, channelId, opts) {
   if (backfillFrom) console.log(`[백필] ${backfillFrom} ~ ${targetDate} (${workDates.length}일) 재집계`);
   for (const dstr of workDates) {
     const b = boundsOf(dstr);
-    const counts = {}, pending = [];
+    const counts = {}, pending = [], done = [];
     let completed = 0, externCount = 0, dupTotal = 0, latest = '';
     for (const ch of workChs) {
       let msgs;
       try { msgs = await fetchAllRange(ch.id, b.oldest, b.latestBound); }
       catch (e) { console.error(`  ⚠ [${ch.label} ${dstr}] 읽기 실패(${e.message}) — 건너뜀`); continue; }
-      const r = tallyInto(msgs, ch, counts, pending);
+      const r = tallyInto(msgs, ch, counts, pending, done);
       completed += r.completed; externCount += r.externCount; dupTotal += r.dup; if (r.latest > latest) latest = r.latest;
     }
     pending.sort((a, b) => (b.time || '').localeCompare(a.time || ''));
+    done.sort((a, b) => (b.time || '').localeCompare(a.time || ''));
     const de = data.days[dstr] || {};
-    de.counts = counts; de.pending = pending;
+    de.counts = counts; de.pending = pending; de.done = done;
     if (latest && latest > (de.updatedAt || '')) de.updatedAt = latest;
     if (!de.updatedAt) de.updatedAt = latest || '';
     data.days[dstr] = de;

@@ -91,6 +91,25 @@
   .hl-lab{font-size:13px; font-weight:700; color:var(--gray)}
   .hl-big{font-size:33px; font-weight:800; letter-spacing:-.03em; line-height:1.12; margin-top:2px; color:var(--ink)}
   .hl-big small{font-size:14px; font-weight:600; color:var(--gray2); margin-left:2px}
+  /* MVP 처리건수 강조 + 클릭 */
+  .mvp-proc{margin-top:6px; cursor:pointer; display:inline-flex; align-items:baseline; gap:4px; padding:4px 12px; border-radius:20px;
+    background:rgba(199,120,0,.12); transition:.15s}
+  .mvp-proc:hover{background:rgba(199,120,0,.22); transform:translateY(-1px)}
+  .mvp-proc b{font-size:30px; font-weight:800; color:#c77800; letter-spacing:-.02em}
+  .mvp-proc small{font-size:14px; font-weight:700; color:#a86400}
+  .mvp-proc-hint{font-size:11px; font-weight:700; color:#c77800; margin-left:6px; opacity:.8}
+  /* 클릭 가능한 타일 */
+  .ov-tile.clickable{cursor:pointer; transition:.15s}
+  .ov-tile.clickable:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.08)}
+  .ov-drill-ic{font-size:11px; margin-left:5px; opacity:.4}
+  /* 처리 상세 모달 */
+  .detail-overlay{position:fixed; inset:0; z-index:9998; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center; padding:20px}
+  .detail-box{background:var(--canvas,#fff); border-radius:18px; width:100%; max-width:640px; max-height:82vh; display:flex; flex-direction:column; padding:20px 22px; box-shadow:0 24px 60px rgba(0,0,0,.3)}
+  .detail-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px}
+  .detail-head h3{font-size:17px; font-weight:800; color:var(--ink)}
+  .detail-x{border:none; background:var(--surface2); width:30px; height:30px; border-radius:50%; font-size:15px; cursor:pointer; color:var(--gray)}
+  .detail-x:hover{background:var(--line-soft)}
+  .detail-scroll{overflow:auto; margin-top:12px}
   .hl-card.blue .hl-big{color:#1a56db}
   .hl-card.gold .hl-big{color:#c77800}
   .hl-card.mint .hl-big{color:#0f9d58}
@@ -1352,10 +1371,12 @@ function renderOverview(){
   const grandProc = workGrand + vocAttr;              // 처리 = 업무 처리 + VOC 처리(담당자 지정)
   const grandProcPrev = workGrandPrev + vocAttrPrev;
   // 부재 미처리(1차부재)도 '원격 총 건수'에 포함 — 해당 기간 각 날짜의 부재 pending 합
+  const pendCntOf = ds => ds.reduce((a,d)=>a+((slackDay(d)||{}).pending||[]).length,0);
   const absCntOf = ds => ds.reduce((a,d)=>a+((slackDay(d)||{}).pending||[]).filter(p=>(p.reasons||[]).some(r=>/부재/.test(r))).length,0);
-  const absentCnt = absCntOf(viewDates), absentCntPrev = absCntOf(prevDates);
-  const grandAll = grandProc + absentCnt;             // 원격 총 건수 = 처리 + 부재 미처리
-  const grandAllPrev = grandProcPrev + absentCntPrev;
+  const absentCnt = absCntOf(viewDates);
+  const confirmCnt = pendCntOf(viewDates) - absentCnt;   // 확인필요(부재 아닌 미처리)
+  const grandAll = grandProc + pendCntOf(viewDates);      // 원격 총 건수 = 처리 + 부재 + 확인필요(전체 미처리)
+  const grandAllPrev = grandProcPrev + pendCntOf(prevDates);
   const ovPend = ovPendingList();                     // 부재=당일만, 확인필요=어제~오늘 이월
   const pendCarry = ovPend.length;
   // 누락 랭킹 — 미처리·확인필요에 적재된 담당자 카운트
@@ -1404,14 +1425,14 @@ function renderOverview(){
         <div class="hl-lab">${periodWord} 원격 총 건수</div>
         <div class="hl-big">${grandAll}<small>건</small></div>
         ${deltaHTML(grandAll, grandAllPrev)}
-        ${absentCnt?`<div class="ov-delta flat" style="margin-top:2px"><span>처리 ${grandProc} + 부재 ${absentCnt}</span></div>`:''}
+        ${(absentCnt||confirmCnt)?`<div class="ov-delta flat" style="margin-top:2px"><span>처리 ${grandProc}${absentCnt?` + 부재 ${absentCnt}`:''}${confirmCnt?` + 확인필요 ${confirmCnt}`:''}</span></div>`:''}
       </div>
       <div class="hl-card gold" id="mvpCard">
         <div class="mvp-flash"></div><div class="mvp-confetti" id="mvpConfetti"></div>
         <div class="hl-ic">🏆</div>
         <div class="hl-lab">${periodWord} MVP</div>
         <div class="hl-big">${mvp?escapeHtml(mvp.emp):'-'}</div>
-        <div class="ov-delta flat"><span>${mvp?mvp.total+'건 처리':'데이터 없음'}</span></div>
+        ${mvp?`<div class="mvp-proc" onclick="showDoneDetail('emp','${mvp.emp}')"><b>${mvp.total}</b><small>건 처리</small><span class="mvp-proc-hint">🔎 상세 보기</span></div>`:`<div class="ov-delta flat"><span>데이터 없음</span></div>`}
       </div>
       <div class="hl-card mint">
         <div class="hl-ic">🌴</div>
@@ -1423,8 +1444,8 @@ function renderOverview(){
 
     <div class="ov-tiles">
       ${catTotals.map(c=>`
-        <div class="ov-tile" style="--c:${c.color}">
-          <div class="ov-name"><span class="ov-ic">${c.icon}</span>${c.name}</div>
+        <div class="ov-tile clickable" style="--c:${c.color}" onclick="showDoneDetail('cat','${c.key}')" title="클릭 → 상호·사업자 조회">
+          <div class="ov-name"><span class="ov-ic">${c.icon}</span>${c.name}<span class="ov-drill-ic">🔎</span></div>
           ${c.key==='voc'
             ? `<div class="ov-val">${c.total}<small>건 인입 <span class="voc-proc">(처리 ${c.proc}건)</span></small></div>`
             : `<div class="ov-val">${c.total}<small>건</small></div>`}
@@ -1447,7 +1468,7 @@ function renderOverview(){
 
     <div class="grid2">
       <div class="card light-rank"><div class="card-head"><h3>😇 직원 랭킹 <span class="rank-sub">🍭 천국의 명단</span></h3><span class="hint">${viewLabel} 처리량 TOP</span></div>
-        <div class="rank-row">${empRows.slice(0,5).map((r,i)=>`<div class="rank-item light ${i<3?'top':''}"${i<3?` style="animation-delay:${(i*0.4).toFixed(2)}s"`:''}><div class="rank-medal">${['👑','😇','🍭','🍬','⭐'][i]||'⭐'}</div><div class="rank-name">${rankNameHTML(r.emp)}</div><div class="rank-val">${r.total}건</div></div>`).join('')}</div>
+        <div class="rank-row">${empRows.slice(0,5).map((r,i)=>`<div class="rank-item light ${i<3?'top':''}"${i<3?` style="animation-delay:${(i*0.4).toFixed(2)}s"`:''}><div class="rank-medal">${['🥇','🥈','🥉','🏅','🏅'][i]||'🏅'}</div><div class="rank-name">${rankNameHTML(r.emp)}</div><div class="rank-val">${r.total}건</div></div>`).join('')}</div>
       </div>
       <div class="card dark-rank"><div class="card-head"><h3>⚡ 누락 랭킹 <span class="rank-sub">💀 어둠의 명단</span></h3><span class="hint">미처리·확인필요 담당</span></div>
         <div class="rank-row">${missRows.length?missRows.map((r,i)=>`<div class="rank-item dark ${i===0?'worst':''}"><div class="rank-medal">${['💀','☠️','⚰️','🦇','👻'][i]||'🕸️'}</div><div class="rank-name">${escapeHtml(r[0])}</div><div class="rank-val">${r[1]}건 누락</div></div>`).join(''):'<div class="empty-note" style="color:#b8a8d8">누락 없음 — 평화롭습니다 🕊️</div>'}</div>
@@ -1511,6 +1532,29 @@ function fireMvpConfetti(){
 }
 // hex + alpha → rgba
 function hexA(hex,a){ const n=parseInt(hex.slice(1),16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`; }
+// 카테고리 라벨/칩
+function catLabelOf(k){ if(k==='voc')return 'VOC'; const c=WORK_CATS.find(w=>w.key===k); return c?c.name:k; }
+function catChip(k){ const c=WORK_CATS.find(w=>w.key===k); const col=k==='voc'?'#ff2d55':(c?c.color:'#8e8e93'); return `<span class="cat-chip" style="background:${hexA(col,.14)};color:${col}">${catLabelOf(k)}</span>`; }
+// 처리 상세 모달: mode='cat'(카테고리별) 또는 'emp'(직원별) — 상호/사업자/유형/담당 조회
+function showDoneDetail(mode, key){
+  const dates=ovDates(), set=new Set(dates); let items=[], title='';
+  if(mode==='cat'){
+    title = catLabelOf(key)+' 처리 상세';
+    if(key==='voc'){ allSlackDates().forEach(d=>{ const v=(slackDay(d)||{}).voc; if(!v)return; [...(v.alerts||[]),...(v.praises||[])].forEach(x=>{ if(x.emp&&x.doneDate&&set.has(x.doneDate)) items.push({time:x.time,store:x.store,biz:x.storeId,emp:x.emp,cat:'voc',date:x.doneDate}); }); }); }
+    else { dates.forEach(d=>((slackDay(d)||{}).done||[]).forEach(x=>{ if(x.cat===key) items.push({time:x.time,store:x.store,biz:x.biz,emp:x.emp,cat:x.cat,date:d}); })); }
+  } else {
+    title = key+' 처리 상세';
+    dates.forEach(d=>((slackDay(d)||{}).done||[]).forEach(x=>{ if(x.emp===key) items.push({time:x.time,store:x.store,biz:x.biz,emp:x.emp,cat:x.cat,date:d}); }));
+  }
+  items.sort((a,b)=>((b.date||'')+(b.time||'')).localeCompare((a.date||'')+(a.time||'')));
+  const rows = items.length? items.map(x=>`<tr class="dm-row" data-k="${((x.store||'')+' '+(x.biz||'')).toLowerCase()}"><td class="trow-time">${fmtShort(x.date)}<br>${x.time||''}</td><td>${catChip(x.cat)}</td><td class="emp-name">${escapeHtml(x.store||'-')}</td><td class="trow-biz">${escapeHtml(x.biz||'-')}</td><td>${escapeHtml(x.emp||'-')}</td></tr>`).join('')
+    : `<tr><td colspan="5" style="text-align:center;color:var(--gray2);padding:22px">상세 데이터가 없습니다.<br><span style="font-size:12px">과거 일자는 <b>backfill</b> 워크플로 실행 후 표시됩니다.</span></td></tr>`;
+  let el=document.getElementById('doneModal'); if(!el){ el=document.createElement('div'); el.id='doneModal'; el.className='detail-overlay'; el.onclick=e=>{ if(e.target===el) el.remove(); }; document.body.appendChild(el); }
+  el.innerHTML=`<div class="detail-box"><div class="detail-head"><h3>${escapeHtml(title)} <span class="cnt-badge">${items.length}</span></h3><button class="detail-x" onclick="document.getElementById('doneModal').remove()">✕</button></div>
+    <input class="search-box" type="text" placeholder="상호명 또는 사업자번호 검색…" oninput="filterDoneModal(this.value)">
+    <div class="detail-scroll"><table class="voc-table"><thead><tr><th style="width:56px">시간</th><th style="width:96px">유형</th><th>상호</th><th style="width:120px">사업자</th><th style="width:70px">담당</th></tr></thead><tbody id="doneModalBody">${rows}</tbody></table></div></div>`;
+}
+function filterDoneModal(q){ q=(q||'').trim().toLowerCase(); document.querySelectorAll('#doneModalBody .dm-row').forEach(tr=>{ tr.style.display=(tr.dataset.k||'').includes(q)?'':'none'; }); }
 
 // 전체 처리 추이 (기간 내 일별 전 카테고리 합계)
 function overviewTrend(dates){
