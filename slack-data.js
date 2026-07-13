@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 319,
+  "version": 320,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1987,42 +1987,44 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-13": {
-      "updatedAt": "09:45",
+      "updatedAt": "10:00",
       "counts": {
+        "as": {
+          "배선유": 1,
+          "심성현": 2,
+          "김현기": 2,
+          "송태양": 1
+        },
         "onboarding": {
+          "김현기": 1,
           "심성현": 1
         },
-        "as": {
-          "심성현": 1,
-          "김현기": 2
-        },
         "transfer": {
-          "송태양": 1,
           "심성현": 1
         },
         "menu": {
-          "배선유": 3
+          "배선유": 4
         }
       },
       "pending": [
         {
-          "time": "09:45",
-          "store": "유(U)헤어살롱",
-          "biz": "6093566140",
-          "handler": "심성현",
+          "time": "10:00",
+          "store": "오에라",
+          "biz": "7822501889",
+          "handler": "김현기",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
           ]
         },
         {
-          "time": "09:38",
-          "store": "수",
-          "biz": "1940201026",
-          "handler": "김현기",
+          "time": "09:57",
+          "store": "주식회사 드림금거래소",
+          "biz": "5538802140",
+          "handler": "심성현",
           "cat": "as",
           "reasons": [
-            "1차 부재"
+            "확인 후 미완료"
           ]
         }
       ],
