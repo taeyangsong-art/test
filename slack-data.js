@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 363,
+  "version": 364,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -9673,12 +9673,12 @@ window.SLACK_DATA = {
       ]
     },
     "2026-07-13": {
-      "updatedAt": "18:48",
+      "updatedAt": "18:51",
       "counts": {
         "as": {
-          "최민석": 11,
+          "최민석": 13,
+          "김기범": 13,
           "김현기": 29,
-          "김기범": 12,
           "서상원": 12,
           "송태양": 9,
           "심성현": 26,
@@ -9712,16 +9712,6 @@ window.SLACK_DATA = {
         }
       },
       "pending": [
-        {
-          "time": "18:39",
-          "store": "땅이콩이땅콩빵",
-          "biz": "7803701528",
-          "handler": "김기범",
-          "cat": "as",
-          "reasons": [
-            "확인 후 미완료"
-          ]
-        },
         {
           "time": "14:32",
           "store": "키노(KINO)",
@@ -10079,6 +10069,27 @@ window.SLACK_DATA = {
         ]
       },
       "done": [
+        {
+          "time": "18:48",
+          "store": "탕수육",
+          "biz": "2720702465",
+          "cat": "as",
+          "emp": "최민석"
+        },
+        {
+          "time": "18:39",
+          "store": "땅이콩이땅콩빵",
+          "biz": "7803701528",
+          "cat": "as",
+          "emp": "김기범"
+        },
+        {
+          "time": "18:35",
+          "store": "호소인",
+          "biz": "6788603430",
+          "cat": "as",
+          "emp": "최민석"
+        },
         {
           "time": "18:33",
           "store": "무아 플라워 아틀리에",
