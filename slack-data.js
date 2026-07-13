@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 336,
+  "version": 337,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -2570,11 +2570,11 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-13": {
-      "updatedAt": "12:07",
+      "updatedAt": "12:30",
       "counts": {
         "as": {
-          "김현기": 9,
-          "김규빈": 3,
+          "김규빈": 4,
+          "김현기": 11,
           "배선유": 9,
           "김기범": 2,
           "심성현": 10,
@@ -2590,8 +2590,8 @@ window.SLACK_DATA = {
           "서상원": 2
         },
         "transfer": {
-          "송태양": 3,
-          "심성현": 1
+          "심성현": 2,
+          "송태양": 3
         },
         "menu": {
           "김규빈": 4,
@@ -2600,11 +2600,21 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "12:02",
-          "store": "도담이네열무밭",
-          "biz": "4260701705",
-          "handler": "김현기",
+          "time": "12:16",
+          "store": "소소베이글",
+          "biz": "1663301646",
+          "handler": "김규빈",
           "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "12:02",
+          "store": "따스한정 다이어트",
+          "biz": "",
+          "handler": "심성현",
+          "cat": "transfer",
           "reasons": [
             "확인 후 미완료"
           ]
@@ -2616,17 +2626,7 @@ window.SLACK_DATA = {
           "handler": "심성현",
           "cat": "as",
           "reasons": [
-            "확인 후 미완료"
-          ]
-        },
-        {
-          "time": "11:49",
-          "store": "언플로우 로스터즈",
-          "biz": "",
-          "handler": "심성현",
-          "cat": "transfer",
-          "reasons": [
-            "확인 후 미완료"
+            "1차 부재"
           ]
         },
         {
