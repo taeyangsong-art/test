@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 333,
+  "version": 334,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -2574,16 +2574,6 @@ window.SLACK_DATA = {
           "store": "연우샵",
           "biz": "8311200881",
           "handler": "배선유",
-          "cat": "as",
-          "reasons": [
-            "1차 부재"
-          ]
-        },
-        {
-          "time": "10:55",
-          "store": "이헤어플러스",
-          "biz": "4081176689",
-          "handler": "심성현",
           "cat": "as",
           "reasons": [
             "1차 부재"
