@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 341,
+  "version": 342,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -2570,11 +2570,11 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-13": {
-      "updatedAt": "13:30",
+      "updatedAt": "13:45",
       "counts": {
         "as": {
+          "김기범": 4,
           "서상원": 3,
-          "김기범": 3,
           "송태양": 4,
           "배선유": 12,
           "김현기": 14,
@@ -2592,32 +2592,32 @@ window.SLACK_DATA = {
           "서상원": 2
         },
         "transfer": {
-          "송태양": 5,
+          "송태양": 6,
           "심성현": 3
         },
         "menu": {
           "서상원": 1,
-          "김규빈": 4,
-          "배선유": 6
+          "배선유": 7,
+          "김규빈": 4
         }
       },
       "pending": [
         {
-          "time": "13:29",
-          "store": "이헤어플러스",
-          "biz": "4081176689",
-          "handler": "김기범",
+          "time": "13:42",
+          "store": "피자마루 양산중앙점",
+          "biz": "6971201126",
+          "handler": "서상원",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
           ]
         },
         {
-          "time": "13:27",
-          "store": "3H경남 남양산센터",
-          "biz": "1661902843",
-          "handler": "송태양",
-          "cat": "transfer",
+          "time": "13:08",
+          "store": "바닐라웨이",
+          "biz": "5291401638",
+          "handler": "배선유",
+          "cat": "as",
           "reasons": [
             "확인 후 미완료"
           ]
@@ -2630,16 +2630,6 @@ window.SLACK_DATA = {
           "cat": "as",
           "reasons": [
             "1차 부재"
-          ]
-        },
-        {
-          "time": "12:00",
-          "store": "뚜레쥬르 킨텍스1전시장",
-          "biz": "1283674814",
-          "handler": "배선유",
-          "cat": "menu",
-          "reasons": [
-            "확인 후 미완료"
           ]
         },
         {
