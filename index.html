@@ -127,6 +127,8 @@
   .tg-tier-top{display:flex; justify-content:space-between; align-items:baseline; gap:8px}
   .tg-tier-reward{font-size:16px; font-weight:800; color:var(--ink)}
   .tg-tier-coins{font-size:14px; font-weight:800; color:#e8a020; white-space:nowrap}
+  .tg-tier-pct{font-size:22px; font-weight:800; color:#7c5cff; white-space:nowrap; letter-spacing:-.02em}
+  .tg-tier-pct.done{color:#16a34a}
   .tg-tier-by{font-size:12px; color:var(--gray); margin:3px 0 9px}
   .tg-bar{height:12px; border-radius:8px; background:#e5e7eb; overflow:hidden}
   .tg-bar-fill{height:100%; border-radius:8px; background:linear-gradient(90deg,#7c5cff,#a855f7); transition:width .5s}
@@ -1188,10 +1190,10 @@ function tgTierCard(t, total){
   return `<div class="tg-tier ${reached?'reached':''}">
     <div class="tg-tier-ic">${t.icon}</div>
     <div class="tg-tier-body">
-      <div class="tg-tier-top"><span class="tg-tier-reward">${escapeHtml(t.reward)}</span><span class="tg-tier-coins">🪙 ${t.coins.toLocaleString()}</span></div>
-      <div class="tg-tier-by">🎖️ ${escapeHtml(t.by)} 제공</div>
+      <div class="tg-tier-top"><span class="tg-tier-reward">${escapeHtml(t.reward)}</span><span class="tg-tier-pct ${reached?'done':''}">${Math.round(pct)}%</span></div>
+      <div class="tg-tier-by">🪙 목표 ${t.coins.toLocaleString()} · 🎖️ ${escapeHtml(t.by)} 제공</div>
       <div class="tg-bar"><div class="tg-bar-fill" style="width:${pct}%"></div></div>
-      <div class="tg-tier-stat">${reached?`<b class="tg-done">🎉 달성! 보상 확정</b>`:`${total.toLocaleString()} / ${t.coins.toLocaleString()} · <b>${remain.toLocaleString()}</b>코인 남음`}</div>
+      <div class="tg-tier-stat">${reached?`<b class="tg-done">🎉 달성! 보상 확정 (100%)</b>`:`${total.toLocaleString()} / ${t.coins.toLocaleString()} · 달성률 <b>${Math.round(pct)}%</b> · <b>${remain.toLocaleString()}</b>코인 남음`}</div>
     </div>
   </div>`;
 }
