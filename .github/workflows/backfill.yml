@@ -1,0 +1,45 @@
+name: backfill (과거 일자 재집계)
+
+# 지정한 날짜부터 오늘까지 모든 카테고리(AS·온보딩·명변·메뉴·배달·외주·VOC)를 날짜별로 다시 적재.
+# Actions 탭 → backfill → Run workflow → from_date 입력(기본 2026-07-01) → 실행 (일회성)
+on:
+  workflow_dispatch:
+    inputs:
+      from_date:
+        description: '재집계 시작일 (YYYY-MM-DD)'
+        required: true
+        default: '2026-07-01'
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 과거 일자 재집계
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          BACKFILL_FROM: ${{ inputs.from_date }}
+        run: node scripts/fetch-and-tally.js
+
+      - name: 변경 시 커밋 & 푸시
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet slack-data.js; then
+            echo "변경 없음 — 커밋 생략"
+          else
+            git add slack-data.js
+            git commit -m "chore: 과거 일자 백필 재집계 (${{ inputs.from_date }} ~ 오늘)"
+            for i in 1 2 3 4 5 6 7 8; do
+              git pull --rebase --autostash origin main && git push && { echo "푸시 성공"; exit 0; }
+              echo "푸시 경합 — 재시도 $i..."; sleep $((i*3))
+            done
+            echo "푸시 8회 실패"; exit 1
+          fi

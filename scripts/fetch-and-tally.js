@@ -69,13 +69,21 @@ const Y = tgt.getUTCFullYear(), M = tgt.getUTCMonth(), D = tgt.getUTCDate();
 const targetDate = `${Y}-${pad(M + 1)}-${pad(D)}`;
 const oldest = (Date.UTC(Y, M, D) - 9 * 3600 * 1000) / 1000;       // 대상일 00:00 KST
 const latestBound = (Date.UTC(Y, M, D + 1) - 9 * 3600 * 1000) / 1000; // 다음날 00:00 KST (하루 경계 상한)
-
-// VOC 롤링 재집계: 과거 설문에 뒤늦게 '확인+완료' 이모지가 찍히면 반영하기 위해 최근 N일을 매번 다시 훑는다.
-const VOC_LOOKBACK = 14;
-const oldestWide = (Date.UTC(Y, M, D - VOC_LOOKBACK) - 9 * 3600 * 1000) / 1000;  // (대상일 - N일) 00:00 KST
-const minDateObj = new Date(Date.UTC(Y, M, D - VOC_LOOKBACK));
-const minDate = `${minDateObj.getUTCFullYear()}-${pad(minDateObj.getUTCMonth() + 1)}-${pad(minDateObj.getUTCDate())}`;
 const todayKstDate = `${kstNow.getUTCFullYear()}-${pad(kstNow.getUTCMonth() + 1)}-${pad(kstNow.getUTCDate())}`;  // 완료 처리된 '오늘' 날짜
+
+// 날짜 유틸 (YYYY-MM-DD ↔ KST 하루 경계)
+function dateUTC(s) { const [y, mo, da] = s.split('-').map(Number); return Date.UTC(y, mo - 1, da); }
+function boundsOf(s) { const t = dateUTC(s); return { oldest: (t - 9 * 3600 * 1000) / 1000, latestBound: (t + 86400000 - 9 * 3600 * 1000) / 1000 }; }
+function dateList(fromS, toS) { const out = []; for (let t = dateUTC(fromS), e = dateUTC(toS); t <= e; t += 86400000) { const d = new Date(t); out.push(`${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`); } return out; }
+
+// 백필: BACKFILL_FROM=YYYY-MM-DD 지정 시 그 날부터 오늘까지 모든 카테고리를 날짜별로 다시 적재 (일회성)
+const backfillFrom = (process.env.BACKFILL_FROM || '').trim();
+// VOC 롤링 재집계 시작일 = min(오늘-14일, 백필시작일). 과거 설문에 뒤늦게 '확인+완료' 이모지 찍히면 반영.
+const VOC_LOOKBACK = 14;
+const defMinObj = new Date(Date.UTC(Y, M, D - VOC_LOOKBACK));
+const defMin = `${defMinObj.getUTCFullYear()}-${pad(defMinObj.getUTCMonth() + 1)}-${pad(defMinObj.getUTCDate())}`;
+const minDate = (backfillFrom && backfillFrom < defMin) ? backfillFrom : defMin;
+const oldestWide = boundsOf(minDate).oldest;
 
 function kstHM(ts) {
   const d = new Date(parseFloat(ts) * 1000 + 9 * 3600 * 1000);
@@ -300,19 +308,8 @@ async function tallyVoc(msgs, voc, channelId, opts) {
 }
 
 (async () => {
-  const counts = {}, pending = [];
-  let completed = 0, externCount = 0, dupTotal = 0, latest = '';
-  let vocCh = null;
-  for (const ch of CHANNELS) {
-    if (ch.type === 'voc') { vocCh = ch; continue; }   // VOC는 아래에서 최근 N일 롤링 재집계
-    let msgs;
-    try { msgs = await fetchAll(ch.id); }
-    catch (e) { console.error(`  ⚠ [${ch.label}] 읽기 실패(${e.message}) — 건너뜀 (봇 초대/권한 확인)`); continue; }
-    const r = tallyInto(msgs, ch, counts, pending);
-    completed += r.completed; externCount += r.externCount; dupTotal += r.dup; if (r.latest > latest) latest = r.latest;
-    console.log(`  [${ch.label}] 메시지 ${msgs.length}건 (중복이모지 제외 ${r.dup})`);
-  }
-  pending.sort((a, b) => (b.time || '').localeCompare(a.time || ''));
+  const vocCh = CHANNELS.find(c => c.type === 'voc');
+  const workChs = CHANNELS.filter(c => c.type !== 'voc');
 
   // 기존 데이터 로드
   let data = { version: 0, days: {} };
@@ -322,14 +319,30 @@ async function tallyVoc(msgs, voc, channelId, opts) {
   }
   data.days = data.days || {};
 
-  // 오늘 업무 집계 기록 (VOC는 아래 롤링 재집계에서 덮어씀)
-  const dayEntry = data.days[targetDate] || {};
-  dayEntry.counts = counts; dayEntry.pending = pending;
-  if (latest && latest > (dayEntry.updatedAt || '')) dayEntry.updatedAt = latest;
-  if (!dayEntry.updatedAt) dayEntry.updatedAt = latest || '';
-  data.days[targetDate] = dayEntry;
+  // ===== 업무 채널 집계 (백필이면 BACKFILL_FROM~오늘 여러 날, 아니면 오늘 하루) =====
+  const workDates = backfillFrom ? dateList(backfillFrom, targetDate) : [targetDate];
+  if (backfillFrom) console.log(`[백필] ${backfillFrom} ~ ${targetDate} (${workDates.length}일) 재집계`);
+  for (const dstr of workDates) {
+    const b = boundsOf(dstr);
+    const counts = {}, pending = [];
+    let completed = 0, externCount = 0, dupTotal = 0, latest = '';
+    for (const ch of workChs) {
+      let msgs;
+      try { msgs = await fetchAllRange(ch.id, b.oldest, b.latestBound); }
+      catch (e) { console.error(`  ⚠ [${ch.label} ${dstr}] 읽기 실패(${e.message}) — 건너뜀`); continue; }
+      const r = tallyInto(msgs, ch, counts, pending);
+      completed += r.completed; externCount += r.externCount; dupTotal += r.dup; if (r.latest > latest) latest = r.latest;
+    }
+    pending.sort((a, b) => (b.time || '').localeCompare(a.time || ''));
+    const de = data.days[dstr] || {};
+    de.counts = counts; de.pending = pending;
+    if (latest && latest > (de.updatedAt || '')) de.updatedAt = latest;
+    if (!de.updatedAt) de.updatedAt = latest || '';
+    data.days[dstr] = de;
+    console.log(`  [업무 ${dstr}] 완료 ${completed} · 확인필요 ${pending.length} · 외주 ${externCount} · 중복제외 ${dupTotal}`);
+  }
 
-  // ===== VOC 롤링 재집계 (최근 VOC_LOOKBACK일) — 과거 설문도 오늘 '확인+완료' 찍히면 오늘 완료로 반영 =====
+  // ===== VOC 롤링 재집계 (minDate~오늘) — 과거 설문도 오늘 '확인+완료' 찍히면 오늘 완료로 반영 =====
   let vocDaysTouched = 0, vocResTotal = 0;
   if (vocCh) {
     // 이전 완료일/처리내용 보존용 맵 (완료일은 최초 완료된 날 유지)
@@ -355,7 +368,7 @@ async function tallyVoc(msgs, voc, channelId, opts) {
     }
   }
 
-  console.log(`[${targetDate}] 완료 ${completed} · 확인필요 ${pending.length} · 외주 ${externCount} · 중복제외 ${dupTotal} · VOC ${vocResTotal}응답/${vocDaysTouched}일 재집계`);
+  console.log(`[완료] 업무 ${workDates.length}일 · VOC ${vocResTotal}응답/${vocDaysTouched}일 재집계`);
   data.version = (data.version || 0) + 1;
   const header = '/*\n * 슬랙 원격 처리 채널(AS요청·명의변경 등) 집계 데이터 (날짜별 누적)\n * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.\n */\n';
   fs.writeFileSync(OUT, header + 'window.SLACK_DATA = ' + JSON.stringify(data, null, 2) + ';\n', 'utf8');
