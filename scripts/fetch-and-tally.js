@@ -70,9 +70,23 @@ const targetDate = `${Y}-${pad(M + 1)}-${pad(D)}`;
 const oldest = (Date.UTC(Y, M, D) - 9 * 3600 * 1000) / 1000;       // 대상일 00:00 KST
 const latestBound = (Date.UTC(Y, M, D + 1) - 9 * 3600 * 1000) / 1000; // 다음날 00:00 KST (하루 경계 상한)
 
+// VOC 롤링 재집계: 과거 설문에 뒤늦게 '확인+완료' 이모지가 찍히면 반영하기 위해 최근 N일을 매번 다시 훑는다.
+const VOC_LOOKBACK = 14;
+const oldestWide = (Date.UTC(Y, M, D - VOC_LOOKBACK) - 9 * 3600 * 1000) / 1000;  // (대상일 - N일) 00:00 KST
+const minDateObj = new Date(Date.UTC(Y, M, D - VOC_LOOKBACK));
+const minDate = `${minDateObj.getUTCFullYear()}-${pad(minDateObj.getUTCMonth() + 1)}-${pad(minDateObj.getUTCDate())}`;
+const todayKstDate = `${kstNow.getUTCFullYear()}-${pad(kstNow.getUTCMonth() + 1)}-${pad(kstNow.getUTCDate())}`;  // 완료 처리된 '오늘' 날짜
+
 function kstHM(ts) {
   const d = new Date(parseFloat(ts) * 1000 + 9 * 3600 * 1000);
   return `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
+}
+function kstDate(ts) {
+  const d = new Date(parseFloat(ts) * 1000 + 9 * 3600 * 1000);
+  return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`;
+}
+function freshVoc() {
+  return { responses: 0, install: { count: 0, low: 0 }, nps: { count: 0, low: 0 }, high: { install: 0, nps: 0 }, npsDist: {}, installDist: {}, byIndustry: {}, byTenure: {}, byVan: {}, reasonCounts: {}, alerts: [], praises: [], latest: '' };
 }
 
 async function fetchAll(channelId) {
@@ -90,6 +104,25 @@ async function fetchAll(channelId) {
     msgs = msgs.concat(j.messages || []);
     cursor = (j.response_metadata && j.response_metadata.next_cursor) || '';
   } while (cursor && ++guard < 20);
+  return msgs;
+}
+
+// 지정 기간(oldest~latest) 메시지 전체 읽기 (VOC 롤링 재집계용)
+async function fetchAllRange(channelId, oldestTs, latestTs) {
+  let cursor = '', msgs = [], guard = 0;
+  do {
+    const url = new URL('https://slack.com/api/conversations.history');
+    url.searchParams.set('channel', channelId);
+    url.searchParams.set('oldest', String(oldestTs));
+    url.searchParams.set('latest', String(latestTs));
+    url.searchParams.set('limit', '200');
+    if (cursor) url.searchParams.set('cursor', cursor);
+    const res = await fetch(url, { headers: { Authorization: 'Bearer ' + TOKEN } });
+    const j = await res.json();
+    if (!j.ok) throw new Error(j.error);
+    msgs = msgs.concat(j.messages || []);
+    cursor = (j.response_metadata && j.response_metadata.next_cursor) || '';
+  } while (cursor && ++guard < 40);
   return msgs;
 }
 
@@ -191,7 +224,9 @@ function blocksText(m) {
 }
 
 // VOC 설문 응답 파싱 → 점수/업종/저점사유 집계
-async function tallyVoc(msgs, voc, channelId) {
+// opts = { dayDate: 이 메시지들의 날짜(YYYY-MM-DD), todayKstDate, priorMap: {key:{doneDate,autoNote}}, noteSince: ts }
+async function tallyVoc(msgs, voc, channelId, opts) {
+  opts = opts || {};
   for (const m of msgs) {
     if (m.subtype && m.subtype !== 'bot_message') continue;
     let text = blocksText(m).replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&');
@@ -241,15 +276,19 @@ async function tallyVoc(msgs, voc, channelId) {
     if (tenure) { if (!voc.byTenure[tenure]) voc.byTenure[tenure] = { total: 0, low: 0 }; voc.byTenure[tenure].total++; if (isLow) voc.byTenure[tenure].low++; }
     if (van)    { if (!voc.byVan[van])       voc.byVan[van]       = { total: 0, low: 0 }; voc.byVan[van].total++;       if (isLow) voc.byVan[van].low++; }
     if (reasons.length) {
-      // 처리내용 자동 수집: 스레드 답글 텍스트를 요약(정리)해서 기입
-      let autoNote = '';
-      if ((m.reply_count || 0) > 0 && channelId) {
+      const key = (opts.dayDate || '') + '|' + (storeId || '') + '|' + time;   // 대시보드 vocKey와 동일 규칙
+      const prior = (opts.priorMap || {})[key] || {};
+      // 처리내용 자동 수집: 스레드 답글 텍스트를 정리해서 기입 (이전에 수집한 값이 있으면 재사용 → 안정성·API 절약)
+      let autoNote = prior.autoNote || '';
+      if (!autoNote && (m.reply_count || 0) > 0 && channelId && (!opts.noteSince || parseFloat(m.ts) >= opts.noteSince)) {
         const reps = await fetchReplies(channelId, m.ts);
         autoNote = cleanNote(reps.map(r => blocksText(r)).join(' / '));
       }
+      // 완료일: 이미 완료로 기록된 적 있으면 그 날짜 유지, 이번에 처음 완료되면 '오늘'로 적재
+      const doneDate = autoDone ? (prior.doneDate || opts.todayKstDate || '') : '';
       voc.alerts.push({ time, store, storeId, industry, indBucket, install: isNaN(install) ? null : install, nps: isNaN(nps) ? null : nps, reasons,
         emp: praiseEmp || (autoDone ? vocConfirm : ''),
-        autoStatus: autoDone ? '처리완료' : '', autoEmp: autoDone ? vocConfirm : '', autoNote });
+        autoStatus: autoDone ? '처리완료' : '', autoEmp: autoDone ? vocConfirm : '', autoNote, doneDate });
     }
 
     // 칭찬 적재: 저점(reasons)이 아니면서 담당자확인 리액션 또는 칭찬 문구가 있는 건만 (저점 처리건은 제외)
@@ -263,35 +302,60 @@ async function tallyVoc(msgs, voc, channelId) {
 (async () => {
   const counts = {}, pending = [];
   let completed = 0, externCount = 0, dupTotal = 0, latest = '';
-  const voc = { responses: 0, install: { count: 0, low: 0 }, nps: { count: 0, low: 0 }, high: { install: 0, nps: 0 }, npsDist: {}, installDist: {}, byIndustry: {}, byTenure: {}, byVan: {}, reasonCounts: {}, alerts: [], praises: [], latest: '' };
-  let hasVoc = false;
+  let vocCh = null;
   for (const ch of CHANNELS) {
+    if (ch.type === 'voc') { vocCh = ch; continue; }   // VOC는 아래에서 최근 N일 롤링 재집계
     let msgs;
     try { msgs = await fetchAll(ch.id); }
     catch (e) { console.error(`  ⚠ [${ch.label}] 읽기 실패(${e.message}) — 건너뜀 (봇 초대/권한 확인)`); continue; }
-    if (ch.type === 'voc') {
-      try { await tallyVoc(msgs, voc, ch.id); hasVoc = true; }
-      catch (e) { console.error(`  ⚠ [${ch.label}] VOC 파싱 실패(${e.message}) — VOC만 건너뜀, 나머지 집계는 계속`); }
-      console.log(`  [${ch.label}] 응답 ${voc.responses} · 구매설치저점 ${voc.install.low} · NPS저점 ${voc.nps.low}`);
-    } else {
-      const r = tallyInto(msgs, ch, counts, pending);
-      completed += r.completed; externCount += r.externCount; dupTotal += r.dup; if (r.latest > latest) latest = r.latest;
-      console.log(`  [${ch.label}] 메시지 ${msgs.length}건 (중복이모지 제외 ${r.dup})`);
-    }
+    const r = tallyInto(msgs, ch, counts, pending);
+    completed += r.completed; externCount += r.externCount; dupTotal += r.dup; if (r.latest > latest) latest = r.latest;
+    console.log(`  [${ch.label}] 메시지 ${msgs.length}건 (중복이모지 제외 ${r.dup})`);
   }
   pending.sort((a, b) => (b.time || '').localeCompare(a.time || ''));
-  if (voc.latest > latest) latest = voc.latest;
-  console.log(`[${targetDate}] 완료 ${completed} · 확인필요 ${pending.length} · 외주 ${externCount} · 중복제외 ${dupTotal} · VOC응답 ${voc.responses}`);
 
+  // 기존 데이터 로드
   let data = { version: 0, days: {} };
   if (fs.existsSync(OUT)) {
     const win = {};
     try { new Function('window', fs.readFileSync(OUT, 'utf8'))(win); if (win.SLACK_DATA) data = win.SLACK_DATA; } catch (e) {}
   }
   data.days = data.days || {};
-  const dayEntry = { updatedAt: latest, counts, pending };
-  if (hasVoc && voc.responses > 0) { delete voc.latest; dayEntry.voc = voc; }
+
+  // 오늘 업무 집계 기록 (VOC는 아래 롤링 재집계에서 덮어씀)
+  const dayEntry = data.days[targetDate] || {};
+  dayEntry.counts = counts; dayEntry.pending = pending;
+  if (latest && latest > (dayEntry.updatedAt || '')) dayEntry.updatedAt = latest;
+  if (!dayEntry.updatedAt) dayEntry.updatedAt = latest || '';
   data.days[targetDate] = dayEntry;
+
+  // ===== VOC 롤링 재집계 (최근 VOC_LOOKBACK일) — 과거 설문도 오늘 '확인+완료' 찍히면 오늘 완료로 반영 =====
+  let vocDaysTouched = 0, vocResTotal = 0;
+  if (vocCh) {
+    // 이전 완료일/처리내용 보존용 맵 (완료일은 최초 완료된 날 유지)
+    const priorMap = {};
+    for (const d in data.days) { const vv = data.days[d].voc; if (!vv) continue; for (const a of (vv.alerts || [])) { const k = d + '|' + (a.storeId || '') + '|' + (a.time || ''); priorMap[k] = { doneDate: a.doneDate || '', autoNote: a.autoNote || '' }; } }
+    let wide = [];
+    try { wide = await fetchAllRange(vocCh.id, oldestWide, latestBound); }
+    catch (e) { console.error(`  ⚠ [VOC] 기간 읽기 실패(${e.message}) — VOC 재집계 생략`); }
+    const byDate = {};
+    for (const m of wide) { if (m.subtype && m.subtype !== 'bot_message') continue; const d = kstDate(m.ts); if (d < minDate) continue; (byDate[d] = byDate[d] || []).push(m); }
+    for (const d of Object.keys(byDate).sort()) {
+      const vagg = freshVoc();
+      try { await tallyVoc(byDate[d], vagg, vocCh.id, { dayDate: d, todayKstDate, priorMap, noteSince: oldestWide }); }
+      catch (e) { console.error(`  ⚠ [VOC ${d}] 파싱 실패(${e.message}) — 이 날짜 건너뜀`); continue; }
+      if (vagg.responses > 0) {
+        const vlatest = vagg.latest; delete vagg.latest;
+        const de = data.days[d] || { updatedAt: '', counts: {}, pending: [] };
+        de.voc = vagg;
+        if (d === targetDate && vlatest && vlatest > (de.updatedAt || '')) de.updatedAt = vlatest;
+        data.days[d] = de;
+        vocDaysTouched++; vocResTotal += vagg.responses;
+      }
+    }
+  }
+
+  console.log(`[${targetDate}] 완료 ${completed} · 확인필요 ${pending.length} · 외주 ${externCount} · 중복제외 ${dupTotal} · VOC ${vocResTotal}응답/${vocDaysTouched}일 재집계`);
   data.version = (data.version || 0) + 1;
   const header = '/*\n * 슬랙 원격 처리 채널(AS요청·명의변경 등) 집계 데이터 (날짜별 누적)\n * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.\n */\n';
   fs.writeFileSync(OUT, header + 'window.SLACK_DATA = ' + JSON.stringify(data, null, 2) + ';\n', 'utf8');

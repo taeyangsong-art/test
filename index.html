@@ -426,6 +426,7 @@
     border-radius:9px; background:#fff; color:var(--ink); cursor:pointer}
   .praise-sel:focus{outline:none; border-color:var(--green); box-shadow:0 0 0 3px var(--green-soft)}
   .voc-rawind{font-size:11px; color:var(--gray2); margin-top:2px}
+  .voc-donedate{font-size:11px; color:#1e40af; font-weight:800; margin-top:2px}
   .voc-rawtxt{font-size:12px; color:var(--ink-soft); line-height:1.45}
   .voc-table td{vertical-align:top}
   .voc-stat{font-weight:700}
@@ -1660,8 +1661,8 @@ function vocAlertRow(a){
   const statSel=`<select class="voc-sel voc-stat ${vocStatColorCls(statVal)}" onchange="saveVocEdit('${key}','status',this.value)">${VOC_STATUSES.map(o=>`<option ${statVal===o?'selected':''}>${o}</option>`).join('')}</select>`;
   const searchKey=((a.store||'')+' '+(a.storeId||'')).toLowerCase();
   return `<tr class="voc-alert-row" data-key="${searchKey}">
-    <td class="trow-time">${a.time||''}</td>
-    <td class="emp-name">${escapeHtml(a.store||'-')}${a.industry?`<div class="voc-rawind">원본: ${escapeHtml(a.industry)}</div>`:''}</td>
+    <td class="trow-time">${a.time||''}${a.date?`<div class="voc-rawind">${fmtShort(a.date)}</div>`:''}</td>
+    <td class="emp-name">${escapeHtml(a.store||'-')}${(vocDone(statVal)&&a.doneDate)?`<div class="voc-donedate">✓ ${fmtShort(a.doneDate)} 완료${a.autoEmp?' · '+escapeHtml(a.autoEmp):''}</div>`:''}${a.industry?`<div class="voc-rawind">원본: ${escapeHtml(a.industry)}</div>`:''}</td>
     <td class="trow-biz">${a.storeId||'-'}</td>
     <td>${indSel}</td>
     <td class="num" style="color:var(--red);font-weight:800;white-space:nowrap">${score||'-'}</td>
@@ -1744,7 +1745,8 @@ function renderVoc(){
   const carryDates=allSlackDates().filter(d=>d<=carryEnd);
   const carryAgg=aggVoc(carryDates);
   const pendingAlerts=carryAgg.alerts.filter(a=>!isDone(a)).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
-  const doneAlerts=v.alerts.filter(isDone);
+  // 완료 매장도 누적: 조회기간 종료일까지 완료된 건 전체, 완료일 최신순
+  const doneAlerts=carryAgg.alerts.filter(isDone).sort((a,b)=>((b.doneDate||b.date||'')).localeCompare(a.doneDate||a.date||''));
 
   document.getElementById("main").innerHTML=`
     <div class="page-head">
