@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 329,
+  "version": 330,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -2509,17 +2509,22 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-13": {
-      "updatedAt": "11:00",
+      "updatedAt": "11:14",
       "counts": {
+        "extern": {
+          "서상원": 1
+        },
         "as": {
+          "송태양": 3,
+          "김기범": 1,
           "김현기": 5,
-          "배선유": 5,
-          "서상원": 1,
-          "심성현": 6,
-          "송태양": 1
+          "심성현": 7,
+          "배선유": 5
         },
         "onboarding": {
+          "김규빈": 1,
           "심성현": 2,
+          "서상원": 1,
           "김현기": 1
         },
         "transfer": {
@@ -2533,29 +2538,29 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "10:44",
-          "store": "카페 나니",
-          "biz": "2743101623",
-          "handler": "송태양",
+          "time": "10:57",
+          "store": "옛날손짜장",
+          "biz": "2120855012",
+          "handler": "배선유",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
           ]
         },
         {
-          "time": "10:42",
-          "store": "키메사 (KIMESA) TILE &amp; AGIT",
-          "biz": "2904301313",
-          "handler": "김규빈",
+          "time": "10:57",
+          "store": "이플 플라워",
+          "biz": "5466700718",
+          "handler": "배선유",
           "cat": "as",
           "reasons": [
-            "확인 후 미완료"
+            "1차 부재"
           ]
         },
         {
-          "time": "10:42",
-          "store": "(주)건축집단마 마미",
-          "biz": "1318556561",
+          "time": "10:55",
+          "store": "이헤어플러스",
+          "biz": "4081176689",
           "handler": "심성현",
           "cat": "as",
           "reasons": [
