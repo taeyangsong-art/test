@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 323,
+  "version": 324,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -1610,7 +1610,11 @@ window.SLACK_DATA = {
     },
     "2026-07-12": {
       "updatedAt": "22:08",
-      "counts": {},
+      "counts": {
+        "menu": {
+          "배선유": 1
+        }
+      },
       "pending": [],
       "voc": {
         "responses": 26,
@@ -1721,7 +1725,10 @@ window.SLACK_DATA = {
                 "cat": "단말기 설치나 초기 과정이 어려움"
               }
             ],
-            "emp": ""
+            "emp": "",
+            "autoStatus": "",
+            "autoEmp": "",
+            "autoNote": "1차부재 1차부재"
           },
           {
             "time": "18:55",
@@ -1739,7 +1746,10 @@ window.SLACK_DATA = {
                 "cat": "사용중 오류가 자주 발생함"
               }
             ],
-            "emp": ""
+            "emp": "",
+            "autoStatus": "",
+            "autoEmp": "",
+            "autoNote": "토스장애이슈 토스장애이슈"
           },
           {
             "time": "16:29",
@@ -1757,7 +1767,10 @@ window.SLACK_DATA = {
                 "cat": "사용중 오류가 자주 발생함"
               }
             ],
-            "emp": ""
+            "emp": "",
+            "autoStatus": "",
+            "autoEmp": "",
+            "autoNote": ""
           },
           {
             "time": "16:06",
@@ -1775,7 +1788,10 @@ window.SLACK_DATA = {
                 "cat": "기타 이슈(정산/직원에 대한 불만/호영님출몰)"
               }
             ],
-            "emp": ""
+            "emp": "",
+            "autoStatus": "",
+            "autoEmp": "",
+            "autoNote": ""
           },
           {
             "time": "15:59",
@@ -1793,7 +1809,10 @@ window.SLACK_DATA = {
                 "cat": "기타 이슈(정산/직원에 대한 불만/호영님출몰)"
               }
             ],
-            "emp": ""
+            "emp": "",
+            "autoStatus": "",
+            "autoEmp": "",
+            "autoNote": ""
           },
           {
             "time": "15:49",
@@ -1811,7 +1830,10 @@ window.SLACK_DATA = {
                 "cat": "사용중 오류가 자주 발생함"
               }
             ],
-            "emp": ""
+            "emp": "",
+            "autoStatus": "",
+            "autoEmp": "",
+            "autoNote": "토스장애이슈 토스장애이슈"
           },
           {
             "time": "15:44",
@@ -1829,7 +1851,10 @@ window.SLACK_DATA = {
                 "cat": "사용중 오류가 자주 발생함"
               }
             ],
-            "emp": ""
+            "emp": "",
+            "autoStatus": "",
+            "autoEmp": "",
+            "autoNote": ""
           },
           {
             "time": "15:06",
@@ -1847,7 +1872,10 @@ window.SLACK_DATA = {
                 "cat": "기타 이슈(정산/직원에 대한 불만/호영님출몰)"
               }
             ],
-            "emp": ""
+            "emp": "",
+            "autoStatus": "",
+            "autoEmp": "",
+            "autoNote": ""
           }
         ],
         "praises": [
