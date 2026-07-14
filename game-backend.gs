@@ -31,9 +31,25 @@ function emailOf_(emp) {
 }
 
 function store_() {
-  var ss;
-  if (SHEET_ID) { ss = SpreadsheetApp.openById(SHEET_ID); }
-  else { ss = SpreadsheetApp.getActiveSpreadsheet(); }
+  var ss = null;
+  if (SHEET_ID) {
+    ss = SpreadsheetApp.openById(SHEET_ID);
+  } else {
+    var props = PropertiesService.getScriptProperties();
+    var id = props.getProperty('STORE_SHEET_ID');
+    if (id) {
+      try { ss = SpreadsheetApp.openById(id); } catch (e) { ss = null; }
+    }
+    if (!ss) {
+      try { ss = SpreadsheetApp.getActiveSpreadsheet(); } catch (e) { ss = null; }
+    }
+    if (!ss) {
+      ss = SpreadsheetApp.create('offcare-dashboard-store');
+      props.setProperty('STORE_SHEET_ID', ss.getId());
+    } else if (!id) {
+      try { props.setProperty('STORE_SHEET_ID', ss.getId()); } catch (e) {}
+    }
+  }
   var sh = ss.getSheetByName('store');
   if (!sh) { sh = ss.insertSheet('store'); }
   return sh;
