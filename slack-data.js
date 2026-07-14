@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 454,
+  "version": 455,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -25466,7 +25466,7 @@ window.SLACK_DATA = {
       "counts": {
         "as": {
           "심성현": 23,
-          "김현기": 17,
+          "김현기": 18,
           "송태양": 6,
           "김동욱": 19,
           "서상원": 2,
@@ -25486,11 +25486,11 @@ window.SLACK_DATA = {
           "서상원": 1
         },
         "transfer": {
-          "송태양": 8,
-          "김동욱": 3
+          "김동욱": 4,
+          "송태양": 8
         },
         "menu": {
-          "배선유": 14,
+          "배선유": 15,
           "김규빈": 1,
           "김동욱": 3
         },
@@ -25501,21 +25501,41 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "16:12",
-          "store": "워크앤레스트",
-          "biz": "8112302620",
-          "handler": "김동욱",
-          "cat": "transfer",
+          "time": "16:23",
+          "store": "준스포츠",
+          "biz": "7080500695",
+          "handler": "배선유",
+          "cat": "as",
           "reasons": [
             "확인 후 미완료"
           ]
         },
         {
-          "time": "10:18",
-          "store": "카페88수제버거베이커리",
-          "biz": "8140902981",
+          "time": "16:20",
+          "store": "굿찜 본점",
+          "biz": "3345100977",
           "handler": "김현기",
           "cat": "as",
+          "reasons": [
+            "1차 부재"
+          ]
+        },
+        {
+          "time": "16:20",
+          "store": "원조감자탕 일미집 판교점",
+          "biz": "1063491328",
+          "handler": "심성현",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "16:00",
+          "store": "한일학원",
+          "biz": "7929601950",
+          "handler": "송태양",
+          "cat": "transfer",
           "reasons": [
             "확인 후 미완료"
           ]
@@ -25523,11 +25543,25 @@ window.SLACK_DATA = {
       ],
       "done": [
         {
+          "time": "16:15",
+          "store": "도시곳간 목포점",
+          "biz": "6068703752",
+          "cat": "menu",
+          "emp": "배선유"
+        },
+        {
           "time": "16:12",
           "store": "밀앤루",
           "biz": "7531102995",
           "cat": "as",
           "emp": "심성현"
+        },
+        {
+          "time": "16:12",
+          "store": "워크앤레스트",
+          "biz": "8112302620",
+          "cat": "transfer",
+          "emp": "김동욱"
         },
         {
           "time": "16:04",
@@ -26286,6 +26320,13 @@ window.SLACK_DATA = {
           "emp": "김동욱"
         },
         {
+          "time": "10:18",
+          "store": "카페88수제버거베이커리",
+          "biz": "8140902981",
+          "cat": "as",
+          "emp": "김현기"
+        },
+        {
           "time": "10:15",
           "store": "홍판사홈피샵정보채널쇼폼미디어링크",
           "biz": "6252101889",
@@ -26454,7 +26495,7 @@ window.SLACK_DATA = {
           "emp": "배선유"
         }
       ],
-      "updatedAt": "16:23",
+      "updatedAt": "16:30",
       "voc": {
         "responses": 17,
         "install": {
