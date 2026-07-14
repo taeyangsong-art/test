@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 462,
+  "version": 463,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -25465,8 +25465,8 @@ window.SLACK_DATA = {
     "2026-07-14": {
       "counts": {
         "as": {
+          "심성현": 27,
           "최민석": 6,
-          "심성현": 26,
           "김동욱": 23,
           "김기범": 4,
           "김현기": 22,
@@ -25476,9 +25476,9 @@ window.SLACK_DATA = {
           "김규빈": 6
         },
         "onboarding": {
-          "최민석": 3,
+          "최민석": 4,
+          "배선유": 5,
           "김현기": 1,
-          "배선유": 4,
           "김동욱": 3,
           "서상원": 2,
           "심성현": 3,
@@ -25504,11 +25504,11 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "17:50",
-          "store": "297크루아상카페",
-          "biz": "5482100550",
+          "time": "18:02",
+          "store": "최주부백개장",
+          "biz": "1102244200",
           "handler": "배선유",
-          "cat": "as",
+          "cat": "menu",
           "reasons": [
             "확인 후 미완료"
           ]
@@ -25536,6 +25536,20 @@ window.SLACK_DATA = {
       ],
       "done": [
         {
+          "time": "18:19",
+          "store": "몰트앤캐스크 다산점",
+          "biz": "3341602538",
+          "cat": "as",
+          "emp": "심성현"
+        },
+        {
+          "time": "18:09",
+          "store": "머리에 반하다",
+          "biz": "8966700535",
+          "cat": "onboarding",
+          "emp": "최민석"
+        },
+        {
           "time": "18:06",
           "store": "리움1619(Rium1619)",
           "biz": "8595800946",
@@ -25555,6 +25569,13 @@ window.SLACK_DATA = {
           "biz": "8023401074",
           "cat": "onboarding",
           "emp": "최민석"
+        },
+        {
+          "time": "17:50",
+          "store": "297크루아상카페",
+          "biz": "5482100550",
+          "cat": "onboarding",
+          "emp": "배선유"
         },
         {
           "time": "17:47",
@@ -26768,7 +26789,7 @@ window.SLACK_DATA = {
           "emp": "배선유"
         }
       ],
-      "updatedAt": "18:10",
+      "updatedAt": "18:30",
       "voc": {
         "responses": 20,
         "install": {
