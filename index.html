@@ -1416,11 +1416,57 @@ function loadCloud(cb){
 }
 function loadGameCloud(cb){ loadCloud(cb); }   // 하위호환
 function setGameMe(v){ gameMe=v; save("opcare_gameme_v1",gameMe); renderGame(); }
-function buyOrEquip(cat,id){
+/* ===== 코인 사용 본인 인증 (직원별 PIN + 이메일 OTP, 서버 검증) ===== */
+const LS_GAMEAUTH = "opcare_gameauth_v1";
+let GAMEAUTH = load(LS_GAMEAUTH, {});   // { emp: 만료ms } — 이 브라우저에서 인증된 세션 (7일)
+function isGameAuthed(emp){ return !!(emp && GAMEAUTH[emp] && GAMEAUTH[emp] > Date.now()); }
+function setGameAuthed(emp){ GAMEAUTH[emp]=Date.now()+7*24*3600*1000; save(LS_GAMEAUTH,GAMEAUTH); }
+function authGet(params){ const q=Object.keys(params).map(k=>k+'='+encodeURIComponent(params[k])).join('&'); return fetch(GAME_API+'?'+q+'&t='+Date.now()).then(r=>r.json()).catch(()=>({ok:false,error:'network'})); }
+async function requireAuth(emp){
+  if(!GAME_API) return true;             // 클라우드 미설정 시 통과
+  if(isGameAuthed(emp)) return true;
+  const st=await authGet({action:'status', emp});
+  if(st&&st.hasPin){
+    for(let tries=0; tries<3; tries++){
+      const pin=prompt(`🔒 ${emp} 님 PIN 입력 (코인 사용 인증)`);
+      if(pin===null) return false;
+      const r=await authGet({action:'checkPin', emp, pin});
+      if(r&&r.locked){ alert('⛔ PIN 5회 실패로 잠겼습니다. 10분 뒤 다시 시도하세요.'); return false; }
+      if(r&&r.ok){ setGameAuthed(emp); return true; }
+      if(tries<2 && !confirm('PIN이 틀렸어요. 다시 입력할까요?\n(취소 → PIN 재설정: 이메일 인증)')){ return resetPinFlow(emp); }
+    }
+    return resetPinFlow(emp);
+  }
+  return setupPinFlow(emp, st&&st.hasEmail);
+}
+async function setupPinFlow(emp, hasEmail){
+  if(hasEmail){
+    if(!confirm(`${emp} 님 회사 이메일로 인증코드를 보냅니다. 계속할까요?`)) return false;
+    const s=await authGet({action:'sendOtp', emp});
+    if(!s||!s.ok){ alert('인증코드 발송 실패: '+((s&&s.error)||'')); return false; }
+    const otp=prompt('📧 이메일로 받은 인증코드 6자리 입력'); if(!otp) return false;
+    const pin=prompt('🔑 새 PIN 설정 (4~6자리 숫자)'); if(!pin) return false;
+    const r=await authGet({action:'setPin', emp, otp, pin});
+    if(!r||!r.ok){ alert('설정 실패: '+(r&&r.error==='bad_otp'?'인증코드 오류/만료':(r&&r.error)||'')); return false; }
+    setGameAuthed(emp); alert('✅ PIN 설정 완료!'); return true;
+  }
+  if(!confirm(`${emp} 님 이메일이 서버에 등록돼 있지 않아, 이메일 인증 없이 PIN을 처음 설정합니다.\n(관리자가 이메일 등록 후엔 이메일 재설정 가능)\n계속할까요?`)) return false;
+  const pin=prompt('🔑 새 PIN 설정 (4~6자리 숫자)'); if(!pin) return false;
+  const r=await authGet({action:'setPinDirect', emp, pin});
+  if(!r||!r.ok){ alert('설정 실패: '+(r&&r.error==='pin_exists'?'이미 PIN이 있어요(재설정은 이메일 필요)':(r&&r.error)||'')); return false; }
+  setGameAuthed(emp); alert('✅ PIN 설정 완료!'); return true;
+}
+async function resetPinFlow(emp){
+  const st=await authGet({action:'status', emp});
+  if(!st||!st.hasEmail){ alert('이메일이 서버에 등록돼 있지 않아 재설정 불가.\n관리자에게 문의하세요.'); return false; }
+  return setupPinFlow(emp, true);   // OTP로 새 PIN 덮어쓰기
+}
+async function buyOrEquip(cat,id){
   const emp=gameMe; if(!emp){ alert('먼저 상단에서 본인 이름을 선택하세요 🙂'); return; }
   const it=itemById(cat,id); if(!it) return; const g=gs(emp);
   if(!owns(emp,cat,id)){
     if(empAvail(emp)<it.price){ alert('🪙 코인이 부족해요!\n원격을 더 처리하면 코인이 쌓여요 (1건 = 1코인)'); return; }
+    if(it.price>0 && !(await requireAuth(emp))) return;   // 유료 구매 → 본인 인증
     g.spent=(g.spent||0)+it.price; g.owned=g.owned||[]; g.owned.push(cat+':'+id);
   }
   g.equipped=g.equipped||{}; g.equipped[cat]=id; saveGame(); renderGame();
@@ -1492,11 +1538,12 @@ function resolveLoot(emp,out){ const g=gs(emp);
   g.owned=g.owned||[]; g.owned.push(it.cat+':'+it.id);
   return {emoji:it.e||'🎁',big:'['+it.name+']',sub:RARITY_KO[it.rarity]+' '+(CAT_KO[it.cat]||'')+' 획득!',cls:'item',rarity:it.rarity};
 }
-function castFish(spot){
+async function castFish(spot){
   const emp=gameMe; if(!emp){ alert('먼저 본인을 선택하세요 🙂'); return; }
   const f=FISH[spot]; if(fishBusy) return;
   if(f.entry && empAvail(emp)<f.entry){ alert(f.name+'는 '+f.entry+'코인 이상 있어야 입장할 수 있어요!'); return; }
   if(empAvail(emp)<f.cost){ alert('🪙 코인이 부족해요! (캐스트 '+f.cost+'코인)'); return; }
+  if(!(await requireAuth(emp))) return;   // 코인 소모 → 본인 인증
   fishBusy=true; const g=gs(emp); g.spent=(g.spent||0)+f.cost; saveGame(); showFishing(f);
   setTimeout(()=>{ const res=resolveLoot(emp, rollLoot(f.loot)); saveGame(); showFishResult(res); renderMain(); fishBusy=false; }, 1400);
 }
