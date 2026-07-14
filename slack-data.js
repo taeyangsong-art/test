@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 431,
+  "version": 432,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -25465,10 +25465,12 @@ window.SLACK_DATA = {
     "2026-07-14": {
       "counts": {
         "onboarding": {
+          "송태양": 1,
           "심성현": 1,
           "김동욱": 1
         },
         "as": {
+          "김기범": 1,
           "김동욱": 6,
           "심성현": 6,
           "배선유": 4,
@@ -25479,13 +25481,26 @@ window.SLACK_DATA = {
           "송태양": 1
         },
         "menu": {
-          "배선유": 3,
+          "배선유": 5,
           "김동욱": 3
+        },
+        "delivery": {
+          "김현기": 1
         }
       },
       "pending": [
         {
-          "time": "10:43",
+          "time": "10:55",
+          "store": "어슈",
+          "biz": "7850503646",
+          "handler": "심성현",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "10:53",
           "store": "형과아우누룽지삼계탕 영도점",
           "biz": "2651203081",
           "handler": "김기범",
@@ -25516,6 +25531,34 @@ window.SLACK_DATA = {
         }
       ],
       "done": [
+        {
+          "time": "10:46",
+          "store": "라라요가",
+          "biz": "4171268249",
+          "cat": "onboarding",
+          "emp": "송태양"
+        },
+        {
+          "time": "10:46",
+          "store": "소피의 책방",
+          "biz": "3271302897",
+          "cat": "menu",
+          "emp": "배선유"
+        },
+        {
+          "time": "10:43",
+          "store": "형과아우누룽지삼계탕 영도점",
+          "biz": "2651203081",
+          "cat": "as",
+          "emp": "김기범"
+        },
+        {
+          "time": "10:39",
+          "store": "(주)주디마리 광주유스퀘어2호점",
+          "biz": "3688503104",
+          "cat": "menu",
+          "emp": "배선유"
+        },
         {
           "time": "10:30",
           "store": "마루카오디오",
@@ -25629,6 +25672,13 @@ window.SLACK_DATA = {
           "emp": "심성현"
         },
         {
+          "time": "09:45",
+          "store": "소프 sof",
+          "biz": "4163207970",
+          "cat": "delivery",
+          "emp": "김현기"
+        },
+        {
           "time": "09:41",
           "store": "형과아우누룽지삼계탕왕갈비탕",
           "biz": "3932901130",
@@ -25720,7 +25770,7 @@ window.SLACK_DATA = {
           "emp": "배선유"
         }
       ],
-      "updatedAt": "10:43",
+      "updatedAt": "11:00",
       "voc": {
         "responses": 3,
         "install": {
