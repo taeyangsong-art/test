@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 432,
+  "version": 433,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -25465,17 +25465,17 @@ window.SLACK_DATA = {
     "2026-07-14": {
       "counts": {
         "onboarding": {
+          "심성현": 2,
           "송태양": 1,
-          "심성현": 1,
           "김동욱": 1
         },
         "as": {
+          "김현기": 4,
+          "심성현": 7,
           "김기범": 1,
+          "배선유": 5,
           "김동욱": 6,
-          "심성현": 6,
-          "배선유": 4,
-          "송태양": 1,
-          "김현기": 3
+          "송태양": 1
         },
         "transfer": {
           "송태양": 1
@@ -25490,10 +25490,30 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "10:55",
-          "store": "어슈",
-          "biz": "7850503646",
+          "time": "11:10",
+          "store": "응급실국물떡볶이구미구평점",
+          "biz": "8240903518",
           "handler": "심성현",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "11:05",
+          "store": "동거독락",
+          "biz": "",
+          "handler": "송태양",
+          "cat": "transfer",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "11:00",
+          "store": "가온",
+          "biz": "1052083323",
+          "handler": "김동욱",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
@@ -25504,16 +25524,6 @@ window.SLACK_DATA = {
           "store": "형과아우누룽지삼계탕 영도점",
           "biz": "2651203081",
           "handler": "김기범",
-          "cat": "as",
-          "reasons": [
-            "확인 후 미완료"
-          ]
-        },
-        {
-          "time": "10:30",
-          "store": "카페마슬",
-          "biz": "4332802013",
-          "handler": "배선유",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
@@ -25531,6 +25541,27 @@ window.SLACK_DATA = {
         }
       ],
       "done": [
+        {
+          "time": "11:00",
+          "store": "소코드레스",
+          "biz": "8312200857",
+          "cat": "onboarding",
+          "emp": "심성현"
+        },
+        {
+          "time": "10:56",
+          "store": "파일어스커피 로스터즈",
+          "biz": "2114496828",
+          "cat": "as",
+          "emp": "김현기"
+        },
+        {
+          "time": "10:55",
+          "store": "어슈",
+          "biz": "7850503646",
+          "cat": "as",
+          "emp": "심성현"
+        },
         {
           "time": "10:46",
           "store": "라라요가",
@@ -25557,6 +25588,13 @@ window.SLACK_DATA = {
           "store": "(주)주디마리 광주유스퀘어2호점",
           "biz": "3688503104",
           "cat": "menu",
+          "emp": "배선유"
+        },
+        {
+          "time": "10:30",
+          "store": "카페마슬",
+          "biz": "4332802013",
+          "cat": "as",
           "emp": "배선유"
         },
         {
@@ -25770,7 +25808,7 @@ window.SLACK_DATA = {
           "emp": "배선유"
         }
       ],
-      "updatedAt": "11:00",
+      "updatedAt": "11:10",
       "voc": {
         "responses": 3,
         "install": {
