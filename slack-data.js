@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 424,
+  "version": 425,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -27403,6 +27403,16 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
+          "time": "09:00",
+          "store": "제돈상회",
+          "biz": "5376100459",
+          "handler": "심성현",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
           "time": "08:57",
           "store": "드롭탑 강천산(대구)휴게소점",
           "biz": "5858502942",
@@ -27429,7 +27439,47 @@ window.SLACK_DATA = {
           "emp": "배선유"
         }
       ],
-      "updatedAt": "09:00"
+      "updatedAt": "09:02",
+      "voc": {
+        "responses": 2,
+        "install": {
+          "count": 0,
+          "low": 0
+        },
+        "nps": {
+          "count": 2,
+          "low": 0
+        },
+        "high": {
+          "install": 0,
+          "nps": 1
+        },
+        "npsDist": {
+          "8": 1,
+          "10": 1
+        },
+        "installDist": {},
+        "byIndustry": {},
+        "byTenure": {
+          "1개월": {
+            "total": 2,
+            "low": 0
+          }
+        },
+        "byVan": {
+          "SECTA9": {
+            "total": 1,
+            "low": 0
+          },
+          "KPN": {
+            "total": 1,
+            "low": 0
+          }
+        },
+        "reasonCounts": {},
+        "alerts": [],
+        "praises": []
+      }
     }
   }
 };
