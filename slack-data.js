@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 441,
+  "version": 442,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -25465,13 +25465,13 @@ window.SLACK_DATA = {
     "2026-07-14": {
       "counts": {
         "as": {
-          "김규빈": 2,
-          "배선유": 8,
+          "김규빈": 3,
+          "배선유": 9,
+          "송태양": 2,
           "김현기": 11,
           "심성현": 15,
           "김동욱": 11,
-          "김기범": 2,
-          "송태양": 1
+          "김기범": 2
         },
         "onboarding": {
           "심성현": 2,
@@ -25483,7 +25483,7 @@ window.SLACK_DATA = {
           "김동욱": 2
         },
         "menu": {
-          "배선유": 6,
+          "배선유": 7,
           "김동욱": 3
         },
         "delivery": {
@@ -25492,9 +25492,9 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "13:13",
-          "store": "준영이네 작은시장",
-          "biz": "3299702194",
+          "time": "13:24",
+          "store": "형과아우누룽지삼계탕 영도점",
+          "biz": "2651203081",
           "handler": "배선유",
           "cat": "as",
           "reasons": [
@@ -25502,23 +25502,23 @@ window.SLACK_DATA = {
           ]
         },
         {
-          "time": "13:04",
-          "store": "코마치로스시",
-          "biz": "5821002829",
-          "handler": "김규빈",
-          "cat": "as",
-          "reasons": [
-            "1차 부재"
-          ]
-        },
-        {
-          "time": "13:00",
-          "store": "청정자원",
-          "biz": "7381302215",
+          "time": "13:22",
+          "store": "아도라헤어(철원점)",
+          "biz": "3570303210",
           "handler": "송태양",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "13:15",
+          "store": "무위(MUWEE)",
+          "biz": "1951002867",
+          "handler": "배선유",
+          "cat": "as",
+          "reasons": [
+            "1차 부재"
           ]
         },
         {
@@ -25543,6 +25543,27 @@ window.SLACK_DATA = {
         }
       ],
       "done": [
+        {
+          "time": "13:22",
+          "store": "장군갈비",
+          "biz": "2061380015",
+          "cat": "menu",
+          "emp": "배선유"
+        },
+        {
+          "time": "13:15",
+          "store": "아네모네 키친",
+          "biz": "4032095174",
+          "cat": "as",
+          "emp": "김규빈"
+        },
+        {
+          "time": "13:13",
+          "store": "준영이네 작은시장",
+          "biz": "3299702194",
+          "cat": "as",
+          "emp": "배선유"
+        },
         {
           "time": "13:07",
           "store": "속초회사교동점",
@@ -25570,6 +25591,13 @@ window.SLACK_DATA = {
           "biz": "8183201814",
           "cat": "as",
           "emp": "김규빈"
+        },
+        {
+          "time": "13:00",
+          "store": "청정자원",
+          "biz": "7381302215",
+          "cat": "as",
+          "emp": "송태양"
         },
         {
           "time": "12:56",
@@ -26034,7 +26062,7 @@ window.SLACK_DATA = {
           "emp": "배선유"
         }
       ],
-      "updatedAt": "13:15",
+      "updatedAt": "13:30",
       "voc": {
         "responses": 3,
         "install": {
