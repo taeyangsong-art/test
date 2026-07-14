@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 471,
+  "version": 472,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -25465,7 +25465,7 @@ window.SLACK_DATA = {
     "2026-07-14": {
       "counts": {
         "as": {
-          "최민석": 11,
+          "최민석": 13,
           "김기범": 5,
           "심성현": 28,
           "김동욱": 23,
@@ -25492,6 +25492,7 @@ window.SLACK_DATA = {
           "김동욱": 4
         },
         "menu": {
+          "최민석": 1,
           "배선유": 20,
           "김규빈": 1,
           "김동욱": 3
@@ -25526,9 +25527,23 @@ window.SLACK_DATA = {
       ],
       "done": [
         {
+          "time": "20:40",
+          "store": "화닭",
+          "biz": "3727600666",
+          "cat": "as",
+          "emp": "최민석"
+        },
+        {
           "time": "20:00",
           "store": "구공삼곱창",
           "biz": "1164500999",
+          "cat": "as",
+          "emp": "최민석"
+        },
+        {
+          "time": "20:00",
+          "store": "벡터수학과학학원",
+          "biz": "3149268597",
           "cat": "as",
           "emp": "최민석"
         },
@@ -25558,6 +25573,13 @@ window.SLACK_DATA = {
           "store": "조아짐",
           "biz": "7241101950",
           "cat": "onboarding",
+          "emp": "최민석"
+        },
+        {
+          "time": "19:24",
+          "store": "정성가득",
+          "biz": "8041003505",
+          "cat": "menu",
           "emp": "최민석"
         },
         {
@@ -26877,7 +26899,7 @@ window.SLACK_DATA = {
           "emp": "배선유"
         }
       ],
-      "updatedAt": "20:00",
+      "updatedAt": "20:40",
       "voc": {
         "responses": 22,
         "install": {
