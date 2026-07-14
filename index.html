@@ -495,6 +495,11 @@
   .praise-sel:focus{outline:none; border-color:var(--green); box-shadow:0 0 0 3px var(--green-soft)}
   .voc-rawind{font-size:11px; color:var(--gray2); margin-top:2px}
   .voc-donedate{font-size:11px; color:#1e40af; font-weight:800; margin-top:2px}
+  .vrep-more-box{display:none}
+  .vrep-more-box.open{display:block}
+  .vrep-toggle{width:100%; margin-top:8px; border:1px dashed var(--line); background:var(--surface2); color:var(--gray);
+    border-radius:10px; padding:8px; font-family:inherit; font-size:12.5px; font-weight:700; cursor:pointer}
+  .vrep-toggle:hover{background:var(--line-soft); color:var(--ink)}
   .vday-grid{display:flex; flex-wrap:wrap; gap:8px}
   .vday{min-width:54px; text-align:center; border:1px solid var(--line-soft); border-radius:10px; padding:9px 7px; background:var(--surface2)}
   .vday.has{background:#e8f0fe; border-color:#c7dbff}
@@ -1883,7 +1888,7 @@ function momTile(label,cur,prev,higherBad,suffix,tone){
     <div class="delta ${cls}">${arrow} ${pct} <span style="color:var(--gray2);font-weight:500">전월 ${prev}</span></div></div>`;
 }
 function progressBar(pct,color){ return `<div class="prog"><div class="prog-fill" style="width:${Math.min(100,pct)}%;background:${color}"></div></div>`; }
-function quoteCard(text, meta, tone){ return `<div class="quote-card ${tone}"><div class="quote-text">“${escapeHtml((text||'-').slice(0,160))}”</div><div class="quote-meta">${escapeHtml(meta||'')}</div></div>`; }
+function quoteCard(text, meta, tone){ return `<div class="quote-card ${tone}"><div class="quote-text">“${escapeHtml((text||'-').slice(0,300))}”</div><div class="quote-meta">${escapeHtml(meta||'')}</div></div>`; }
 function vocKpi(lab,val,denom,tone){
   return `<div class="kpi ${tone||''}"><div class="lab">${lab}</div><div class="val">${val}<small>건</small></div>
     <div class="delta flat">${denom!=null?`응답 ${denom}건 중`:'&nbsp;'}</div></div>`;
@@ -2069,6 +2074,13 @@ function renderVoc(){
 function filterVoc(q){ q=(q||'').trim().toLowerCase(); document.querySelectorAll('.voc-alert-row').forEach(tr=>{ tr.style.display=(tr.dataset.key||'').includes(q)?'':'none'; }); }
 // 삭제되지 않은 칭찬만
 function praiseVisible(p){ const e=VOCPRAISE[vocKey(p)]; return !(e&&e.deleted); }
+// 직원·응대 관련 칭찬만 (담당자 지정됐거나 직원칭찬 키워드 포함)
+const STAFF_PRAISE_KW = ['친절','응대','영상통화','화상통화','전화','설명','신속','대응','사용법','상담','도움','세심','꼼꼼','안내','알려주','알려 주','가르쳐','자세히','차근차근','정성','기사님','기사분','직원','담당자','원격지원','케어','챙겨','상냥'];
+function isStaffPraise(p){ const emp=(VOCPRAISE[vocKey(p)]||{}).emp||p.emp; if(emp) return true; const t=p.text||''; return STAFF_PRAISE_KW.some(k=>t.includes(k)); }
+function staffPraises(list){ return (list||[]).filter(p=>praiseVisible(p)&&isStaffPraise(p)); }
+// 대표 저점/칭찬 더보기 토글
+function vrepToggle(btn){ const box=btn.previousElementSibling; const open=box.classList.toggle('open'); btn.textContent=open?'▴ 접기':'▾ '+box.children.length+'개 더 보기'; }
+function vocRepBox(cardsArr){ if(!cardsArr.length) return ''; const shown=cardsArr.slice(0,5).join(''); const more=cardsArr.slice(5); if(!more.length) return shown; return `${shown}<div class="vrep-more-box">${more.join('')}</div><button class="vrep-toggle" onclick="vrepToggle(this)">▾ ${more.length}개 더 보기</button>`; }
 // 칭찬 섹션 (검색 + 카드 + 삭제 + 복원)
 function praiseCardsHTML(praises){
   if(!praises||!praises.length) return '<div class="empty-note">이 기간 칭찬·확인 적재 건이 없습니다</div>';
@@ -2142,8 +2154,9 @@ function renderVocMonthly(){
   const mIndEntries=vocGroupEntries(v.alerts,'ind'), mReaEntries=vocGroupEntries(v.alerts,'rea');
   const mIndDMax=Math.max(1,...mIndEntries.map(e=>e[1].length)), mReaDMax=Math.max(1,...mReaEntries.map(e=>e[1].length));
   const lowRate=v.responses?Math.round(totalIn/v.responses*100):0;
-  const byPraiseEmp={}; v.praises.forEach(p=>{ if(!praiseVisible(p)) return; const ov=VOCPRAISE[vocKey(p)]; const emp=(ov&&ov.emp)||p.emp; if(emp) byPraiseEmp[emp]=(byPraiseEmp[emp]||0)+1; });
-  const vpCount=v.praises.filter(praiseVisible).length;
+  const vPraiseList = staffPraises(v.praises);   // 직원칭찬(직원지정 or 응대 키워드)만
+  const byPraiseEmp={}; vPraiseList.forEach(p=>{ const ov=VOCPRAISE[vocKey(p)]; const emp=(ov&&ov.emp)||p.emp; if(emp) byPraiseEmp[emp]=(byPraiseEmp[emp]||0)+1; });
+  const vpCount=vPraiseList.length;
   const praiseEmpRows=Object.entries(byPraiseEmp).sort((a,b)=>b[1]-a[1]);
   const peMax=Math.max(1,...praiseEmpRows.map(r=>r[1]));
   const comment=VOCCOMMENT[mkey]||'';
@@ -2161,8 +2174,10 @@ function renderVocMonthly(){
   const tenRows=Object.entries(v.byTenure).sort((a,b)=>b[1].total-a[1].total);
   const vanRows=Object.entries(v.byVan).sort((a,b)=>b[1].total-a[1].total);
   const tenMax=Math.max(1,...tenRows.map(r=>r[1].total)), vanMax=Math.max(1,...vanRows.map(r=>r[1].total));
-  const worst=[...v.alerts].sort((a,b)=>((a.nps!=null?a.nps:99)+(a.install!=null?a.install*2:99))-((b.nps!=null?b.nps:99)+(b.install!=null?b.install*2:99))).slice(0,3);
-  const best=v.praises.filter(praiseVisible).slice(0,3);
+  const txtLen=a=>((a.reasons&&a.reasons[0]&&a.reasons[0].text)||'').length;
+  const worstAll=[...v.alerts].sort((a,b)=>txtLen(b)-txtLen(a)||((a.nps!=null?a.nps:99)-(b.nps!=null?b.nps:99))).slice(0,10);  // 워딩 길이(상세)순
+  const prettyScore=t=>(t||'').length + STAFF_PRAISE_KW.reduce((s,k)=>s+((t||'').includes(k)?15:0),0);
+  const bestAll=[...vPraiseList].sort((a,b)=>prettyScore(b.text)-prettyScore(a.text)).slice(0,10);  // 길이+표현 좋은 순
   const stackBar=(low,total,c1,c2)=>`<div class="prog"><div class="prog-fill" style="width:${total?low/total*100:0}%;background:${c1}"></div></div>`;
 
   document.getElementById("main").innerHTML=`
@@ -2226,10 +2241,10 @@ function renderVocMonthly(){
     </div>
 
     <div class="grid2">
-      <div class="card"><div class="card-head"><h3>😡 대표 저점 VOC</h3><span class="hint">가장 낮은 점수</span></div>
-        ${worst.length?worst.map(a=>quoteCard((a.reasons[0]&&a.reasons[0].text)||'-', `${a.store||'-'} · ${a.nps!=null?'추천 '+a.nps:''}${a.install!=null?' 설치 '+a.install:''}`,'neg')).join(''):'<div class="empty-note">저점 없음 👍</div>'}</div>
-      <div class="card"><div class="card-head"><h3>😀 대표 칭찬 VOC</h3><span class="hint">고객 만족 목소리</span></div>
-        ${best.length?best.map(p=>quoteCard(p.text, `${p.store||'-'} · ${p.nps!=null?'추천 '+p.nps:''}${p.install!=null?' 설치 '+p.install:''}`,'pos')).join(''):'<div class="empty-note">칭찬 없음</div>'}</div>
+      <div class="card"><div class="card-head"><h3>😡 대표 저점 VOC</h3><span class="hint">워딩·길이 기준 상위 5 · 더보기 → 10</span></div>
+        ${worstAll.length?vocRepBox(worstAll.map(a=>quoteCard((a.reasons[0]&&a.reasons[0].text)||'-', `${a.store||'-'} · ${a.nps!=null?'추천 '+a.nps:''}${a.install!=null?' 설치 '+a.install:''}`,'neg'))):'<div class="empty-note">저점 없음 👍</div>'}</div>
+      <div class="card"><div class="card-head"><h3>😀 대표 칭찬 VOC</h3><span class="hint">길이·표현 기준 상위 5 · 더보기 → 10</span></div>
+        ${bestAll.length?vocRepBox(bestAll.map(p=>quoteCard(p.text, `${p.store||'-'} · ${p.nps!=null?'추천 '+p.nps:''}${p.install!=null?' 설치 '+p.install:''}`,'pos'))):'<div class="empty-note">칭찬 없음</div>'}</div>
     </div>
 
     <div class="grid2">
@@ -2240,8 +2255,8 @@ function renderVocMonthly(){
     </div>
     <div class="card"><div class="card-head"><h3>일별 인입 추이</h3><span class="hint">${mo+1}월</span></div>${vocDailyTrend(dates)}</div>
     <div class="card">
-      <div class="card-head"><h3>💚 칭찬 상세 · 직원 지정</h3><span class="hint">${vpCount}건 · 각 카드에서 담당 직원 선택 · 불필요한 건 × 삭제</span></div>
-      ${praiseCardsHTML(v.praises)}
+      <div class="card-head"><h3>💚 칭찬 상세 · 직원 지정</h3><span class="hint">${vpCount}건 · 직원·응대 칭찬만 · 각 카드에서 담당 직원 선택 · 불필요한 건 × 삭제</span></div>
+      ${praiseCardsHTML(v.praises.filter(isStaffPraise))}
     </div>
     <div class="card">
       <div class="card-head"><h3>👏 칭찬 · 고점 (직원별 집계)</h3><span class="hint">고점(설치 5·추천 10 만점) ${v.high.install+v.high.nps}건 · 칭찬/확인 ${vpCount}건</span></div>
