@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 437,
+  "version": 438,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -25465,9 +25465,9 @@ window.SLACK_DATA = {
     "2026-07-14": {
       "counts": {
         "as": {
-          "김현기": 8,
+          "김현기": 10,
+          "김동욱": 11,
           "심성현": 13,
-          "김동욱": 9,
           "배선유": 6,
           "김기범": 2,
           "송태양": 1
@@ -25491,10 +25491,10 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "12:00",
-          "store": "안녕속초바다야",
-          "biz": "4561902294",
-          "handler": "김동욱",
+          "time": "12:05",
+          "store": "한라산청담",
+          "biz": "6121391416",
+          "handler": "심성현",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
@@ -25522,6 +25522,34 @@ window.SLACK_DATA = {
         }
       ],
       "done": [
+        {
+          "time": "12:11",
+          "store": "교촌치킨(행신역점)",
+          "biz": "5",
+          "cat": "as",
+          "emp": "김현기"
+        },
+        {
+          "time": "12:11",
+          "store": "투데이휘트니스 헬스&amp;PT",
+          "biz": "2728603659",
+          "cat": "as",
+          "emp": "김현기"
+        },
+        {
+          "time": "12:05",
+          "store": "나와모랩 일산1호점",
+          "biz": "5891302743",
+          "cat": "as",
+          "emp": "김동욱"
+        },
+        {
+          "time": "12:00",
+          "store": "안녕속초바다야",
+          "biz": "4561902294",
+          "cat": "as",
+          "emp": "김동욱"
+        },
         {
           "time": "11:57",
           "store": "생생 어물시장",
@@ -25922,7 +25950,7 @@ window.SLACK_DATA = {
           "emp": "배선유"
         }
       ],
-      "updatedAt": "12:11",
+      "updatedAt": "12:22",
       "voc": {
         "responses": 3,
         "install": {
