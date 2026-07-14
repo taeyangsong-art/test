@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 451,
+  "version": 452,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -25465,12 +25465,12 @@ window.SLACK_DATA = {
     "2026-07-14": {
       "counts": {
         "as": {
+          "김현기": 16,
+          "최민석": 3,
           "김동욱": 19,
           "서상원": 2,
           "배선유": 14,
           "심성현": 20,
-          "김현기": 14,
-          "최민석": 2,
           "송태양": 5,
           "김규빈": 6,
           "김기범": 2
@@ -25489,7 +25489,7 @@ window.SLACK_DATA = {
           "김동욱": 3
         },
         "menu": {
-          "배선유": 11,
+          "배선유": 12,
           "김규빈": 1,
           "김동욱": 3
         },
@@ -25500,19 +25500,39 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "15:31",
-          "store": "식객",
-          "biz": "6282901676",
-          "handler": "김현기",
+          "time": "16:00",
+          "store": "마음쉼터 힐링숲",
+          "biz": "8640103859",
+          "handler": "김동욱",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
           ]
         },
         {
-          "time": "15:23",
-          "store": "소다팥",
-          "biz": "8763801466",
+          "time": "16:00",
+          "store": "빠흐 오피스 (PAR OFFICE)",
+          "biz": "4205101092",
+          "handler": "심성현",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "15:51",
+          "store": "원더풀꽈배기 초량점",
+          "biz": "5646100859",
+          "handler": "송태양",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "15:29",
+          "store": "백석리 연탄집",
+          "biz": "3031568714",
           "handler": "배선유",
           "cat": "menu",
           "reasons": [
@@ -25542,6 +25562,20 @@ window.SLACK_DATA = {
       ],
       "done": [
         {
+          "time": "15:52",
+          "store": "왕산식당 남악점",
+          "biz": "4614101492",
+          "cat": "as",
+          "emp": "김현기"
+        },
+        {
+          "time": "15:45",
+          "store": "에스에스제이(SSJ) 축구클럽",
+          "biz": "6959301930",
+          "cat": "as",
+          "emp": "최민석"
+        },
+        {
           "time": "15:39",
           "store": "웅이분식",
           "biz": "5880902817",
@@ -25556,11 +25590,25 @@ window.SLACK_DATA = {
           "emp": "서상원"
         },
         {
+          "time": "15:31",
+          "store": "식객",
+          "biz": "6282901676",
+          "cat": "as",
+          "emp": "김현기"
+        },
+        {
           "time": "15:24",
           "store": "해양 참치",
           "biz": "",
           "cat": "transfer",
           "emp": "송태양"
+        },
+        {
+          "time": "15:23",
+          "store": "소다팥",
+          "biz": "8763801466",
+          "cat": "menu",
+          "emp": "배선유"
         },
         {
           "time": "15:21",
@@ -26382,38 +26430,45 @@ window.SLACK_DATA = {
           "emp": "배선유"
         }
       ],
-      "updatedAt": "15:45",
+      "updatedAt": "16:00",
       "voc": {
-        "responses": 14,
+        "responses": 16,
         "install": {
-          "count": 3,
-          "low": 1
+          "count": 5,
+          "low": 2
         },
         "nps": {
-          "count": 14,
-          "low": 5
+          "count": 16,
+          "low": 7
         },
         "high": {
           "install": 0,
           "nps": 6
         },
         "npsDist": {
+          "0": 1,
           "3": 2,
-          "5": 3,
+          "5": 4,
           "7": 1,
           "8": 1,
           "9": 1,
           "10": 6
         },
         "installDist": {
-          "1": 1,
+          "1": 2,
+          "3": 1,
           "4": 2
         },
         "byIndustry": {
+          "도소매": 2,
           "서비스[학원]": 2,
           "요식업": 1
         },
         "byTenure": {
+          "구매설치": {
+            "total": 5,
+            "low": 3
+          },
           "6개월": {
             "total": 3,
             "low": 0
@@ -26421,10 +26476,6 @@ window.SLACK_DATA = {
           "12개월": {
             "total": 2,
             "low": 2
-          },
-          "구매설치": {
-            "total": 3,
-            "low": 1
           },
           "3개월": {
             "total": 3,
@@ -26436,6 +26487,14 @@ window.SLACK_DATA = {
           }
         },
         "byVan": {
+          "KIS": {
+            "total": 6,
+            "low": 3
+          },
+          "SMARTRO": {
+            "total": 2,
+            "low": 1
+          },
           "DAOU": {
             "total": 2,
             "low": 0
@@ -26448,26 +26507,68 @@ window.SLACK_DATA = {
             "total": 1,
             "low": 1
           },
-          "KIS": {
-            "total": 5,
-            "low": 2
-          },
           "SECTA9": {
             "total": 2,
-            "low": 0
-          },
-          "SMARTRO": {
-            "total": 1,
             "low": 0
           }
         },
         "reasonCounts": {
+          "단말기 설치나 초기 과정이 어려움": 4,
           "사용중 오류가 자주 발생함": 2,
           "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 2,
-          "고객센터 연락이 매우 힘듦": 1,
-          "단말기 설치나 초기 과정이 어려움": 1
+          "고객센터 연락이 매우 힘듦": 1
         },
         "alerts": [
+          {
+            "time": "15:51",
+            "store": "서구 시찌다",
+            "storeId": "538845",
+            "industry": "도소매",
+            "indBucket": "도소매",
+            "install": 1,
+            "nps": 0,
+            "reasons": [
+              {
+                "q": "구매설치",
+                "score": 1,
+                "text": "설치가 너무 복잡하고  어렵다   설명을 들으려고  전화를 하면  연결도 잘 안된다",
+                "cat": "단말기 설치나 초기 과정이 어려움"
+              },
+              {
+                "q": "추천의향",
+                "score": 0,
+                "text": "직접 와서  설치를 해 주시고 설명해 주시지 않으면  완전  꽝 이다땡 땡  땡",
+                "cat": "단말기 설치나 초기 과정이 어려움"
+              }
+            ],
+            "emp": "",
+            "autoStatus": "",
+            "autoEmp": "",
+            "autoNote": "",
+            "doneDate": ""
+          },
+          {
+            "time": "15:51",
+            "store": "위베이프 전자담배 삼양점",
+            "storeId": "518429",
+            "industry": "도소매",
+            "indBucket": "도소매",
+            "install": 3,
+            "nps": 5,
+            "reasons": [
+              {
+                "q": "추천의향",
+                "score": 5,
+                "text": "설치가 번거로워요",
+                "cat": "단말기 설치나 초기 과정이 어려움"
+              }
+            ],
+            "emp": "",
+            "autoStatus": "",
+            "autoEmp": "",
+            "autoNote": "",
+            "doneDate": ""
+          },
           {
             "time": "15:30",
             "store": "옛골한식뷔페",
