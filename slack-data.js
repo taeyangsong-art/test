@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 464,
+  "version": 465,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -25464,9 +25464,12 @@ window.SLACK_DATA = {
     },
     "2026-07-14": {
       "counts": {
+        "extern": {
+          "서상원": 3
+        },
         "as": {
           "심성현": 28,
-          "최민석": 7,
+          "최민석": 6,
           "김동욱": 23,
           "김기범": 4,
           "김현기": 22,
@@ -25476,7 +25479,7 @@ window.SLACK_DATA = {
           "김규빈": 6
         },
         "onboarding": {
-          "최민석": 4,
+          "최민석": 5,
           "배선유": 5,
           "김현기": 1,
           "김동욱": 3,
@@ -25484,15 +25487,12 @@ window.SLACK_DATA = {
           "심성현": 3,
           "송태양": 2
         },
-        "extern": {
-          "서상원": 2
-        },
         "transfer": {
           "송태양": 10,
           "김동욱": 4
         },
         "menu": {
-          "배선유": 19,
+          "배선유": 20,
           "김규빈": 1,
           "김동욱": 3
         },
@@ -25503,26 +25503,6 @@ window.SLACK_DATA = {
         }
       },
       "pending": [
-        {
-          "time": "18:42",
-          "store": "호텔 모뭄",
-          "biz": "6398502837",
-          "handler": "서상원",
-          "cat": "as",
-          "reasons": [
-            "확인 후 미완료"
-          ]
-        },
-        {
-          "time": "18:26",
-          "store": "포도술 문래",
-          "biz": "1952900992",
-          "handler": "배선유",
-          "cat": "menu",
-          "reasons": [
-            "확인 후 미완료"
-          ]
-        },
         {
           "time": "17:38",
           "store": "울엄니김밥",
@@ -25546,6 +25526,13 @@ window.SLACK_DATA = {
       ],
       "done": [
         {
+          "time": "18:42",
+          "store": "호텔 모뭄",
+          "biz": "6398502837",
+          "cat": "extern",
+          "emp": "서상원"
+        },
+        {
           "time": "18:30",
           "store": "아네모네 키친",
           "biz": "4032095174",
@@ -25556,8 +25543,15 @@ window.SLACK_DATA = {
           "time": "18:30",
           "store": "더 베니 (The Benny)",
           "biz": "4414301304",
-          "cat": "as",
+          "cat": "onboarding",
           "emp": "최민석"
+        },
+        {
+          "time": "18:26",
+          "store": "포도술 문래",
+          "biz": "1952900992",
+          "cat": "menu",
+          "emp": "배선유"
         },
         {
           "time": "18:19",
@@ -26827,7 +26821,7 @@ window.SLACK_DATA = {
           "emp": "배선유"
         }
       ],
-      "updatedAt": "18:42",
+      "updatedAt": "19:00",
       "voc": {
         "responses": 21,
         "install": {
