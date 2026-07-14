@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 459,
+  "version": 460,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -9517,11 +9517,11 @@ window.SLACK_DATA = {
                 "cat": "필요한 기능이 없거나 몰라서 불편"
               }
             ],
-            "emp": "",
-            "autoStatus": "",
-            "autoEmp": "",
+            "emp": "송태양",
+            "autoStatus": "처리완료",
+            "autoEmp": "송태양",
             "autoNote": "",
-            "doneDate": ""
+            "doneDate": "2026-07-14"
           },
           {
             "time": "15:06",
@@ -9542,7 +9542,7 @@ window.SLACK_DATA = {
             "emp": "",
             "autoStatus": "",
             "autoEmp": "",
-            "autoNote": "",
+            "autoNote": "1차부재 1차부재",
             "doneDate": ""
           }
         ],
@@ -25464,27 +25464,27 @@ window.SLACK_DATA = {
     },
     "2026-07-14": {
       "counts": {
+        "as": {
+          "김현기": 22,
+          "김동욱": 21,
+          "배선유": 21,
+          "송태양": 7,
+          "최민석": 5,
+          "서상원": 3,
+          "심성현": 24,
+          "김기범": 3,
+          "김규빈": 6
+        },
         "onboarding": {
           "배선유": 4,
+          "김동욱": 3,
           "서상원": 2,
           "최민석": 2,
-          "김동욱": 2,
           "심성현": 3,
           "송태양": 2
         },
         "extern": {
           "서상원": 2
-        },
-        "as": {
-          "김동욱": 20,
-          "배선유": 21,
-          "송태양": 7,
-          "최민석": 5,
-          "서상원": 3,
-          "김현기": 21,
-          "심성현": 24,
-          "김기범": 3,
-          "김규빈": 6
         },
         "transfer": {
           "송태양": 10,
@@ -25502,6 +25502,36 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
+          "time": "17:40",
+          "store": "뮤리엘 스킨&amp;왁싱",
+          "biz": "1952300573",
+          "handler": "김기범",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "17:37",
+          "store": "혜윰논술교습소",
+          "biz": "1929302274",
+          "handler": "김현기",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "17:33",
+          "store": "오유아",
+          "biz": "6360502272",
+          "handler": "김동욱",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
           "time": "17:15",
           "store": "롯데시네마 잠실 (팝업)",
           "biz": "3138700979",
@@ -25512,11 +25542,11 @@ window.SLACK_DATA = {
           ]
         },
         {
-          "time": "17:12",
-          "store": "청미음",
-          "biz": "8513801526",
-          "handler": "김동욱",
-          "cat": "as",
+          "time": "16:52",
+          "store": "살롱드비키",
+          "biz": "2092792875",
+          "handler": "배선유",
+          "cat": "menu",
           "reasons": [
             "확인 후 미완료"
           ]
@@ -25534,11 +25564,32 @@ window.SLACK_DATA = {
       ],
       "done": [
         {
+          "time": "17:34",
+          "store": "주디마리 홍대점(JUDYMARY)",
+          "biz": "4858502579",
+          "cat": "as",
+          "emp": "김현기"
+        },
+        {
           "time": "17:16",
           "store": "펑셔널 퍼포먼스 트레이닝(FPT)",
           "biz": "4796300759",
           "cat": "onboarding",
           "emp": "배선유"
+        },
+        {
+          "time": "17:14",
+          "store": "본디",
+          "biz": "8473701670",
+          "cat": "onboarding",
+          "emp": "김동욱"
+        },
+        {
+          "time": "17:12",
+          "store": "청미음",
+          "biz": "8513801526",
+          "cat": "as",
+          "emp": "김동욱"
         },
         {
           "time": "17:05",
@@ -26668,7 +26719,7 @@ window.SLACK_DATA = {
           "emp": "배선유"
         }
       ],
-      "updatedAt": "17:22",
+      "updatedAt": "17:45",
       "voc": {
         "responses": 19,
         "install": {
