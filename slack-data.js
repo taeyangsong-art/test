@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 445,
+  "version": 446,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -25465,8 +25465,8 @@ window.SLACK_DATA = {
     "2026-07-14": {
       "counts": {
         "as": {
-          "심성현": 16,
-          "김동욱": 12,
+          "심성현": 17,
+          "김동욱": 13,
           "김현기": 12,
           "김규빈": 6,
           "배선유": 12,
@@ -25493,9 +25493,19 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "14:13",
-          "store": "금광정비",
-          "biz": "1583000965",
+          "time": "14:28",
+          "store": "루시(LUCY)어학원",
+          "biz": "2239603433",
+          "handler": "배선유",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "14:27",
+          "store": "도브뷰티",
+          "biz": "7022500638",
           "handler": "심성현",
           "cat": "as",
           "reasons": [
@@ -25503,10 +25513,10 @@ window.SLACK_DATA = {
           ]
         },
         {
-          "time": "11:48",
-          "store": "에녹농수산물",
-          "biz": "1109371895",
-          "handler": "김동욱",
+          "time": "14:15",
+          "store": "드포유",
+          "biz": "6412302318",
+          "handler": "김현기",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
@@ -25524,6 +25534,13 @@ window.SLACK_DATA = {
         }
       ],
       "done": [
+        {
+          "time": "14:13",
+          "store": "금광정비",
+          "biz": "1583000965",
+          "cat": "as",
+          "emp": "심성현"
+        },
         {
           "time": "14:08",
           "store": "버니랜드키즈카페",
@@ -25789,6 +25806,13 @@ window.SLACK_DATA = {
           "biz": "1446500857",
           "cat": "as",
           "emp": "심성현"
+        },
+        {
+          "time": "11:48",
+          "store": "에녹농수산물",
+          "biz": "1109371895",
+          "cat": "as",
+          "emp": "김동욱"
         },
         {
           "time": "11:45",
@@ -26155,7 +26179,7 @@ window.SLACK_DATA = {
           "emp": "배선유"
         }
       ],
-      "updatedAt": "14:13",
+      "updatedAt": "14:30",
       "voc": {
         "responses": 3,
         "install": {
