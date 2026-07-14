@@ -1417,6 +1417,7 @@ function loadCloud(cb){
 function loadGameCloud(cb){ loadCloud(cb); }   // 하위호환
 function setGameMe(v){ gameMe=v; save("opcare_gameme_v1",gameMe); renderGame(); }
 /* ===== 코인 사용 본인 인증 (직원별 PIN + 이메일 OTP, 서버 검증) ===== */
+const AUTH_EMAIL = false;   // true=PIN 분실 시 회사 이메일 OTP 사용 / false=PIN 전용(관리자 초기화)
 const LS_GAMEAUTH = "opcare_gameauth_v1";
 let GAMEAUTH = load(LS_GAMEAUTH, {});   // { emp: 만료ms } — 이 브라우저에서 인증된 세션 (7일)
 function isGameAuthed(emp){ return !!(emp && GAMEAUTH[emp] && GAMEAUTH[emp] > Date.now()); }
@@ -1433,11 +1434,11 @@ async function requireAuth(emp){
       const r=await authGet({action:'checkPin', emp, pin});
       if(r&&r.locked){ alert('⛔ PIN 5회 실패로 잠겼습니다. 10분 뒤 다시 시도하세요.'); return false; }
       if(r&&r.ok){ setGameAuthed(emp); return true; }
-      if(tries<2 && !confirm('PIN이 틀렸어요. 다시 입력할까요?\n(취소 → PIN 재설정: 이메일 인증)')){ return resetPinFlow(emp); }
+      if(tries<2 && !confirm('PIN이 틀렸어요. 다시 입력할까요?\n(취소 → PIN 재설정)')){ return resetPinFlow(emp); }
     }
     return resetPinFlow(emp);
   }
-  return setupPinFlow(emp, st&&st.hasEmail);
+  return setupPinFlow(emp, AUTH_EMAIL && st && st.hasEmail);
 }
 async function setupPinFlow(emp, hasEmail){
   if(hasEmail){
@@ -1457,6 +1458,7 @@ async function setupPinFlow(emp, hasEmail){
   setGameAuthed(emp); alert('✅ PIN 설정 완료!'); return true;
 }
 async function resetPinFlow(emp){
+  if(!AUTH_EMAIL){ alert('🔑 PIN 재설정은 관리자에게 요청하세요.\n(관리자: 저장 시트 A2 셀에서 해당 이름 PIN 삭제 후 다시 설정)'); return false; }
   const st=await authGet({action:'status', emp});
   if(!st||!st.hasEmail){ alert('이메일이 서버에 등록돼 있지 않아 재설정 불가.\n관리자에게 문의하세요.'); return false; }
   return setupPinFlow(emp, true);   // OTP로 새 PIN 덮어쓰기
