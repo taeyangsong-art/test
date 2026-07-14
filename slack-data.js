@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 452,
+  "version": 453,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -25465,31 +25465,32 @@ window.SLACK_DATA = {
     "2026-07-14": {
       "counts": {
         "as": {
-          "김현기": 16,
-          "최민석": 3,
+          "심성현": 22,
+          "김현기": 17,
+          "송태양": 6,
           "김동욱": 19,
           "서상원": 2,
           "배선유": 14,
-          "심성현": 20,
-          "송태양": 5,
+          "최민석": 2,
           "김규빈": 6,
           "김기범": 2
         },
-        "extern": {
-          "서상원": 1
-        },
         "onboarding": {
+          "김동욱": 2,
+          "최민석": 1,
           "배선유": 1,
           "심성현": 3,
-          "송태양": 2,
-          "김동욱": 1
+          "송태양": 2
+        },
+        "extern": {
+          "서상원": 1
         },
         "transfer": {
           "송태양": 8,
           "김동욱": 3
         },
         "menu": {
-          "배선유": 12,
+          "배선유": 13,
           "김규빈": 1,
           "김동욱": 3
         },
@@ -25500,19 +25501,9 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "16:00",
-          "store": "마음쉼터 힐링숲",
-          "biz": "8640103859",
-          "handler": "김동욱",
-          "cat": "as",
-          "reasons": [
-            "확인 후 미완료"
-          ]
-        },
-        {
-          "time": "16:00",
-          "store": "빠흐 오피스 (PAR OFFICE)",
-          "biz": "4205101092",
+          "time": "16:12",
+          "store": "밀앤루",
+          "biz": "7531102995",
           "handler": "심성현",
           "cat": "as",
           "reasons": [
@@ -25520,19 +25511,19 @@ window.SLACK_DATA = {
           ]
         },
         {
-          "time": "15:51",
-          "store": "원더풀꽈배기 초량점",
-          "biz": "5646100859",
-          "handler": "송태양",
-          "cat": "as",
+          "time": "16:12",
+          "store": "워크앤레스트",
+          "biz": "8112302620",
+          "handler": "김동욱",
+          "cat": "transfer",
           "reasons": [
             "확인 후 미완료"
           ]
         },
         {
-          "time": "15:29",
-          "store": "백석리 연탄집",
-          "biz": "3031568714",
+          "time": "15:48",
+          "store": "쉬게",
+          "biz": "1142129859",
           "handler": "배선유",
           "cat": "menu",
           "reasons": [
@@ -25562,6 +25553,34 @@ window.SLACK_DATA = {
       ],
       "done": [
         {
+          "time": "16:04",
+          "store": "태우감자탕",
+          "biz": "8591502651",
+          "cat": "as",
+          "emp": "심성현"
+        },
+        {
+          "time": "16:00",
+          "store": "무브그라운드",
+          "biz": "6277200423",
+          "cat": "as",
+          "emp": "김현기"
+        },
+        {
+          "time": "16:00",
+          "store": "마음쉼터 힐링숲",
+          "biz": "8640103859",
+          "cat": "onboarding",
+          "emp": "김동욱"
+        },
+        {
+          "time": "16:00",
+          "store": "빠흐 오피스 (PAR OFFICE)",
+          "biz": "4205101092",
+          "cat": "as",
+          "emp": "심성현"
+        },
+        {
           "time": "15:52",
           "store": "왕산식당 남악점",
           "biz": "4614101492",
@@ -25569,10 +25588,17 @@ window.SLACK_DATA = {
           "emp": "김현기"
         },
         {
+          "time": "15:51",
+          "store": "원더풀꽈배기 초량점",
+          "biz": "5646100859",
+          "cat": "as",
+          "emp": "송태양"
+        },
+        {
           "time": "15:45",
           "store": "에스에스제이(SSJ) 축구클럽",
           "biz": "6959301930",
-          "cat": "as",
+          "cat": "onboarding",
           "emp": "최민석"
         },
         {
@@ -25595,6 +25621,13 @@ window.SLACK_DATA = {
           "biz": "6282901676",
           "cat": "as",
           "emp": "김현기"
+        },
+        {
+          "time": "15:29",
+          "store": "백석리 연탄집",
+          "biz": "3031568714",
+          "cat": "menu",
+          "emp": "배선유"
         },
         {
           "time": "15:24",
@@ -26430,20 +26463,20 @@ window.SLACK_DATA = {
           "emp": "배선유"
         }
       ],
-      "updatedAt": "16:00",
+      "updatedAt": "16:15",
       "voc": {
-        "responses": 16,
+        "responses": 17,
         "install": {
           "count": 5,
           "low": 2
         },
         "nps": {
-          "count": 16,
+          "count": 17,
           "low": 7
         },
         "high": {
           "install": 0,
-          "nps": 6
+          "nps": 7
         },
         "npsDist": {
           "0": 1,
@@ -26452,7 +26485,7 @@ window.SLACK_DATA = {
           "7": 1,
           "8": 1,
           "9": 1,
-          "10": 6
+          "10": 7
         },
         "installDist": {
           "1": 2,
@@ -26465,6 +26498,10 @@ window.SLACK_DATA = {
           "요식업": 1
         },
         "byTenure": {
+          "3개월": {
+            "total": 4,
+            "low": 2
+          },
           "구매설치": {
             "total": 5,
             "low": 3
@@ -26477,10 +26514,6 @@ window.SLACK_DATA = {
             "total": 2,
             "low": 2
           },
-          "3개월": {
-            "total": 3,
-            "low": 2
-          },
           "1개월": {
             "total": 3,
             "low": 0
@@ -26488,7 +26521,7 @@ window.SLACK_DATA = {
         },
         "byVan": {
           "KIS": {
-            "total": 6,
+            "total": 7,
             "low": 3
           },
           "SMARTRO": {
