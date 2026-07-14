@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 446,
+  "version": 447,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -25465,17 +25465,17 @@ window.SLACK_DATA = {
     "2026-07-14": {
       "counts": {
         "as": {
+          "송태양": 4,
+          "김현기": 13,
           "심성현": 17,
           "김동욱": 13,
-          "김현기": 12,
           "김규빈": 6,
           "배선유": 12,
-          "송태양": 3,
           "김기범": 2
         },
         "onboarding": {
+          "심성현": 3,
           "송태양": 2,
-          "심성현": 2,
           "김동욱": 1
         },
         "transfer": {
@@ -25493,19 +25493,9 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "14:28",
-          "store": "루시(LUCY)어학원",
-          "biz": "2239603433",
-          "handler": "배선유",
-          "cat": "as",
-          "reasons": [
-            "확인 후 미완료"
-          ]
-        },
-        {
-          "time": "14:27",
-          "store": "도브뷰티",
-          "biz": "7022500638",
+          "time": "14:41",
+          "store": "장군갈비",
+          "biz": "2061380015",
           "handler": "심성현",
           "cat": "as",
           "reasons": [
@@ -25513,10 +25503,30 @@ window.SLACK_DATA = {
           ]
         },
         {
-          "time": "14:15",
-          "store": "드포유",
-          "biz": "6412302318",
-          "handler": "김현기",
+          "time": "14:39",
+          "store": "본뮤즈 네일",
+          "biz": "2776600697",
+          "handler": "송태양",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "14:30",
+          "store": "세교이화음악학원",
+          "biz": "4949801822",
+          "handler": "김동욱",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
+          "time": "14:28",
+          "store": "루시(LUCY)어학원",
+          "biz": "2239603433",
+          "handler": "배선유",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
@@ -25534,6 +25544,27 @@ window.SLACK_DATA = {
         }
       ],
       "done": [
+        {
+          "time": "14:32",
+          "store": "텀 리스닝룸(T:UM Listening room)",
+          "biz": "8837000636",
+          "cat": "as",
+          "emp": "송태양"
+        },
+        {
+          "time": "14:27",
+          "store": "도브뷰티",
+          "biz": "7022500638",
+          "cat": "onboarding",
+          "emp": "심성현"
+        },
+        {
+          "time": "14:15",
+          "store": "드포유",
+          "biz": "6412302318",
+          "cat": "as",
+          "emp": "김현기"
+        },
         {
           "time": "14:13",
           "store": "금광정비",
@@ -26179,7 +26210,7 @@ window.SLACK_DATA = {
           "emp": "배선유"
         }
       ],
-      "updatedAt": "14:30",
+      "updatedAt": "14:41",
       "voc": {
         "responses": 3,
         "install": {
