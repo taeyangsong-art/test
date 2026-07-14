@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 427,
+  "version": 428,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -27398,21 +27398,35 @@ window.SLACK_DATA = {
     "2026-07-14": {
       "counts": {
         "as": {
+          "심성현": 2,
           "김현기": 2,
           "김동욱": 1,
-          "배선유": 2,
-          "심성현": 1
+          "배선유": 2
         },
         "onboarding": {
           "김동욱": 1
         },
         "menu": {
-          "김동욱": 1,
-          "배선유": 2
+          "배선유": 3,
+          "김동욱": 3
         }
       },
       "pending": [],
       "done": [
+        {
+          "time": "09:49",
+          "store": "헤어로와",
+          "biz": "1550403076",
+          "cat": "as",
+          "emp": "심성현"
+        },
+        {
+          "time": "09:41",
+          "store": "형과아우누룽지삼계탕왕갈비탕",
+          "biz": "3932901130",
+          "cat": "menu",
+          "emp": "배선유"
+        },
         {
           "time": "09:30",
           "store": "카페율하온진해용원점",
@@ -27442,6 +27456,13 @@ window.SLACK_DATA = {
           "emp": "김동욱"
         },
         {
+          "time": "09:22",
+          "store": "숯불구이백반",
+          "biz": "2266000305",
+          "cat": "menu",
+          "emp": "김동욱"
+        },
+        {
           "time": "09:19",
           "store": "순덕미장원",
           "biz": "1160625894",
@@ -27454,6 +27475,13 @@ window.SLACK_DATA = {
           "biz": "8402901728",
           "cat": "as",
           "emp": "김현기"
+        },
+        {
+          "time": "09:15",
+          "store": "형과아우누룽지삼계탕왕갈비탕",
+          "biz": "3932901130",
+          "cat": "menu",
+          "emp": "김동욱"
         },
         {
           "time": "09:00",
@@ -27484,7 +27512,7 @@ window.SLACK_DATA = {
           "emp": "배선유"
         }
       ],
-      "updatedAt": "09:45",
+      "updatedAt": "10:00",
       "voc": {
         "responses": 2,
         "install": {
