@@ -2530,20 +2530,22 @@ function renderVoc(){
       ${pendingAlerts.length||v.alerts.length?`<input class="search-box" type="text" placeholder="매장명 또는 매장ID 검색…" oninput="filterVoc(this.value)">
       <div style="overflow-x:auto"><table class="voc-table" style="margin-top:12px">
         <thead>${VOC_ALERT_HEAD}</thead>
-        <tbody>${pendingAlerts.length?pendingAlerts.map(vocAlertRow).join(''):`<tr><td colspan="8" style="text-align:center;color:var(--gray2);padding:22px 0">처리중인 저점 건이 없습니다 👍</td></tr>`}</tbody>
+        <tbody id="vocPendBody">${pendingAlerts.length?pendingAlerts.map(vocAlertRow).join(''):`<tr><td colspan="8" style="text-align:center;color:var(--gray2);padding:22px 0">처리중인 저점 건이 없습니다 👍</td></tr>`}</tbody>
       </table></div>`:'<div class="empty-note">이 기간 저점 건이 없습니다 👍</div>'}
     </div>
 
     <div class="card">
       <div class="card-head"><h3>✅ 처리완료 매장 <span class="cnt-badge done">${doneAlerts.length}</span></h3><span class="hint">상태를 '처리중'으로 되돌리면 다시 위로 이동</span></div>
-      ${doneAlerts.length?`<div style="overflow-x:auto"><table class="voc-table">
+      ${doneAlerts.length?`<input class="search-box" type="text" placeholder="매장명 또는 매장ID 검색…" oninput="filterVocDone(this.value)">
+      <div style="overflow-x:auto"><table class="voc-table" style="margin-top:12px">
         <thead>${VOC_ALERT_HEAD}</thead>
-        <tbody>${doneAlerts.map(vocAlertRow).join('')}</tbody>
+        <tbody id="vocDoneBody">${doneAlerts.map(vocAlertRow).join('')}</tbody>
       </table></div>`:'<div class="empty-note">처리완료된 매장이 없습니다 — 위 표에서 상태를 <b>처리완료</b>로 바꾸면 이리로 옮겨집니다</div>'}
     </div>
   `;
 }
-function filterVoc(q){ q=(q||'').trim().toLowerCase(); document.querySelectorAll('.voc-alert-row').forEach(tr=>{ tr.style.display=(tr.dataset.key||'').includes(q)?'':'none'; }); }
+function filterVoc(q){ q=(q||'').trim().toLowerCase(); document.querySelectorAll('#vocPendBody .voc-alert-row').forEach(tr=>{ tr.style.display=(tr.dataset.key||'').includes(q)?'':'none'; }); }
+function filterVocDone(q){ q=(q||'').trim().toLowerCase(); document.querySelectorAll('#vocDoneBody .voc-alert-row').forEach(tr=>{ tr.style.display=(tr.dataset.key||'').includes(q)?'':'none'; }); }
 // 삭제되지 않은 칭찬만
 function praiseVisible(p){ const e=VOCPRAISE[vocKey(p)]; return !(e&&e.deleted); }
 // 직원·응대 관련 칭찬만 (담당자 지정됐거나 직원칭찬 키워드 포함)
