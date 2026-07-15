@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 560,
+  "version": 561,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -27258,11 +27258,11 @@ window.SLACK_DATA = {
     "2026-07-15": {
       "counts": {
         "as": {
+          "배선유": 17,
           "심성현": 33,
           "송태양": 19,
           "김동욱": 17,
-          "김현기": 17,
-          "배선유": 16,
+          "김현기": 19,
           "김규빈": 10,
           "최민석": 6,
           "김기범": 11,
@@ -27280,7 +27280,7 @@ window.SLACK_DATA = {
           "서상원": 5
         },
         "transfer": {
-          "송태양": 8
+          "송태양": 9
         },
         "menu": {
           "배선유": 6,
@@ -27294,17 +27294,31 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "16:45",
-          "store": "이유(leeyoo)",
-          "biz": "6981003384",
-          "handler": "김현기",
-          "cat": "delivery",
+          "time": "16:56",
+          "store": "더마 리바이브",
+          "biz": "1750602570",
+          "handler": "심성현",
+          "cat": "as",
           "reasons": [
-            "확인 후 미완료"
+            "1차 부재"
           ]
         }
       ],
       "done": [
+        {
+          "time": "17:46",
+          "store": "정음평생교육원",
+          "biz": "2724401442",
+          "cat": "transfer",
+          "emp": "송태양"
+        },
+        {
+          "time": "17:45",
+          "store": "도하",
+          "biz": "5401002636",
+          "cat": "as",
+          "emp": "배선유"
+        },
         {
           "time": "17:30",
           "store": "미제이 에스테틱",
@@ -27467,6 +27481,13 @@ window.SLACK_DATA = {
           "emp": "김현기"
         },
         {
+          "time": "16:45",
+          "store": "이유(leeyoo)",
+          "biz": "6981003384",
+          "cat": "as",
+          "emp": "김현기"
+        },
+        {
           "time": "16:44",
           "store": "연피아노음악교습소",
           "biz": "1109840117",
@@ -27477,6 +27498,13 @@ window.SLACK_DATA = {
           "time": "16:34",
           "store": "리그프렙영어교습소",
           "biz": "7069601828",
+          "cat": "as",
+          "emp": "김현기"
+        },
+        {
+          "time": "16:30",
+          "store": "진여사네복김밥",
+          "biz": "2181417055",
           "cat": "as",
           "emp": "김현기"
         },
@@ -28545,7 +28573,7 @@ window.SLACK_DATA = {
           "emp": "김동욱"
         }
       ],
-      "updatedAt": "17:45",
+      "updatedAt": "18:00",
       "voc": {
         "responses": 17,
         "install": {
