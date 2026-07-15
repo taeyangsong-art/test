@@ -1540,15 +1540,15 @@ const GAME_ITEMS = {
   pet: [
     {id:'p_none',name:'없음',price:0,e:'',rarity:'common'},
     {id:'p_cat',name:'고양이',price:60,e:'🐱',rarity:'common',perk:{coin:1}},
-    {id:'p_dog',name:'강아지',price:60,e:'🐶',rarity:'common',perk:{item:0.05}},
+    {id:'p_dog',name:'강아지',price:60,e:'🐶',rarity:'common',perk:{item:0.005}},
     {id:'fp_fish',name:'물고기',price:60,e:'🐟',rarity:'common',fishOnly:true,perk:{coin:2}},
-    {id:'fp_octopus',name:'문어',price:150,e:'🐙',rarity:'rare',fishOnly:true,perk:{item:0.10,miss:0.20}},
-    {id:'p_unicorn',name:'유니콘',price:300,e:'🦄',rarity:'epic',fishOnly:true,perk:{item:0.20,coin:3}},
-    {id:'fp_shark',name:'상어',price:350,e:'🦈',rarity:'epic',fishOnly:true,perk:{item:0.15,coin:4,miss:0.20}},
-    {id:'fp_turtle',name:'거북이',price:700,e:'🐢',rarity:'legendary',fishOnly:true,perk:{coin:5,miss:0.40,loss:0.70}},
-    {id:'p_dragon',name:'드래곤',price:450,e:'🐉',rarity:'legendary',fishOnly:true,perk:{coin:6,loss:1.0,miss:0.50,item:0.20}},
-    {id:'p_kraken',name:'크라켄',price:800,e:'🦑',rarity:'mythic',fishOnly:true,perk:{item:0.30,coin:8,miss:0.50,loss:0.80}},
-    {id:'p_whale',name:'고래',price:800,e:'🐋',rarity:'mythic',fishOnly:true,perk:{coin:10,item:0.25,loss:1.0}},
+    {id:'fp_octopus',name:'문어',price:150,e:'🐙',rarity:'rare',fishOnly:true,perk:{item:0.01,miss:0.02}},
+    {id:'p_unicorn',name:'유니콘',price:300,e:'🦄',rarity:'epic',fishOnly:true,perk:{item:0.02,coin:3}},
+    {id:'fp_shark',name:'상어',price:350,e:'🦈',rarity:'epic',fishOnly:true,perk:{item:0.015,coin:4,miss:0.02}},
+    {id:'fp_turtle',name:'거북이',price:700,e:'🐢',rarity:'legendary',fishOnly:true,perk:{coin:5,miss:0.04,loss:0.07}},
+    {id:'p_dragon',name:'드래곤',price:450,e:'🐉',rarity:'legendary',fishOnly:true,perk:{coin:6,loss:0.10,miss:0.05,item:0.02}},
+    {id:'p_kraken',name:'크라켄',price:800,e:'🦑',rarity:'mythic',fishOnly:true,perk:{item:0.03,coin:8,miss:0.05,loss:0.08}},
+    {id:'p_whale',name:'고래',price:800,e:'🐋',rarity:'mythic',fishOnly:true,perk:{coin:10,item:0.025,loss:0.10}},
   ],
 };
 const LS_GAME = "opcare_game_v1";
@@ -1959,7 +1959,7 @@ function rollLootPerk(loot, perk){
   acc+=pLoss; if(r<acc && losses.length) return pick(losses);
   return nones.length?pick(nones):(coins.length?pick(coins):loot[0]);
 }
-function perkDesc(perk){ if(!perk) return ''; const p=[]; if(perk.item)p.push(`아이템 확률 +${Math.round(perk.item*100)}%`); if(perk.coin)p.push(`코인 +${perk.coin}개 추가 지급`); if(perk.miss)p.push(`꽝 -${Math.round(perk.miss*100)}%`); if(perk.loss)p.push(perk.loss>=1?'코인손실 방어(0%)':`코인손실 -${Math.round(perk.loss*100)}%`); return p.join(' · '); }
+function perkDesc(perk){ if(!perk) return ''; const p=[]; const pct=x=>{const v=Math.round(x*1000)/10; return (Number.isInteger(v)?v:v.toFixed(1))+'%';}; if(perk.item)p.push(`아이템 확률 +${pct(perk.item)}`); if(perk.coin)p.push(`코인 +${perk.coin}개 추가 지급`); if(perk.miss)p.push(`꽝 -${pct(perk.miss)}`); if(perk.loss)p.push(perk.loss>=1?'코인손실 방어(0%)':`코인손실 -${pct(perk.loss)}`); return p.join(' · '); }
 function pickItem(rars, fishOnly, emp){ const pool=[]; for(const cat in GAME_ITEMS){ for(const it of GAME_ITEMS[cat]){ if(it.price===0) continue; if(it.targetOnly) continue; if(it.gender && emp && !genderOK(emp,it)) continue; if(!rars.includes(it.rarity)) continue; if(fishOnly && !it.fishOnly) continue; if(!fishOnly && it.fishOnly) continue; if(emp && owns(emp,cat,it.id)) continue; pool.push(Object.assign({cat},it)); } } return pool.length?pool[Math.floor(Math.random()*pool.length)]:null; }
 const CAT_KO={title:'타이틀',nametag:'네임택',hat:'모자',pet:'펫',skin:'피부',hair:'헤어',dye:'염색',eyes:'눈',brows:'눈썹',mouth:'입',beard:'수염',top:'상의',pants:'하의',shoes:'신발',gloves:'장갑',cape:'망토'};
 function resolveLoot(emp,out){ const g=gs(emp);
