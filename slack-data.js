@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 622,
+  "version": 623,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -27288,6 +27288,7 @@ window.SLACK_DATA = {
         },
         "menu": {
           "최민석": 2,
+          "김기범": 1,
           "배선유": 6,
           "김규빈": 3,
           "김동욱": 1
@@ -27501,6 +27502,13 @@ window.SLACK_DATA = {
           "biz": "3013495351",
           "cat": "onboarding",
           "emp": "미지정"
+        },
+        {
+          "time": "18:33",
+          "store": "요거트가족",
+          "biz": "1891602210",
+          "cat": "menu",
+          "emp": "김기범"
         },
         {
           "time": "18:22",
