@@ -284,6 +284,9 @@
   .it-tip-cond{color:#7e22ce}
   .it-tip-prog{margin-top:4px; padding-top:4px; border-top:1px dashed #d8b4fe; color:#6b21a8}
   .it-tip-prog b{font-size:12.5px}
+  .it-tip-reset{margin-top:4px; font-size:10.5px; font-weight:600; color:#9a6ad0}
+  .ach-reset-note{font-size:12px; font-weight:600; color:var(--purple,#6E3FE5); background:#f3e8ff;
+    border-radius:10px; padding:8px 12px; margin:-4px 0 10px}
   .r-title{font-size:11px; font-weight:800; margin-right:4px}
   .tr-legendary,.tr-mythic{background-size:200% auto; animation:titleShine 2.6s linear infinite}
   @keyframes titleShine{to{background-position:-200% center}}
@@ -1144,14 +1147,15 @@ function nightItems(dates){
 // 특정 직원이 fromTime(예:21:00) 이후에 처리한 누적 건수 (업무 done + VOC 완료) — 타이틀 구매 요건용
 function nightHandled(emp, fromTime){
   const from = fromTime || "21:00"; let n=0;
-  allSlackDates().forEach(d=>{ ((slackDay(d)||{}).done||[]).forEach(x=>{ if(x.emp===emp && (x.time||"")>=from) n++; }); });
-  allSlackDates().forEach(d=>{ const v=(slackDay(d)||{}).voc; if(!v)return; [...(v.alerts||[]),...(v.praises||[])].forEach(x=>{ if(x.emp===emp && x.doneDate && (x.time||"")>=from) n++; }); });
+  monthSlackDates().forEach(d=>{ ((slackDay(d)||{}).done||[]).forEach(x=>{ if(x.emp===emp && (x.time||"")>=from) n++; }); });
+  monthSlackDates().forEach(d=>{ const v=(slackDay(d)||{}).voc; if(!v)return; [...(v.alerts||[]),...(v.praises||[])].forEach(x=>{ if(x.emp===emp && x.doneDate && (x.time||"")>=from) n++; }); });
   return n;
 }
-// ===== 타이틀/네임택 달성 조건 (충족 시 코인 없이 무료 획득) =====
-function empWorkByDay(emp){ const m={}; allSlackDates().forEach(d=>{ ((slackDay(d)||{}).done||[]).forEach(x=>{ if(x.emp===emp) m[d]=(m[d]||0)+1; }); }); return m; }
-// 일별 MVP(그날 업무처리 최다) 선정 횟수 맵 (전 직원)
-function dailyMvpCounts(){ const cnt={}; allSlackDates().forEach(d=>{ const by={}; ((slackDay(d)||{}).done||[]).forEach(x=>{ if(x.emp) by[x.emp]=(by[x.emp]||0)+1; }); let top=null,tv=0; for(const e in by){ if(by[e]>tv){ tv=by[e]; top=e; } } if(top) cnt[top]=(cnt[top]||0)+1; }); return cnt; }
+// ===== 타이틀 달성 조건 (충족 시 코인 없이 무료 획득) — 진행도는 '현재 달'만 측정 → 매월 1일 초기화 =====
+function monthSlackDates(){ const mk=curMonthKey(); return allSlackDates().filter(d=>d.slice(0,7)===mk); }
+function empWorkByDay(emp){ const m={}; monthSlackDates().forEach(d=>{ ((slackDay(d)||{}).done||[]).forEach(x=>{ if(x.emp===emp) m[d]=(m[d]||0)+1; }); }); return m; }
+// 일별 MVP(그날 업무처리 최다) 선정 횟수 맵 (이번 달)
+function dailyMvpCounts(){ const cnt={}; monthSlackDates().forEach(d=>{ const by={}; ((slackDay(d)||{}).done||[]).forEach(x=>{ if(x.emp) by[x.emp]=(by[x.emp]||0)+1; }); let top=null,tv=0; for(const e in by){ if(by[e]>tv){ tv=by[e]; top=e; } } if(top) cnt[top]=(cnt[top]||0)+1; }); return cnt; }
 function mvpCountOf(emp){ return dailyMvpCounts()[emp]||0; }
 const ACH_SHORT={hand:'하루 35건',phoenix:'12시간 이상 처리',master:'6업무+VOC·미처리0',god:'하루50건+MVP10회',night:'밤8시후 300건'};
 function achShort(k){ return ACH_SHORT[k]||''; }
@@ -1159,8 +1163,8 @@ function achShort(k){ return ACH_SHORT[k]||''; }
 function achStatus(emp, it){
   if(!it || !it.ach || !emp) return it&&it.ach ? {ok:false, label:achShort(it.ach), prog:'-'} : null;
   if(it.ach==='hand'){ const best=Math.max(0,...Object.values(empWorkByDay(emp))); return {ok:best>=35, label:'하루 원격 35건 처리', prog:`${best}/35건`}; }
-  if(it.ach==='phoenix'){ const toMin=t=>{ const p=(t||'').split(':'); return (+p[0]||0)*60+(+p[1]||0); }; let ok=false, bestSpan=0; allSlackDates().forEach(d=>{ const ts=((slackDay(d)||{}).done||[]).filter(x=>x.emp===emp&&x.time).map(x=>toMin(x.time)); if(ts.length>=2){ const span=Math.max(...ts)-Math.min(...ts); if(span>bestSpan) bestSpan=span; if(span>=720) ok=true; } }); return {ok, label:'하루 원격 처리 이력 12시간 이상 (첫~마지막 처리 간격)', prog:ok?'달성 ✓':`최고 ${Math.floor(bestSpan/60)}시간 ${bestSpan%60}분/12시간`}; }
-  if(it.ach==='master'){ let ok=false; const W=['onboarding','as','transfer','menu','delivery','extern']; allSlackDates().forEach(d=>{ const day=slackDay(d)||{}; const dn=(day.done||[]).filter(x=>x.emp===emp); const cs=new Set(dn.map(x=>x.cat)); const all6=W.every(c=>cs.has(c)); const voc=day.voc?[...(day.voc.alerts||[]),...(day.voc.praises||[])].some(x=>x.emp===emp&&x.doneDate===d):false; const anyPending=(day.pending||[]).some(p=>p.handler===emp); if(all6&&voc&&!anyPending) ok=true; }); return {ok, label:'하루에 온보딩·AS·명변·메뉴·배달·외주·VOC 각 1건 이상 + 부재·미처리 0건', prog:ok?'달성 ✓':'미달'}; }
+  if(it.ach==='phoenix'){ const toMin=t=>{ const p=(t||'').split(':'); return (+p[0]||0)*60+(+p[1]||0); }; let ok=false, bestSpan=0; monthSlackDates().forEach(d=>{ const ts=((slackDay(d)||{}).done||[]).filter(x=>x.emp===emp&&x.time).map(x=>toMin(x.time)); if(ts.length>=2){ const span=Math.max(...ts)-Math.min(...ts); if(span>bestSpan) bestSpan=span; if(span>=720) ok=true; } }); return {ok, label:'하루 원격 처리 이력 12시간 이상 (첫~마지막 처리 간격)', prog:ok?'달성 ✓':`최고 ${Math.floor(bestSpan/60)}시간 ${bestSpan%60}분/12시간`}; }
+  if(it.ach==='master'){ let ok=false; const W=['onboarding','as','transfer','menu','delivery','extern']; monthSlackDates().forEach(d=>{ const day=slackDay(d)||{}; const dn=(day.done||[]).filter(x=>x.emp===emp); const cs=new Set(dn.map(x=>x.cat)); const all6=W.every(c=>cs.has(c)); const voc=day.voc?[...(day.voc.alerts||[]),...(day.voc.praises||[])].some(x=>x.emp===emp&&x.doneDate===d):false; const anyPending=(day.pending||[]).some(p=>p.handler===emp); if(all6&&voc&&!anyPending) ok=true; }); return {ok, label:'하루에 온보딩·AS·명변·메뉴·배달·외주·VOC 각 1건 이상 + 부재·미처리 0건', prog:ok?'달성 ✓':'미달'}; }
   if(it.ach==='god'){ const best=Math.max(0,...Object.values(empWorkByDay(emp))); const mvp=mvpCountOf(emp); return {ok:best>=50&&mvp>=10, label:'하루 50건 이상 처리 + MVP 10회 이상 선정', prog:`하루최고 ${best}/50 · MVP ${mvp}/10`}; }
   if(it.ach==='night'){ const have=nightHandled(emp,'20:00'); return {ok:have>=300, label:'밤 20:00 이후 300건 처리', prog:`${have}/300건`}; }
   return null;
@@ -1650,7 +1654,7 @@ function itemTipHTML(cat,id){ const it=itemById(cat,id); if(!it) return ''; cons
     <div class="it-tip-top"><span class="it-tip-rar" style="color:${RARITY[r]}">${RARITY_KO[r]}</span>${it.fishOnly?'<span class="it-tip-fish">🎣 낚시전용</span>':''}</div>
     ${disp}
     <div class="it-tip-name">${CAT_LABEL[cat]||''} · ${escapeHtml(it.name)}</div>
-    ${it.ach?(function(){ const a=gameMe?achStatus(gameMe,it):null; return `<div class="it-tip-req"><div class="it-tip-cond">🎯 ${escapeHtml(a?a.label:achShort(it.ach))}</div>${a&&a.prog&&a.prog!=='미달'?`<div class="it-tip-prog">📊 내 진행 <b>${escapeHtml(a.prog)}</b></div>`:''}</div>`; })():''}
+    ${it.ach?(function(){ const a=gameMe?achStatus(gameMe,it):null; return `<div class="it-tip-req"><div class="it-tip-cond">🎯 ${escapeHtml(a?a.label:achShort(it.ach))}</div>${a&&a.prog&&a.prog!=='미달'?`<div class="it-tip-prog">📊 내 진행 <b>${escapeHtml(a.prog)}</b></div>`:''}<div class="it-tip-reset">🔄 매월 1일 진행 초기화</div></div>`; })():''}
     <div class="it-tip-foot">${it.ach?(owned?'✓ 보유중':(gameMe&&achStatus(gameMe,it).ok?'🎁 지금 무료 획득 가능!':'🎯 달성 시 무료 획득')):(it.price===0?'기본 제공':(owned?'✓ 보유중':(it.fishOnly?'낚시로만 획득':'🪙 '+it.price+' 코인')))}</div>
   </div>`;
 }
@@ -1785,6 +1789,7 @@ function renderGame(){
     <div class="card game-me" id="gmBox">${gameMeInner(emp, eq)}</div>
     <div class="preview-hint">💡 아이템에 마우스를 올리면 위 캐릭터에 <b>미리 입어보기</b> 돼요 · 코인은 왼쪽 <b>🎣 낚시터</b>에서도 획득!</div>
     ${shopSection('title','👑 타이틀',emp)}
+    <div class="ach-reset-note">🔄 모든 타이틀 획득 조건 진행도는 <b>매월 1일 초기화</b>됩니다 · 이미 획득한 타이틀은 계속 보유돼요</div>
     ${shopSection('nametag','🏷️ 네임택',emp)}
     <div class="avatar-secthead"><span>🧙 아바타 꾸미기</span><button class="btn" onclick="showGenderModal()">${(g.gender==='f'?'👧 여자':'👦 남자')} · 성별 바꾸기</button></div>
     ${shopSection('skin','🎨 피부',emp)}
