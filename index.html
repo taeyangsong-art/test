@@ -583,6 +583,16 @@
   .vd-pct{display:inline-block; font-size:11.5px; font-weight:800; color:#1F4FFA; background:#eef2ff; border-radius:20px; padding:1px 7px; margin-left:3px}
   .vd-rpct{font-size:11px; font-weight:700; color:var(--gray2,#9AA0A6); margin-left:2px}
   .voc-drill-body{padding:2px 12px 12px; border-top:1px solid var(--line-soft)}
+  .voc-drill-sum{display:flex; align-items:center; gap:10px; padding:11px 12px; margin-bottom:8px; cursor:pointer;
+    border:1px solid var(--line-soft); border-radius:10px; background:var(--surface2); transition:.12s}
+  .voc-drill-sum:hover{background:var(--canvas,#fff); border-color:var(--blue,#1F4FFA); box-shadow:0 2px 10px rgba(31,79,250,.12); transform:translateY(-1px)}
+  .voc-drill-sum .vd-open{flex:0 0 auto; opacity:.45; font-size:13px}
+  .voc-drill-sum:hover .vd-open{opacity:1}
+  /* 큰 상세 모달 */
+  .vd-modal{max-width:min(920px,94vw); width:920px}
+  .vd-modal-body{font-size:14px}
+  .vd-modal-body .vd-reasons{margin-bottom:14px}
+  .vd-modal-body .voc-detail-item{padding:12px 14px}
   .vd-top{font-size:13px; color:var(--ink); background:var(--surface2); border:1px solid var(--line-soft); border-radius:8px; padding:8px 10px; margin:10px 0 8px}
   .vd-reasons{background:var(--canvas); border:1px solid var(--line-soft); border-radius:8px; padding:10px 11px; margin:10px 0 8px}
   .vd-reasons-h{font-size:12.5px; color:var(--ink); margin-bottom:9px}
@@ -2457,6 +2467,7 @@ function storeDetailList(items){
     </div>`).join('')}</div>`;
 }
 // 업종/사유 드릴다운(클릭 시 매장 상세 펼침). topReason=true면 '가장 많은 이유' 요약 표시
+let VOCDRILL={}, vdSeq=0;   // 업종/이유 클릭 → 큰 모달로 보여줄 상세 저장
 function vocGroupDrill(entries, max, color, topReason){
   const total=entries.reduce((a,e)=>a+e[1].length,0)||1;   // 전체 모수(인입 합계)
   return entries.map(([name, items])=>{
@@ -2471,11 +2482,16 @@ function vocGroupDrill(entries, max, color, topReason){
         ${rows.map(([r,c])=>`<div class="vd-rrow"><span class="vd-rname" title="${escapeHtml(r)}">${escapeHtml(r.split('(')[0])}</span><span class="vd-rbar"><span style="width:${c/rmax*100}%"></span></span><span class="vd-rcnt">${c}건 <span class="vd-rpct">${Math.round(c/cnt*100)}%</span></span></div>`).join('')}
       </div>`;
     }
-    return `<details class="voc-drill">
-      <summary><span class="vd-name">${escapeHtml(name.split('(')[0])}</span><span class="vd-bar"><span class="vd-fill" style="width:${cnt/max*100}%;background:${color}"></span></span><span class="vd-cnt">${cnt}건 <span class="vd-pct">${pct}%</span></span></summary>
-      <div class="voc-drill-body">${topLine}${storeDetailList(items)}</div>
-    </details>`;
+    const nm=name.split('(')[0], id='vd'+(vdSeq++);
+    VOCDRILL[id]={title:nm, cnt, pct, icon:topReason?'🏭':'😟', html:`${topLine}${storeDetailList(items)}`};
+    return `<div class="voc-drill-sum" onclick="showVocDrill('${id}')" title="클릭 → 크게 보기">
+      <span class="vd-name">${escapeHtml(nm)}</span><span class="vd-bar"><span class="vd-fill" style="width:${cnt/max*100}%;background:${color}"></span></span><span class="vd-cnt">${cnt}건 <span class="vd-pct">${pct}%</span></span><span class="vd-open">🔍</span>
+    </div>`;
   }).join('');
+}
+function showVocDrill(id){ const d=VOCDRILL[id]; if(!d) return;
+  let el=document.getElementById('vocDrillModal'); if(!el){ el=document.createElement('div'); el.id='vocDrillModal'; el.className='detail-overlay'; el.onclick=e=>{ if(e.target===el) el.remove(); }; document.body.appendChild(el); }
+  el.innerHTML=`<div class="detail-box vd-modal"><div class="detail-head"><h3>${d.icon||'🔎'} ${escapeHtml(d.title)} <span class="cnt-badge">${d.cnt}건 · ${d.pct}%</span></h3><button class="detail-x" onclick="document.getElementById('vocDrillModal').remove()">✕</button></div><div class="detail-scroll vd-modal-body">${d.html}</div></div>`;
 }
 function renderVoc(){
   const viewDates=vocViewDates();
