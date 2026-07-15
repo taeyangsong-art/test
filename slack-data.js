@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 555,
+  "version": 556,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -27258,13 +27258,13 @@ window.SLACK_DATA = {
     "2026-07-15": {
       "counts": {
         "as": {
+          "김현기": 14,
+          "최민석": 6,
+          "김기범": 11,
+          "김규빈": 9,
           "송태양": 15,
           "심성현": 26,
-          "김기범": 9,
-          "김규빈": 8,
-          "최민석": 5,
-          "배선유": 14,
-          "김현기": 13,
+          "배선유": 15,
           "김동욱": 12,
           "서상원": 1
         },
@@ -27292,19 +27292,36 @@ window.SLACK_DATA = {
           "심성현": 1
         }
       },
-      "pending": [
-        {
-          "time": "15:10",
-          "store": "신청무 점핑클럽",
-          "biz": "7319701758",
-          "handler": "김기범",
-          "cat": "as",
-          "reasons": [
-            "1차 부재"
-          ]
-        }
-      ],
+      "pending": [],
       "done": [
+        {
+          "time": "16:34",
+          "store": "리그프렙영어교습소",
+          "biz": "7069601828",
+          "cat": "as",
+          "emp": "김현기"
+        },
+        {
+          "time": "16:25",
+          "store": "바닐라드림",
+          "biz": "1440272507",
+          "cat": "as",
+          "emp": "최민석"
+        },
+        {
+          "time": "16:23",
+          "store": "강창구찹쌀진순대 종로점",
+          "biz": "2608803382",
+          "cat": "as",
+          "emp": "김기범"
+        },
+        {
+          "time": "16:20",
+          "store": "정성가득",
+          "biz": "8041003505",
+          "cat": "as",
+          "emp": "김규빈"
+        },
         {
           "time": "16:15",
           "store": "참치공방 을지로점",
@@ -27346,6 +27363,13 @@ window.SLACK_DATA = {
           "biz": "3227500572",
           "cat": "as",
           "emp": "심성현"
+        },
+        {
+          "time": "16:04",
+          "store": "모란장",
+          "biz": "2171664092",
+          "cat": "as",
+          "emp": "배선유"
         },
         {
           "time": "16:03",
@@ -27472,6 +27496,13 @@ window.SLACK_DATA = {
           "biz": "6011351336",
           "cat": "as",
           "emp": "김규빈"
+        },
+        {
+          "time": "15:10",
+          "store": "신청무 점핑클럽",
+          "biz": "7319701758",
+          "cat": "as",
+          "emp": "김기범"
         },
         {
           "time": "15:10",
@@ -28328,15 +28359,15 @@ window.SLACK_DATA = {
           "emp": "김동욱"
         }
       ],
-      "updatedAt": "16:30",
+      "updatedAt": "16:45",
       "voc": {
-        "responses": 14,
+        "responses": 16,
         "install": {
           "count": 5,
           "low": 3
         },
         "nps": {
-          "count": 14,
+          "count": 16,
           "low": 6
         },
         "high": {
@@ -28348,7 +28379,7 @@ window.SLACK_DATA = {
           "2": 2,
           "5": 2,
           "6": 2,
-          "8": 1,
+          "8": 3,
           "9": 1,
           "10": 4
         },
@@ -28364,6 +28395,14 @@ window.SLACK_DATA = {
           "도소매": 1
         },
         "byTenure": {
+          "1개월": {
+            "total": 4,
+            "low": 2
+          },
+          "12개월": {
+            "total": 2,
+            "low": 1
+          },
           "구매설치": {
             "total": 5,
             "low": 3
@@ -28372,20 +28411,20 @@ window.SLACK_DATA = {
             "total": 2,
             "low": 2
           },
-          "1개월": {
-            "total": 3,
-            "low": 2
-          },
-          "12개월": {
-            "total": 1,
-            "low": 1
-          },
           "3개월": {
             "total": 3,
             "low": 0
           }
         },
         "byVan": {
+          "KIS": {
+            "total": 5,
+            "low": 1
+          },
+          "KSNET": {
+            "total": 2,
+            "low": 1
+          },
           "KPN": {
             "total": 3,
             "low": 2
@@ -28393,14 +28432,6 @@ window.SLACK_DATA = {
           "DAOU": {
             "total": 2,
             "low": 2
-          },
-          "KSNET": {
-            "total": 1,
-            "low": 1
-          },
-          "KIS": {
-            "total": 4,
-            "low": 1
           },
           "SECTA9": {
             "total": 3,
