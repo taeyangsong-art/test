@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 579,
+  "version": 580,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -27291,7 +27291,7 @@ window.SLACK_DATA = {
           "김동욱": 1
         },
         "delivery": {
-          "최민석": 1,
+          "최민석": 2,
           "심성현": 1
         }
       },
@@ -27344,6 +27344,13 @@ window.SLACK_DATA = {
           "store": "주식회사 멜팅랩스 을지로점",
           "biz": "5848502973",
           "cat": "as",
+          "emp": "최민석"
+        },
+        {
+          "time": "21:00",
+          "store": "달찌, 별무리 오두막",
+          "biz": "7536200820",
+          "cat": "delivery",
           "emp": "최민석"
         },
         {
