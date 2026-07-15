@@ -2008,7 +2008,7 @@ function renderOverview(){
   const confirmCnt = pendCntOf(viewDates) - absentCnt;   // 확인필요(부재 아닌 미처리)
   const grandAll = grandProc + pendCntOf(viewDates);      // 원격 총 건수 = 처리 + 부재 + 확인필요(전체 미처리)
   const grandAllPrev = grandProcPrev + pendCntOf(prevDates);
-  const ovPend = ovPendingList();                     // 부재=당일만, 확인필요=어제~오늘 이월
+  const ovPend = ovPendingList();                     // 부재·확인필요 모두 다음날 오전 10시까지 이월
   const pendCarry = ovPend.length;
   // 누락 랭킹 — 미처리·확인필요에 적재된 담당자 카운트
   const missRows=(function(){ const cnt={}; ovPend.forEach(p=>{ const hd=p.handler; if(hd&&hd!=='미지정') cnt[hd]=(cnt[hd]||0)+1; }); return Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,5); })();
@@ -2085,7 +2085,7 @@ function renderOverview(){
       <div class="ov-tile pend" style="--c:#ff9500">
         <div class="ov-name"><span class="ov-ic">🔎</span>부재·미처리</div>
         <div class="ov-val">${pendCarry}<small>건</small></div>
-        <div class="ov-delta flat"><span>부재 당일만 · 확인필요 이월</span></div>
+        <div class="ov-delta flat"><span>부재·확인필요 다음날 10시까지</span></div>
       </div>
     </div>
 
@@ -2916,21 +2916,21 @@ function filterPending(q){
 }
 
 // 전체현황용 — 오늘 전 카테고리 미처리·확인필요 통합 (유형 컬럼 + 검색)
-// 전체현황 미처리 목록 — 부재는 당일(오늘)만, 확인필요는 어제~오늘 이월
+// 전체현황 미처리 목록 — 부재·확인필요 모두 다음날 오전 10시까지 이월 후 소멸
 function ovPendingList(){
   const t=ymd(today()), yd=ymd(addDays(today(),-1));
-  const isAbsent=p=>(p.reasons||[]).some(r=>/부재/.test(r));
   const nf = p => ovShift!=='night' || isNightTime(p.time);
+  const beforeCutoff = today().getHours() < 10;   // 오늘 오전 10시 이전이면 어제 건도 아직 유지(10시에 소멸)
   const todayP=((slackDay(t)||{}).pending||[]).filter(nf).map(p=>({...p,_date:t}));
-  const ydConfirm=((slackDay(yd)||{}).pending||[]).filter(p=>!isAbsent(p)).filter(nf).map(p=>({...p,_date:yd}));  // 어제 부재는 이월 안 함
-  const merged={}; [...ydConfirm, ...todayP].forEach(p=>{ merged[(p.store||'')+'|'+(p.biz||'')+'|'+(p.time||'')]=p; });
+  const ydP = beforeCutoff ? ((slackDay(yd)||{}).pending||[]).filter(nf).map(p=>({...p,_date:yd})) : [];
+  const merged={}; [...ydP, ...todayP].forEach(p=>{ merged[(p.store||'')+'|'+(p.biz||'')+'|'+(p.time||'')]=p; });
   return Object.values(merged);
 }
 function overviewPendingCard(){
   const t=ymd(today());
   const list=ovPendingList();
   const upd=(slackDay(t)||{}).updatedAt;
-  const head=`<div class="card-head"><h3>🔎 미처리 · 확인필요 <span class="cnt-badge">${list.length}</span></h3><span class="hint">부재 당일만 · 확인필요 이월${upd?` (${upd} 갱신)`:''} · 상호/사업자 검색</span></div>`;
+  const head=`<div class="card-head"><h3>🔎 미처리 · 확인필요 <span class="cnt-badge">${list.length}</span></h3><span class="hint">부재·확인필요 다음날 오전 10시까지 이월${upd?` (${upd} 갱신)`:''} · 상호/사업자 검색</span></div>`;
   if(!list.length) return `<div class="card">${head}<div class="empty-note">지금 챙길 미처리·확인필요 건이 없습니다 ✅</div></div>`;
   const rows=list.slice().sort((a,b)=>((b._date||'')+(b.time||'')).localeCompare((a._date||'')+(a.time||''))).map(p=>{
     const c=WORK_CATS.find(w=>w.key===(p.cat||'as'))||{name:p.cat||'AS',color:'#8e8e93'};
@@ -2949,7 +2949,7 @@ function overviewPendingCard(){
   }).join("");
   return `<div class="card">${head}
     <p class="note" style="margin:-6px 0 14px;font-size:13px;color:var(--gray)">
-      <b>완료(원격OOO)</b>가 안 됐거나 <b>1차 부재</b>가 찍힌 건입니다. <b>부재 건도 원격 총 건수에 포함(당일만 표시, 다음날 사라짐)</b>되고, <b>확인필요는 다음날까지 이월</b>됩니다. (2차부재 제외)</p>
+      <b>완료(원격OOO)</b>가 안 됐거나 <b>1차 부재</b>가 찍힌 건(확인·부재 후 1시간 경과)입니다. <b>부재·확인필요 모두 다음날 오전 10시까지 이월</b>된 뒤 사라집니다. (2차부재 제외)</p>
     <input class="search-box" type="text" placeholder="상호명 또는 사업자번호 검색…" oninput="filterOvPending(this.value)">
     <div style="overflow-x:auto"><table style="margin-top:12px">
       <thead><tr><th style="width:48px">일자</th><th style="width:92px">유형</th><th style="width:52px">시간</th><th>상호</th><th style="width:122px">사업자번호</th><th>상태</th><th style="width:70px">담당</th></tr></thead>

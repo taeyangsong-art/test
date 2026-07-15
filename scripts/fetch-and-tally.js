@@ -194,6 +194,7 @@ function tallyInto(msgs, ch, counts, pending, done) {
     const absTag = names.some(n => /2차.?부재/.test(n)) ? '2차 부재' : '1차 부재';
     const hasDup = names.some(n => /중복/.test(n));                          // 팀이 '진짜 중복'에만 찍는 표시
     const doer = emp || confirmPerson;
+    const ageSec = now.getTime() / 1000 - parseFloat(m.ts || '0');   // 메시지 게시 후 경과(초) — 확인/부재 유예 판정용
 
     if (hasDup) { dup++; continue; }         // 중복 이모지 → 집계 제외 (재처리는 중복 표시 없으니 별개 건으로 정상 집계됨)
     if (hasVocTag && !emojiCat) { continue; }   // 원격voc만 찍힌 순수 VOC 참조 → 업무 집계 제외(설문 VOC로만 관리)
@@ -212,10 +213,9 @@ function tallyInto(msgs, ch, counts, pending, done) {
       counts[catKey][who] = (counts[catKey][who] || 0) + 1; completed++;
       done.push({ time, store, biz, cat: catKey, emp: who });
     } else if (hasAbsent) {                  // 완료·카테고리 이모지 없이 '부재만'
-      // 2차부재(재부재=연락 불가)는 확인필요에서 제외, 1차부재만 확인필요로 남김
-      if (absTag !== '2차 부재') pending.push({ time, store, biz, handler: doer || '미지정', cat: ch.defaultCat, reasons: [absTag] });
+      // 2차부재(재부재=연락 불가)는 확인필요에서 제외, 1차부재만 — 그것도 1시간 지나야 확인필요로 적재
+      if (absTag !== '2차 부재' && ageSec >= CONFIRM_GRACE_SEC) pending.push({ time, store, biz, handler: doer || '미지정', cat: ch.defaultCat, reasons: [absTag] });
     } else if (confirmPerson) {              // 확인만 찍힘 → 완료·카테고리 이모지 없이 1시간 지나면 '확인 후 미완료'
-      const ageSec = now.getTime() / 1000 - parseFloat(m.ts || '0');
       if (ageSec >= CONFIRM_GRACE_SEC) pending.push({ time, store, biz, handler: confirmPerson, cat: ch.defaultCat, reasons: ['확인 후 미완료'] });
     }
   }
