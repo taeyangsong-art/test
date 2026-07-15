@@ -1834,14 +1834,20 @@ function renderGame(){
 }
 /* ===== 🎣 낚시터 (가챠) ===== */
 const FISH = {
-  low:  {emoji:'🏞️', name:'초급 낚시터', cost:1,  entry:0,  desc:'누구나 · 코인 30%, 아이템 1%, 최악 -1코인',
-    loot:[ {w:490,t:'none'}, {w:300,t:'coin',big:true}, {w:200,t:'coin',min:-1,max:-1}, {w:10,t:'item',rar:['common','rare'],fish:true} ]},
-  mid:  {emoji:'⛵', name:'중급 낚시터', cost:3,  entry:20, desc:'20코인↑ · 코인 30%, 아이템 3%, 최악 -3코인',
+  low:  {emoji:'🏞️', name:'초급 낚시터', cost:1,  entry:0,  desc:'누구나 · 아이템 10%, 코인 50%, 꽝 30%, 최악 -1코인',
+    loot:[ {w:300,t:'none'}, {w:500,t:'coin',big:true}, {w:100,t:'coin',min:-1,max:-1}, {w:100,t:'item',rar:['common','rare'],fish:true} ]},
+  mid:  {emoji:'⛵', name:'중급 낚시터', cost:3,  entry:20, reqLowItem:true, desc:'초급 아이템 1개 획득 + 20코인↑ · 아이템 3%, 최악 -3코인',
     loot:[ {w:550,t:'none'}, {w:300,t:'coin',big:true}, {w:120,t:'coin',min:-3,max:-2}, {w:30,t:'item',rar:['rare','epic'],fish:true} ]},
   high: {emoji:'🌊', name:'고급 낚시터', cost:10, entry:0,  desc:'신화 전용! 코인 30%, 아이템 5%↓, 최악 -10코인',
     loot:[ {w:560,t:'none'}, {w:300,t:'coin',big:true}, {w:90,t:'coin',min:-10,max:-5}, {w:40,t:'item',rar:['epic','legendary'],fish:true}, {w:10,t:'item',rar:['mythic'],fish:true} ]},
 };
 let fishBusy=false;
+// 낚시터 입장 조건 체크 (전제조건: 초급 아이템 1개 + 입장 코인)
+function fishGate(emp, f){
+  if(f.reqLowItem && !((gs(emp).fishLowItems||0)>0)) return {ok:false, msg:'🔒 중급 낚시터는 먼저 초급 낚시터에서 아이템을 1개 이상 낚아야 입장할 수 있어요!'};
+  if(f.entry && empAvail(emp)<f.entry) return {ok:false, msg:f.name+'는 '+f.entry+'코인 이상 있어야 입장할 수 있어요!'};
+  return {ok:true};
+}
 function randInt(a,b){ return a+Math.floor(Math.random()*(b-a+1)); }
 // 코인 획득량: 1~1000, 큰 금액일수록 극희박 (1000코인 ≈ 0.001%)
 function pickCoinAmount(){ const T=[{w:50000,a:1,b:5},{w:25000,a:6,b:20},{w:15000,a:21,b:80},{w:7000,a:81,b:200},{w:2500,a:201,b:500},{w:490,a:501,b:999},{w:1,a:1000,b:1000}]; const tot=T.reduce((s,t)=>s+t.w,0); let r=Math.random()*tot; for(const t of T){ if((r-=t.w)<0) return randInt(t.a,t.b); } return 1; }
@@ -1893,11 +1899,13 @@ function resolveLoot(emp,out){ const g=gs(emp);
 async function castFish(spot){
   const emp=gameMe; if(!emp){ alert('먼저 본인을 선택하세요 🙂'); return; }
   const f=FISH[spot]; if(fishBusy) return;
-  if(f.entry && empAvail(emp)<f.entry){ alert(f.name+'는 '+f.entry+'코인 이상 있어야 입장할 수 있어요!'); return; }
+  const gate=fishGate(emp,f); if(!gate.ok){ alert(gate.msg); return; }
   if(empAvail(emp)<f.cost){ alert('🪙 코인이 부족해요! (캐스트 '+f.cost+'코인)'); return; }
   if(!(await requireAuth(emp))) return;   // 코인 소모 → 본인 인증
   fishBusy=true; addSpent(emp, f.cost); saveGame(); showFishing(f);
-  setTimeout(()=>{ const res=resolveLoot(emp, rollLootPerk(f.loot, petPerk(emp))); saveGame(); showFishResult(res); renderMain(); fishBusy=false; }, 1400);
+  setTimeout(()=>{ const res=resolveLoot(emp, rollLootPerk(f.loot, petPerk(emp)));
+    if(spot==='low' && res.cls==='item'){ const g=gs(emp); g.fishLowItems=(g.fishLowItems||0)+1; }   // 초급 아이템 획득 기록 → 중급 해금
+    saveGame(); showFishResult(res); renderMain(); fishBusy=false; }, 1400);
 }
 function showFishing(f){
   let el=document.getElementById('fishPop'); if(!el){ el=document.createElement('div'); el.id='fishPop'; el.className='duty-pop-overlay'; document.body.appendChild(el); }
@@ -1916,7 +1924,7 @@ function showFishResult(res){
   if(epicUp && typeof fireMvpConfetti==='function'){ try{ fireMvpConfetti(); }catch(e){} }
 }
 let fishRoom=null;   // 입장한 낚시터 (null=로비)
-function enterFishRoom(spot){ const emp=gameMe; if(!emp){ alert('먼저 본인을 선택하세요 🙂'); return; } const f=FISH[spot]; if(f.entry && empAvail(emp)<f.entry){ alert(f.name+'는 '+f.entry+'코인 이상 있어야 입장할 수 있어요!'); return; } fishRoom=spot; renderGameFish(); window.scrollTo(0,0); }
+function enterFishRoom(spot){ const emp=gameMe; if(!emp){ alert('먼저 본인을 선택하세요 🙂'); return; } const f=FISH[spot]; const gate=fishGate(emp,f); if(!gate.ok){ alert(gate.msg); return; } fishRoom=spot; renderGameFish(); window.scrollTo(0,0); }
 function leaveFishRoom(){ fishRoom=null; renderGameFish(); window.scrollTo(0,0); }
 function fishOdds(spot){ const loot=FISH[spot].loot, tot=loot.reduce((a,x)=>a+x.w,0); let none=0,coin=0,item=0,minus=0; loot.forEach(x=>{ if(x.t==='none')none+=x.w; else if(x.t==='coin'){ if((x.max||0)<0)minus+=x.w; else coin+=x.w; } else item+=x.w; }); const p=n=>Math.round(n/tot*100); return {none:p(none),coin:p(coin),item:p(item),minus:p(minus)}; }
 function fishItemPreview(spot){ const seen={}, items=[]; FISH[spot].loot.filter(x=>x.t==='item').forEach(x=>{ for(const cat in GAME_ITEMS){ for(const it of GAME_ITEMS[cat]){ if(it.price===0) continue; if(!x.rar.includes(it.rarity)) continue; if(x.fish&&!it.fishOnly) continue; if(!x.fish&&it.fishOnly) continue; const k=cat+':'+it.id; if(!seen[k]){ seen[k]=1; items.push(Object.assign({cat},it)); } } } }); const ord={mythic:0,legendary:1,epic:2,rare:3,common:4}; return items.sort((a,b)=>(ord[a.rarity]-ord[b.rarity])); }
@@ -1936,12 +1944,12 @@ function renderGameFish(){
   const petbar = (mp&&mp.perk)
     ? `<div class="fish-petbar"><span class="fpb-emoji">${mp.e||'🐾'}</span><span>착용 펫 <b>${escapeHtml(mp.name)}</b> · ${escapeHtml(perkDesc(mp.perk))}</span></div>`
     : `<div class="fish-petbar" style="background:#f1f5f9;color:#64748b"><span class="fpb-emoji">🐾</span><span>펫을 착용하면 낚시 능력치 보너스! (에픽↑ 펫은 낚시터에서 획득)</span></div>`;
-  document.getElementById("main").innerHTML=head+petbar+`<div class="fish-grid">${['low','mid','high'].map(k=>{ const f=FISH[k], locked=(f.entry&&empAvail(emp)<f.entry);
+  document.getElementById("main").innerHTML=head+petbar+`<div class="fish-grid">${['low','mid','high'].map(k=>{ const f=FISH[k]; const gate=fishGate(emp,f), locked=!gate.ok; const needItem=f.reqLowItem&&!((gs(emp).fishLowItems||0)>0);
     return `<div class="fish-spot fs-${k}">
       <div class="fs-emoji">${f.emoji}</div><div class="fs-name">${f.name}</div>
       <div class="fs-desc">${f.desc}</div>
-      <div class="fs-cost">캐스트 <b>🪙${f.cost}</b>${f.entry?` · 입장 ${f.entry}코인↑`:''}</div>
-      <button class="fs-btn" ${locked?'disabled':''} onclick="enterFishRoom('${k}')">${locked?`🔒 ${f.entry}코인 필요`:'⛵ 입장하기'}</button>
+      <div class="fs-cost">캐스트 <b>🪙${f.cost}</b>${f.entry?` · 입장 ${f.entry}코인↑`:''}${f.reqLowItem?` · 초급 아이템 필요`:''}</div>
+      <button class="fs-btn" ${locked?'disabled':''} onclick="enterFishRoom('${k}')">${locked?(needItem?'🔒 초급 아이템 1개 필요':`🔒 ${f.entry}코인 필요`):'⛵ 입장하기'}</button>
     </div>`; }).join('')}</div>`;
 }
 function renderFishRoom(spot, emp){
