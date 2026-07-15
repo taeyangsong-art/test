@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 562,
+  "version": 563,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -27258,18 +27258,18 @@ window.SLACK_DATA = {
     "2026-07-15": {
       "counts": {
         "as": {
-          "최민석": 7,
+          "최민석": 8,
           "심성현": 34,
+          "송태양": 20,
           "김현기": 20,
           "배선유": 17,
-          "송태양": 19,
           "김동욱": 17,
           "김규빈": 10,
           "김기범": 11,
           "서상원": 1
         },
         "onboarding": {
-          "최민석": 1,
+          "최민석": 2,
           "김동욱": 9,
           "배선유": 6,
           "김규빈": 2,
@@ -27307,6 +27307,20 @@ window.SLACK_DATA = {
       ],
       "done": [
         {
+          "time": "18:03",
+          "store": "만통치킨 인천논현점",
+          "biz": "4550104130",
+          "cat": "as",
+          "emp": "최민석"
+        },
+        {
+          "time": "18:02",
+          "store": "주식회사 엘제이 (Lj)",
+          "biz": "5958503671",
+          "cat": "as",
+          "emp": "최민석"
+        },
+        {
           "time": "17:59",
           "store": "포엔트(FOANT)",
           "biz": "5601003231",
@@ -27326,6 +27340,13 @@ window.SLACK_DATA = {
           "biz": "3061739551",
           "cat": "as",
           "emp": "심성현"
+        },
+        {
+          "time": "17:49",
+          "store": "하라고 헤어",
+          "biz": "4321901718",
+          "cat": "as",
+          "emp": "송태양"
         },
         {
           "time": "17:48",
@@ -27786,7 +27807,7 @@ window.SLACK_DATA = {
           "time": "15:01",
           "store": "토티왁싱",
           "biz": "6253101684",
-          "cat": "as",
+          "cat": "onboarding",
           "emp": "최민석"
         },
         {
@@ -28609,7 +28630,7 @@ window.SLACK_DATA = {
           "emp": "김동욱"
         }
       ],
-      "updatedAt": "18:12",
+      "updatedAt": "18:22",
       "voc": {
         "responses": 19,
         "install": {
