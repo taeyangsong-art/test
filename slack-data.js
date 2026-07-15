@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 534,
+  "version": 535,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -27258,8 +27258,8 @@ window.SLACK_DATA = {
     "2026-07-15": {
       "counts": {
         "as": {
-          "심성현": 8,
-          "송태양": 6,
+          "송태양": 7,
+          "심성현": 9,
           "김현기": 4,
           "배선유": 4,
           "김동욱": 2,
@@ -27270,11 +27270,13 @@ window.SLACK_DATA = {
           "김동욱": 1
         },
         "onboarding": {
+          "김동욱": 1,
           "배선유": 2,
           "심성현": 1,
           "김규빈": 1
         },
         "menu": {
+          "김규빈": 1,
           "배선유": 5,
           "김동욱": 1
         },
@@ -27284,21 +27286,21 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
-          "time": "11:28",
-          "store": "키리야(kiriya)카페",
-          "biz": "2891203393",
-          "handler": "심성현",
+          "time": "11:35",
+          "store": "공릉동 닭한마리",
+          "biz": "5461400992",
+          "handler": "김동욱",
           "cat": "as",
           "reasons": [
             "확인 후 미완료"
           ]
         },
         {
-          "time": "11:22",
-          "store": "면의계절밤일마을본점",
-          "biz": "4075001127",
-          "handler": "김규빈",
-          "cat": "menu",
+          "time": "11:30",
+          "store": "소바미",
+          "biz": "3732000401",
+          "handler": "심성현",
+          "cat": "as",
           "reasons": [
             "확인 후 미완료"
           ]
@@ -27315,16 +27317,6 @@ window.SLACK_DATA = {
         },
         {
           "time": "11:15",
-          "store": "미미롱",
-          "biz": "6552901794",
-          "handler": "김동욱",
-          "cat": "as",
-          "reasons": [
-            "1차 부재"
-          ]
-        },
-        {
-          "time": "11:15",
           "store": "스마트해법수학학원",
           "biz": "2239308698",
           "handler": "김현기",
@@ -27336,11 +27328,32 @@ window.SLACK_DATA = {
       ],
       "done": [
         {
+          "time": "11:31",
+          "store": "종단아구찜",
+          "biz": "7555000013",
+          "cat": "as",
+          "emp": "송태양"
+        },
+        {
+          "time": "11:28",
+          "store": "키리야(kiriya)카페",
+          "biz": "2891203393",
+          "cat": "as",
+          "emp": "심성현"
+        },
+        {
           "time": "11:23",
           "store": "도시곳간 구로점",
           "biz": "4162227375",
           "cat": "as",
           "emp": "심성현"
+        },
+        {
+          "time": "11:22",
+          "store": "면의계절밤일마을본점",
+          "biz": "4075001127",
+          "cat": "menu",
+          "emp": "김규빈"
         },
         {
           "time": "11:20",
@@ -27355,6 +27368,13 @@ window.SLACK_DATA = {
           "biz": "3688503104",
           "cat": "extern",
           "emp": "서상원"
+        },
+        {
+          "time": "11:15",
+          "store": "미미롱",
+          "biz": "6552901794",
+          "cat": "onboarding",
+          "emp": "김동욱"
         },
         {
           "time": "11:15",
@@ -27609,7 +27629,7 @@ window.SLACK_DATA = {
           "emp": "김동욱"
         }
       ],
-      "updatedAt": "11:30",
+      "updatedAt": "11:35",
       "voc": {
         "responses": 2,
         "install": {
