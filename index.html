@@ -588,11 +588,26 @@
   .voc-drill-sum:hover{background:var(--canvas,#fff); border-color:var(--blue,#1F4FFA); box-shadow:0 2px 10px rgba(31,79,250,.12); transform:translateY(-1px)}
   .voc-drill-sum .vd-open{flex:0 0 auto; opacity:.45; font-size:13px}
   .voc-drill-sum:hover .vd-open{opacity:1}
-  /* 큰 상세 모달 */
+  /* 큰 상세 모달 — 글씨 크게 */
   .vd-modal{max-width:min(920px,94vw); width:920px}
-  .vd-modal-body{font-size:14px}
-  .vd-modal-body .vd-reasons{margin-bottom:14px}
-  .vd-modal-body .voc-detail-item{padding:12px 14px}
+  .vd-modal-body{font-size:16px}
+  .vd-modal-body .vd-reasons{margin-bottom:6px}
+  .vd-modal-body .vd-reasons-h{font-size:16px; margin-bottom:12px}
+  .vd-modal-body .vd-rname{font-size:15px}
+  .vd-modal-body .vd-rcnt{font-size:15px; min-width:52px}
+  .vd-modal-body .vd-rrow{margin-bottom:7px}
+  .vd-modal-body .voc-detail-item{padding:13px 15px}
+  .vd-modal-body .vd-store{font-size:16.5px}
+  .vd-modal-body .vd-content,.vd-modal-body .vd-note{font-size:15px; line-height:1.6}
+  .vd-modal-body .vd-content b,.vd-modal-body .vd-note b{font-size:12px}
+  /* 매장별 상세 접힘(처음엔 이유만) */
+  .vd-stores{margin-top:6px; border-top:1px dashed var(--line); padding-top:10px}
+  .vd-stores summary{cursor:pointer; font-size:15px; font-weight:800; color:var(--blue,#1F4FFA); list-style:none; padding:8px 10px;
+    background:#eef2ff; border-radius:10px; display:inline-block}
+  .vd-stores summary::-webkit-details-marker{display:none}
+  .vd-stores summary::before{content:'▸ '; font-size:12px}
+  .vd-stores[open] summary::before{content:'▾ '}
+  .vd-stores[open] summary{margin-bottom:10px}
   .vd-top{font-size:13px; color:var(--ink); background:var(--surface2); border:1px solid var(--line-soft); border-radius:8px; padding:8px 10px; margin:10px 0 8px}
   .vd-reasons{background:var(--canvas); border:1px solid var(--line-soft); border-radius:8px; padding:10px 11px; margin:10px 0 8px}
   .vd-reasons-h{font-size:12.5px; color:var(--ink); margin-bottom:9px}
@@ -2483,7 +2498,11 @@ function vocGroupDrill(entries, max, color, topReason){
       </div>`;
     }
     const nm=name.split('(')[0], id='vd'+(vdSeq++);
-    VOCDRILL[id]={title:nm, cnt, pct, icon:topReason?'🏭':'😟', html:`${topLine}${storeDetailList(items)}`};
+    // 업종 드릴은 처음 화면에 '인입 이유'만 보이게 → 매장별 상세는 접어둠(클릭 시 펼침). 이유별 드릴은 매장 상세를 바로 표시.
+    const bodyHtml = topLine
+      ? `${topLine}<details class="vd-stores"><summary>🏪 매장별 상세 보기 (${cnt}곳)</summary>${storeDetailList(items)}</details>`
+      : storeDetailList(items);
+    VOCDRILL[id]={title:nm, cnt, pct, icon:topReason?'🏭':'😟', html:bodyHtml};
     return `<div class="voc-drill-sum" onclick="showVocDrill('${id}')" title="클릭 → 크게 보기">
       <span class="vd-name">${escapeHtml(nm)}</span><span class="vd-bar"><span class="vd-fill" style="width:${cnt/max*100}%;background:${color}"></span></span><span class="vd-cnt">${cnt}건 <span class="vd-pct">${pct}%</span></span><span class="vd-open">🔍</span>
     </div>`;
