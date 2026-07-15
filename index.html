@@ -2010,8 +2010,8 @@ function renderOverview(){
   const grandAllPrev = grandProcPrev + pendCntOf(prevDates);
   const ovPend = ovPendingList();                     // 부재·확인필요 모두 다음날 오전 10시까지 이월
   const pendCarry = ovPend.length;
-  // 누락 랭킹 — 미처리·확인필요에 적재된 담당자 카운트
-  const missRows=(function(){ const cnt={}; ovPend.forEach(p=>{ const hd=p.handler; if(hd&&hd!=='미지정') cnt[hd]=(cnt[hd]||0)+1; }); return Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,5); })();
+  // 누락 랭킹 — 이번 달 누적(부재/확인필요) 담당자별 카운트 (매월 1일 초기화)
+  const missRows=Object.entries(monthlyMissByEmp().cnt).sort((a,b)=>b[1]-a[1]).slice(0,5);
 
   // VOC 저점을 확인 담당자(emp) 기준으로 직원별 집계
   const vocByEmp = vocDoneCur.byEmp;   // 완료일 기준 직원별 VOC 처리
@@ -2101,8 +2101,8 @@ function renderOverview(){
       <div class="card light-rank"><div class="card-head"><h3>😇 직원 랭킹 <span class="rank-sub">🍭 천국의 명단</span></h3><span class="hint">${viewLabel} 처리량 TOP</span></div>
         <div class="rank-row">${empRows.slice(0,5).map((r,i)=>`<div class="rank-item light ${i<3?'top':''}"${i<3?` style="animation-delay:${(i*0.4).toFixed(2)}s"`:''}><div class="rank-medal">${['🥇','🥈','🥉','🏅','🏅'][i]||'🏅'}</div><div class="rank-name">${rankNameHTML(r.emp)}</div><div class="rank-val">${r.total}건</div></div>`).join('')}</div>
       </div>
-      <div class="card dark-rank"><div class="card-head"><h3>⚡ 누락 랭킹 <span class="rank-sub">💀 어둠의 명단</span></h3><span class="hint">미처리·확인필요 담당</span></div>
-        <div class="rank-row">${missRows.length?missRows.map((r,i)=>`<div class="rank-item dark ${i===0?'worst':''}"><div class="rank-medal">${['💀','☠️','⚰️','🦇','👻'][i]||'🕸️'}</div><div class="rank-name">${escapeHtml(r[0])}</div><div class="rank-val">${r[1]}건 누락</div></div>`).join(''):'<div class="empty-note" style="color:#b8a8d8">누락 없음 — 평화롭습니다 🕊️</div>'}</div>
+      <div class="card dark-rank"><div class="card-head"><h3>⚡ 누락 랭킹 <span class="rank-sub">💀 어둠의 명단</span></h3><span class="hint">이번 달 누적 · 클릭 → 상세 · 매월 1일 초기화</span></div>
+        <div class="rank-row">${missRows.length?missRows.map((r,i)=>`<div class="rank-item dark ${i===0?'worst':''}" onclick="showMissDetail('${escapeHtml(r[0])}')" style="cursor:pointer" title="🔎 누락 건 상세 보기"><div class="rank-medal">${['💀','☠️','⚰️','🦇','👻'][i]||'🕸️'}</div><div class="rank-name">${escapeHtml(r[0])}</div><div class="rank-val">${r[1]}건 누락 🔎</div></div>`).join(''):'<div class="empty-note" style="color:#b8a8d8">누락 없음 — 평화롭습니다 🕊️</div>'}</div>
       </div>
     </div>
 
@@ -2925,6 +2925,22 @@ function ovPendingList(){
   const ydP = beforeCutoff ? ((slackDay(yd)||{}).pending||[]).filter(nf).map(p=>({...p,_date:yd})) : [];
   const merged={}; [...ydP, ...todayP].forEach(p=>{ merged[(p.store||'')+'|'+(p.biz||'')+'|'+(p.time||'')]=p; });
   return Object.values(merged);
+}
+// 누락 랭킹 (이번 달 누적) — 미처리(1차부재/확인필요) 담당자별 건수 + 상세. 매월 1일 초기화(현재 달만 집계)
+function monthlyMissByEmp(){
+  const mk=curMonthKey(); const cnt={}, items={};
+  allSlackDates().filter(d=>d.slice(0,7)===mk).forEach(d=>{
+    ((slackDay(d)||{}).pending||[]).forEach(p=>{
+      if(ovShift==='night' && !isNightTime(p.time)) return;
+      const hd=p.handler; if(!hd||hd==='미지정') return;
+      cnt[hd]=(cnt[hd]||0)+1; (items[hd]=items[hd]||[]).push({...p,_date:d});
+    });
+  });
+  return {cnt, items};
+}
+function showMissDetail(emp){
+  const list=(monthlyMissByEmp().items[emp]||[]).map(p=>({time:p.time, store:p.store, biz:p.biz, emp:p.handler, cat:p.cat, date:p._date, st:(p.reasons||[]).some(r=>/부재/.test(r))?'부재':'확인필요'}));
+  openDetailModal('💀 '+emp+' 누락 상세 (이번 달)', list);
 }
 function overviewPendingCard(){
   const t=ymd(today());
