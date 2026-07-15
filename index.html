@@ -267,7 +267,7 @@
   .si-rar{font-size:10px; font-weight:800; color:var(--rar); letter-spacing:.03em}
   .si-disp{font-size:30px; line-height:1.15; margin:6px 0 4px; min-height:46px; display:flex; align-items:center; justify-content:center; font-weight:800}
   /* 타이틀 텍스트는 크기 줄이고 2줄까지 허용 (카드 높이 균일) */
-  .si-disp .tr-common,.si-disp .tr-rare,.si-disp .tr-epic,.si-disp .tr-legendary,.si-disp .tr-mythic{font-size:14px; line-height:1.35; word-break:keep-all}
+  .si-disp .tr-common,.si-disp .tr-rare,.si-disp .tr-epic,.si-disp .tr-legendary,.si-disp .tr-mythic,.si-disp .tr-unique{font-size:14px; line-height:1.35; word-break:keep-all}
   .si-name{font-size:13px; font-weight:700; color:var(--ink); margin-bottom:9px}
   .si-buy{width:100%; border:none; border-radius:9px; padding:8px; font-family:inherit; font-size:12.5px; font-weight:800; cursor:pointer;
     background:var(--ink); color:#fff; transition:.15s; margin-top:auto}
@@ -293,7 +293,8 @@
   .ach-reset-note{font-size:12px; font-weight:600; color:var(--purple,#6E3FE5); background:#f3e8ff;
     border-radius:10px; padding:8px 12px; margin:-4px 0 10px}
   .r-title{font-size:11px; font-weight:800; margin-right:4px}
-  .tr-legendary,.tr-mythic{background-size:200% auto; animation:titleShine 2.6s linear infinite}
+  .tr-legendary,.tr-mythic,.tr-unique{background-size:200% auto; animation:titleShine 2.6s linear infinite}
+  .tr-unique{animation-duration:1.8s; filter:drop-shadow(0 0 5px rgba(255,184,0,.55))}
   @keyframes titleShine{to{background-position:-200% center}}
   /* 🎣 낚시터 */
   .fish-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px}
@@ -1204,7 +1205,7 @@ const ACH_SHORT={hand:'하루 35건',phoenix:'12시간 이상 처리',master:'6�
 function achShort(k){ return ACH_SHORT[k]||''; }
 // 낚시 전용 아이템이 어느 낚시터에서 나오는지 힌트 (지정 드롭 + 등급별)
 function fishSpotHint(it){
-  const targeted={ft_wanderer:'초급 낚시터', t_whale:'중급 낚시터'};
+  const targeted={ft_wanderer:'초급 낚시터', t_whale:'중급 낚시터', ft_captain:'고급 낚시터'};
   if(targeted[it.id]) return targeted[it.id];
   return ({common:'초급 낚시터', rare:'초급·중급 낚시터', epic:'중급·고급 낚시터', legendary:'고급 낚시터', mythic:'고급 낚시터'})[it.rarity] || '낚시터';
 }
@@ -1421,8 +1422,8 @@ function tgEdit(){
 /* ================= 🎮 원격 상점 (게임) ================= */
 const GAME_API = "https://script.google.com/macros/s/AKfycbwlPj0fbNjMWTpU1jiGI3gUNPvOE8MlZ7ANqgQP41ZrWE0vo4r2en1pSYZVgEiYYR8M_A/exec";   // Apps Script 웹앱(팀 공유 클라우드)
 const GAME_COIN_PER = 1;             // 원격 1건 = 🪙1코인
-const RARITY = {common:'#8a94a6', rare:'#1a73e8', epic:'#9c36b5', legendary:'#e8820a', mythic:'#e0218a'};
-const RARITY_KO = {common:'일반', rare:'레어', epic:'에픽', legendary:'전설', mythic:'신화'};
+const RARITY = {common:'#8a94a6', rare:'#1a73e8', epic:'#9c36b5', legendary:'#e8820a', mythic:'#e0218a', unique:'#FFB800'};
+const RARITY_KO = {common:'일반', rare:'레어', epic:'에픽', legendary:'전설', mythic:'신화', unique:'유일'};
 const GAME_ITEMS = {
   title: [
     {id:'t_novice',name:'견습 원격러',price:0,rarity:'common'},
@@ -1436,7 +1437,7 @@ const GAME_ITEMS = {
     {id:'ft_novice',name:'초보 낚시꾼',price:60,rarity:'common',fishOnly:true},
     {id:'ft_wanderer',name:'전문가',price:350,rarity:'epic',fishOnly:true,targetOnly:true,color:'#2d3fa0',glow:'#3f5fff'},
     {id:'t_whale',name:'고래',price:800,rarity:'legendary',fishOnly:true,targetOnly:true,grad:'linear-gradient(90deg,#4ea8ff,#00f5d4,#8a5cff,#4ea8ff)'},
-    {id:'ft_captain',name:'폭풍의 선장',price:700,rarity:'legendary',fishOnly:true,grad:'linear-gradient(90deg,#0aa5b1,#4ea8ff,#0aa5b1)'},
+    {id:'ft_captain',name:'곽호영',price:9999,rarity:'unique',fishOnly:true,targetOnly:true,freeShop:true,grad:'linear-gradient(90deg,#ff2d55,#ff9500,#ffd60a,#34c759,#00c7be,#5e5ce6,#bf5af2,#ff2d55)'},
   ],
   nametag: [
     {id:'n_none',name:'기본',price:0,rarity:'common'},
@@ -1741,9 +1742,10 @@ function itemTipHTML(cat,id){ const it=itemById(cat,id); if(!it) return ''; cons
     ${disp}
     <div class="it-tip-name">${CAT_LABEL[cat]||''} · ${escapeHtml(it.name)}</div>
     ${it.ach?(function(){ const a=gameMe?achStatus(gameMe,it):null; return `<div class="it-tip-req"><div class="it-tip-cond">🎯 달성 조건: ${escapeHtml(a?a.label:achShort(it.ach))}</div>${a&&a.prog&&a.prog!=='미달'?`<div class="it-tip-prog">📊 내 진행 <b>${escapeHtml(a.prog)}</b></div>`:''}<div class="it-tip-reset">🔄 매월 1일 진행 초기화</div></div>`; })():''}
-    ${(!it.ach && it.fishOnly)?`<div class="it-tip-req"><div class="it-tip-cond">🎣 획득: ${escapeHtml(fishSpotHint(it))}에서 낚시로 획득</div></div>`:''}
+    ${(!it.ach && it.fishOnly)?`<div class="it-tip-req"><div class="it-tip-cond">🎣 획득: ${escapeHtml(fishSpotHint(it))}에서 낚시로 획득${it.id==='ft_captain'?' · 🌈 0.00001% 극악 확률':''}</div></div>`:''}
     ${it.perk?`<div class="it-tip-perk"><span class="it-tip-perk-h">🐾 펫 능력</span> ${escapeHtml(perkDesc(it.perk))}</div>`:''}
-    <div class="it-tip-foot">${it.ach?(owned?'✓ 보유중':(gameMe&&achStatus(gameMe,it).ok?'🎁 지금 무료 획득 가능!':'🎯 달성 시 무료 획득')):(it.price===0?'기본 제공':(owned?'✓ 보유중':(it.fishOnly?'낚시로만 획득':'🪙 '+it.price+' 코인')))}</div>
+    ${it.freeShop?`<div class="it-tip-perk"><span class="it-tip-perk-h">👑 유일 능력</span> 착용 시 모든 상점 아이템 무료!</div>`:''}
+    <div class="it-tip-foot">${it.ach?(owned?'✓ 보유중':(gameMe&&achStatus(gameMe,it).ok?'🎁 지금 무료 획득 가능!':'🎯 달성 시 무료 획득')):(it.price===0?'기본 제공':(owned?'✓ 보유중':(it.fishOnly?'낚시로만 획득':((gameMe&&hasFreeShop(gameMe))?'🆓 무료 (곽호영 능력)':'🪙 '+it.price+' 코인'))))}</div>
   </div>`;
 }
 function showItemTip(e,cat,id){ let t=document.getElementById('itemTip'); if(!t){ t=document.createElement('div'); t.id='itemTip'; t.className='item-tip'; document.body.appendChild(t); } const html=itemTipHTML(cat,id); if(!html){ hideItemTip(); return; } t.innerHTML=html; t.style.display='block'; moveItemTip(e); }
@@ -1831,6 +1833,8 @@ async function adminResetPin(){
   if(r&&r.ok){ delete GAMEAUTH[emp.trim()]; save(LS_GAMEAUTH,GAMEAUTH); alert(`✅ ${emp} 님 PIN이 초기화됐어요.\n그 직원이 다음에 코인 쓸 때 새로 설정하면 됩니다.`); }
   else alert('초기화 실패: '+(r&&r.error==='bad_key'?'관리자 키가 틀렸어요':(r&&r.error)||''));
 }
+// 👑 유일 타이틀 [곽호영] 착용 시 능력: 모든 상점(코인) 아이템 무료
+function hasFreeShop(emp){ const t=itemById('title',(gs(emp).equipped||{}).title); return !!(t&&t.freeShop); }
 async function buyOrEquip(cat,id){
   const emp=gameMe; if(!emp){ alert('먼저 상단에서 본인 이름을 선택하세요 🙂'); return; }
   const it=itemById(cat,id); if(!it) return; const g=gs(emp);
@@ -1838,6 +1842,8 @@ async function buyOrEquip(cat,id){
     const a=achStatus(emp, it);
     if(a){   // 달성형(코인 없이 무료 획득)
       if(!a.ok){ alert(`🔒 [${it.name}]는 아직 달성 전이에요!\n조건: ${a.label}\n진행: ${a.prog}`); return; }
+      g.owned=g.owned||[]; g.owned.push(cat+':'+id);
+    } else if(hasFreeShop(emp)){   // 👑 곽호영 능력: 무료 획득 (코인 소모·인증 없음)
       g.owned=g.owned||[]; g.owned.push(cat+':'+id);
     } else {  // 일반 코인 아이템
       if(empAvail(emp)<it.price){ alert('🪙 코인이 부족해요!\n원격을 더 처리하면 코인이 쌓여요 (1건 = 1코인)'); return; }
@@ -1857,8 +1863,10 @@ function shopCard(cat,it,emp){
     : (cat==='nametag' ? `<span style="${nametagStyle({nametag:it.id})}">가나</span>`
     : `<span class="tr-${r}" style="${titleStyleOf(it)}">[${escapeHtml(it.name)}]</span>`);
   const reqBadge = it.ach ? `<div class="si-req ${owned||(a&&a.ok)?'met':'locked'}">🎯 ${escapeHtml(achShort(it.ach))}${owned?' ✓':(a&&a.prog!=='미달'?` <b>${escapeHtml(a.prog)}</b>`:'')}</div>` : '';
-  const perkBadge = it.perk ? `<div class="si-perk">🐾 ${escapeHtml(perkDesc(it.perk))}</div>` : '';
-  const btnLabel = eq?'✓ 착용중':owned?'착용하기':locked?'🔒 조건 미달':a?'🎁 무료 획득':(it.price===0?'착용':'🪙 '+it.price);
+  const perkBadge = it.perk ? `<div class="si-perk">🐾 ${escapeHtml(perkDesc(it.perk))}</div>`
+    : it.freeShop ? `<div class="si-perk">👑 착용 시 모든 상점 아이템 무료</div>` : '';
+  const freeNow = !owned && !a && it.price>0 && hasFreeShop(emp);
+  const btnLabel = eq?'✓ 착용중':owned?'착용하기':locked?'🔒 조건 미달':a?'🎁 무료 획득':(it.price===0?'착용':(freeNow?'🆓 무료':'🪙 '+it.price));
   return `<div class="shop-item ${eq?'equipped':''} ${locked?'locked':''}" style="--rar:${RARITY[r]}" onmouseenter="previewEq('${cat}','${it.id}');showItemTip(event,'${cat}','${it.id}')" onmousemove="moveItemTip(event)" onmouseleave="clearPreview();hideItemTip()">
     <div class="si-rar">${RARITY_KO[r]}</div>
     <div class="si-disp">${disp}</div>
@@ -1911,8 +1919,8 @@ const FISH = {
     loot:[ {w:500,t:'none'}, {w:300,t:'coin',big:true}, {w:100,t:'coin',min:-1,max:-1}, {w:70,t:'item',rar:['common','rare'],fish:true}, {w:30,t:'item',id:'ft_wanderer'} ]},
   mid:  {emoji:'⛵', name:'중급 낚시터', cost:3,  entry:0, reqLowItem:true, desc:'전문가 타이틀 획득 시 캐스팅 가능 · 아이템 10%(고래 타이틀 포함!), 코인 30%, 꽝 50%, 최악 -5코인',
     loot:[ {w:500,t:'none'}, {w:300,t:'coin',big:true}, {w:100,t:'coin',min:-5,max:-2}, {w:70,t:'item',rar:['rare','epic'],fish:true}, {w:30,t:'item',id:'t_whale'} ]},
-  high: {emoji:'🌊', name:'고급 낚시터', cost:10, entry:0, reqItems:['pet:p_unicorn','pet:fp_shark'], desc:'중급에서 유니콘·상어 펫 획득 시 캐스팅 가능 · 신화 전용! 최악 -10코인',
-    loot:[ {w:560,t:'none'}, {w:300,t:'coin',big:true}, {w:90,t:'coin',min:-10,max:-5}, {w:40,t:'item',rar:['epic','legendary'],fish:true}, {w:10,t:'item',rar:['mythic'],fish:true} ]},
+  high: {emoji:'🌊', name:'고급 낚시터', cost:10, entry:0, reqItems:['pet:p_unicorn','pet:fp_shark'], desc:'중급에서 유니콘·상어 펫 획득 시 캐스팅 가능 · 신화 전용! 최악 -10코인 · 🌈 0.00001% 극악 확률로 [곽호영] 유일 타이틀!',
+    loot:[ {w:560,t:'none'}, {w:300,t:'coin',big:true}, {w:90,t:'coin',min:-10,max:-5}, {w:40,t:'item',rar:['epic','legendary'],fish:true}, {w:10,t:'item',rar:['mythic'],fish:true}, {w:0.0001,t:'item',id:'ft_captain'} ]},
 };
 let fishBusy=false;
 // 입장 조건(코인만) — 입장은 자유롭게 허용, 조건은 캐스팅에서만 검사
@@ -1988,7 +1996,7 @@ function showFishing(f){
 }
 function showFishResult(res){
   const el=document.getElementById('fishPop'); if(!el) return; const col=res.rarity?RARITY[res.rarity]:'#8a94a6';
-  const win=!!res.rarity, epicUp=['epic','legendary','mythic'].includes(res.rarity);
+  const win=!!res.rarity, epicUp=['epic','legendary','mythic','unique'].includes(res.rarity);
   el.innerHTML=`<div class="fish-pop reveal ${win?'win':''} ${epicUp?'epic-up':''}" style="--rc:${col}">
     ${win?'<div class="fp-rays"></div>':''}
     <div class="fp-emoji">${res.emoji}</div>
