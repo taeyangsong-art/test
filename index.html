@@ -1145,11 +1145,22 @@ function nightHandled(emp, fromTime){
   allSlackDates().forEach(d=>{ const v=(slackDay(d)||{}).voc; if(!v)return; [...(v.alerts||[]),...(v.praises||[])].forEach(x=>{ if(x.emp===emp && x.doneDate && (x.time||"")>=from) n++; }); });
   return n;
 }
-// 구매 특수요건 충족 여부 { ok, have, need } — 요건 없으면 항상 ok
-function reqStatus(emp, it){
-  if(!it||!it.req) return {ok:true};
-  if(it.req.night!=null){ const have=nightHandled(emp, it.req.from); return {ok:have>=it.req.night, have, need:it.req.night, from:it.req.from||'21:00', kind:'night'}; }
-  return {ok:true};
+// ===== 타이틀/네임택 달성 조건 (충족 시 코인 없이 무료 획득) =====
+function empWorkByDay(emp){ const m={}; allSlackDates().forEach(d=>{ ((slackDay(d)||{}).done||[]).forEach(x=>{ if(x.emp===emp) m[d]=(m[d]||0)+1; }); }); return m; }
+// 일별 MVP(그날 업무처리 최다) 선정 횟수 맵 (전 직원)
+function dailyMvpCounts(){ const cnt={}; allSlackDates().forEach(d=>{ const by={}; ((slackDay(d)||{}).done||[]).forEach(x=>{ if(x.emp) by[x.emp]=(by[x.emp]||0)+1; }); let top=null,tv=0; for(const e in by){ if(by[e]>tv){ tv=by[e]; top=e; } } if(top) cnt[top]=(cnt[top]||0)+1; }); return cnt; }
+function mvpCountOf(emp){ return dailyMvpCounts()[emp]||0; }
+const ACH_SHORT={hand:'하루 35건',phoenix:'오전9시전+밤9시후',master:'6업무+VOC·부재0',god:'하루50건+MVP10회',night:'밤9시후 500건'};
+function achShort(k){ return ACH_SHORT[k]||''; }
+// 달성 상태 { ok, label, prog } — 조건(it.ach) 없으면 null (=일반 코인 아이템)
+function achStatus(emp, it){
+  if(!it || !it.ach || !emp) return it&&it.ach ? {ok:false, label:achShort(it.ach), prog:'-'} : null;
+  if(it.ach==='hand'){ const best=Math.max(0,...Object.values(empWorkByDay(emp))); return {ok:best>=35, label:'하루 원격 35건 처리', prog:`${best}/35건`}; }
+  if(it.ach==='phoenix'){ let ok=false; allSlackDates().forEach(d=>{ const dn=((slackDay(d)||{}).done||[]).filter(x=>x.emp===emp); if(dn.some(x=>(x.time||'99')<='09:00') && dn.some(x=>(x.time||'')>='21:00')) ok=true; }); return {ok, label:'하루에 오전 9시 이전·오후 9시 이후 모두 처리 (12시간 근무)', prog:ok?'달성 ✓':'미달'}; }
+  if(it.ach==='master'){ let ok=false; const W=['onboarding','as','transfer','menu','delivery','extern']; allSlackDates().forEach(d=>{ const day=slackDay(d)||{}; const dn=(day.done||[]).filter(x=>x.emp===emp); const cs=new Set(dn.map(x=>x.cat)); const all6=W.every(c=>cs.has(c)); const voc=day.voc?[...(day.voc.alerts||[]),...(day.voc.praises||[])].some(x=>x.emp===emp&&x.doneDate===d):false; const absent=(day.pending||[]).some(p=>p.handler===emp&&(p.reasons||[]).some(r=>/부재/.test(r))); if(all6&&voc&&!absent) ok=true; }); return {ok, label:'하루에 온보딩·AS·명변·메뉴·배달·외주·VOC 각 1건 이상 + 부재 미처리 0', prog:ok?'달성 ✓':'미달'}; }
+  if(it.ach==='god'){ const best=Math.max(0,...Object.values(empWorkByDay(emp))); const mvp=mvpCountOf(emp); return {ok:best>=50&&mvp>=10, label:'하루 50건 이상 처리 + MVP 10회 이상 선정', prog:`하루최고 ${best}/50 · MVP ${mvp}/10`}; }
+  if(it.ach==='night'){ const have=nightHandled(emp,'21:00'); return {ok:have>=500, label:'밤 21:00 이후 500건 처리', prog:`${have}/500건`}; }
+  return null;
 }
 // ── 전체현황 shift 대응 데이터 (전체=COUNTS 기반 / 야간=done 시간필터) ──
 function ovCnt(cat, dates, emp){
@@ -1359,11 +1370,11 @@ const RARITY_KO = {common:'일반', rare:'레어', epic:'에픽', legendary:'전
 const GAME_ITEMS = {
   title: [
     {id:'t_novice',name:'견습 원격러',price:0,rarity:'common'},
-    {id:'t_hand',name:'번개손',price:80,rarity:'rare'},
-    {id:'t_night',name:'심야의 수호자',price:120,rarity:'epic',req:{night:500,from:'21:00'}},
-    {id:'t_phoenix',name:'불사조',price:200,rarity:'epic'},
-    {id:'t_master',name:'원격 마스터',price:320,rarity:'epic'},
-    {id:'t_god',name:'원격의 신',price:600,rarity:'legendary',grad:'linear-gradient(90deg,#e8820a,#ff5a8a,#c77dff,#4ea8ff,#e8820a)'},
+    {id:'t_hand',name:'번개손',price:80,rarity:'rare',ach:'hand'},
+    {id:'t_night',name:'심야의 수호자',price:120,rarity:'epic',ach:'night'},
+    {id:'t_phoenix',name:'불사조',price:200,rarity:'epic',ach:'phoenix'},
+    {id:'t_master',name:'원격 마스터',price:320,rarity:'epic',ach:'master'},
+    {id:'t_god',name:'원격의 신',price:600,rarity:'legendary',ach:'god',grad:'linear-gradient(90deg,#e8820a,#ff5a8a,#c77dff,#4ea8ff,#e8820a)'},
     {id:'t_kraken',name:'심해의 지배자',price:1200,rarity:'mythic',fishOnly:true,grad:'linear-gradient(90deg,#00f5d4,#4ea8ff,#8a5cff,#00f5d4)'},
     {id:'t_fishking',name:'전설의 낚시왕',price:1500,rarity:'mythic',fishOnly:true,grad:'linear-gradient(90deg,#ffd34e,#ff5a8a,#00f5d4,#ffd34e)'},
     {id:'ft_novice',name:'초보 낚시꾼',price:60,rarity:'common',fishOnly:true},
@@ -1636,7 +1647,7 @@ function itemTipHTML(cat,id){ const it=itemById(cat,id); if(!it) return ''; cons
     <div class="it-tip-top"><span class="it-tip-rar" style="color:${RARITY[r]}">${RARITY_KO[r]}</span>${it.fishOnly?'<span class="it-tip-fish">🎣 낚시전용</span>':''}</div>
     ${disp}
     <div class="it-tip-name">${CAT_LABEL[cat]||''} · ${escapeHtml(it.name)}</div>
-    ${it.req?`<div class="it-tip-req">🌙 밤 ${it.req.from||'21:00'} 이후 ${it.req.night}건 처리 필요${gameMe?` · 현재 <b>${nightHandled(gameMe,it.req.from)}</b>건`:''}</div>`:''}
+    ${it.ach?(function(){ const a=gameMe?achStatus(gameMe,it):null; return `<div class="it-tip-req">🎯 ${escapeHtml(a?a.label:achShort(it.ach))}${a?` · 진행 <b>${escapeHtml(a.prog)}</b>`:''}<br><span style="opacity:.8">달성 시 코인 없이 무료 획득</span></div>`; })():''}
     <div class="it-tip-foot">${it.price===0?'기본 제공':(owned?'✓ 보유중':(it.fishOnly?'낚시로만 획득':'🪙 '+it.price+' 코인'))}</div>
   </div>`;
 }
@@ -1729,25 +1740,29 @@ async function buyOrEquip(cat,id){
   const emp=gameMe; if(!emp){ alert('먼저 상단에서 본인 이름을 선택하세요 🙂'); return; }
   const it=itemById(cat,id); if(!it) return; const g=gs(emp);
   if(!owns(emp,cat,id)){
-    const rq=reqStatus(emp, it);
-    if(!rq.ok){ alert(`🔒 이 타이틀은 밤 ${rq.from} 이후 처리 ${rq.need}건을 달성해야 구매할 수 있어요!\n현재 ${rq.have} / ${rq.need}건 (${rq.need-rq.have}건 남음)`); return; }
-    if(empAvail(emp)<it.price){ alert('🪙 코인이 부족해요!\n원격을 더 처리하면 코인이 쌓여요 (1건 = 1코인)'); return; }
-    if(it.price>0 && !(await requireAuth(emp))) return;   // 유료 구매 → 본인 인증
-    addSpent(emp, it.price); g.owned=g.owned||[]; g.owned.push(cat+':'+id);
+    const a=achStatus(emp, it);
+    if(a){   // 달성형(코인 없이 무료 획득)
+      if(!a.ok){ alert(`🔒 [${it.name}]는 아직 달성 전이에요!\n조건: ${a.label}\n진행: ${a.prog}`); return; }
+      g.owned=g.owned||[]; g.owned.push(cat+':'+id);
+    } else {  // 일반 코인 아이템
+      if(empAvail(emp)<it.price){ alert('🪙 코인이 부족해요!\n원격을 더 처리하면 코인이 쌓여요 (1건 = 1코인)'); return; }
+      if(it.price>0 && !(await requireAuth(emp))) return;   // 유료 구매 → 본인 인증
+      addSpent(emp, it.price); g.owned=g.owned||[]; g.owned.push(cat+':'+id);
+    }
   }
   g.equipped=g.equipped||{}; g.equipped[cat]=id; saveGame(); renderGame();
 }
 function unequipPart(cat){ const emp=gameMe; if(!emp) return; const g=gs(emp); if(g.equipped) delete g.equipped[cat]; saveGame(); renderGame(); }
 function shopCard(cat,it,emp){
   const eq=(gs(emp).equipped||{})[cat]===it.id, owned=owns(emp,cat,it.id), r=it.rarity||'common';
-  const rq = owned ? {ok:true} : reqStatus(emp,it);
-  const locked = !owned && !rq.ok;
+  const a = owned ? null : achStatus(emp,it);
+  const locked = !!(a && !a.ok);
   const disp = AVATAR_CATS.includes(cat) ? miniPart(cat,it)
     : it.e!==undefined ? (it.e||'✕')
     : (cat==='nametag' ? `<span style="${nametagStyle({nametag:it.id})}">가나</span>`
     : `<span class="tr-${r}" style="${titleStyleOf(it)}">[${escapeHtml(it.name)}]</span>`);
-  const reqBadge = it.req ? `<div class="si-req ${owned||rq.ok?'met':'locked'}">🌙 밤 ${it.req.from||'21:00'}↑ ${it.req.night}건${owned?' ✓':` <b>${rq.have}/${it.req.night}</b>`}</div>` : '';
-  const btnLabel = eq?'✓ 착용중':owned?'착용하기':locked?`🔒 ${rq.need-rq.have}건 더`:(it.price===0?'착용':'🪙 '+it.price);
+  const reqBadge = it.ach ? `<div class="si-req ${owned||(a&&a.ok)?'met':'locked'}">🎯 ${escapeHtml(achShort(it.ach))}${owned?' ✓':(a?` <b>${escapeHtml(a.prog)}</b>`:'')}</div>` : '';
+  const btnLabel = eq?'✓ 착용중':owned?'착용하기':locked?'🔒 조건 미달':a?'🎁 무료 획득':(it.price===0?'착용':'🪙 '+it.price);
   return `<div class="shop-item ${eq?'equipped':''} ${locked?'locked':''}" style="--rar:${RARITY[r]}" onmouseenter="previewEq('${cat}','${it.id}');showItemTip(event,'${cat}','${it.id}')" onmousemove="moveItemTip(event)" onmouseleave="clearPreview();hideItemTip()">
     <div class="si-rar">${RARITY_KO[r]}</div>
     <div class="si-disp">${disp}</div>
