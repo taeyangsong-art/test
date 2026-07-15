@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 550,
+  "version": 551,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -27257,6 +27257,17 @@ window.SLACK_DATA = {
     },
     "2026-07-15": {
       "counts": {
+        "as": {
+          "최민석": 2,
+          "김규빈": 7,
+          "김기범": 7,
+          "김동욱": 12,
+          "김현기": 11,
+          "송태양": 13,
+          "심성현": 22,
+          "배선유": 11,
+          "서상원": 1
+        },
         "onboarding": {
           "김현기": 2,
           "김동욱": 6,
@@ -27264,23 +27275,12 @@ window.SLACK_DATA = {
           "심성현": 2,
           "김규빈": 1
         },
-        "as": {
-          "김동욱": 11,
-          "최민석": 1,
-          "김규빈": 4,
-          "송태양": 13,
-          "심성현": 22,
-          "배선유": 11,
-          "김기범": 6,
-          "김현기": 10,
-          "서상원": 1
-        },
         "extern": {
           "서상원": 5,
           "김동욱": 1
         },
         "transfer": {
-          "송태양": 7
+          "송태양": 8
         },
         "menu": {
           "김규빈": 3,
@@ -27288,22 +27288,68 @@ window.SLACK_DATA = {
           "김동욱": 1
         },
         "delivery": {
+          "최민석": 1,
           "심성현": 1
         }
       },
-      "pending": [
-        {
-          "time": "14:00",
-          "store": "카페 in cake",
-          "biz": "4786400694",
-          "handler": "최민석",
-          "cat": "delivery",
-          "reasons": [
-            "1차 부재"
-          ]
-        }
-      ],
+      "pending": [],
       "done": [
+        {
+          "time": "15:33",
+          "store": "여름방학",
+          "biz": "5151404072",
+          "cat": "as",
+          "emp": "최민석"
+        },
+        {
+          "time": "15:30",
+          "store": "용두부",
+          "biz": "7645301133",
+          "cat": "as",
+          "emp": "김규빈"
+        },
+        {
+          "time": "15:23",
+          "store": "밀앤루",
+          "biz": "7531102995",
+          "cat": "as",
+          "emp": "김규빈"
+        },
+        {
+          "time": "15:21",
+          "store": "반듯에스테틱",
+          "biz": "3330703662",
+          "cat": "transfer",
+          "emp": "송태양"
+        },
+        {
+          "time": "15:17",
+          "store": "피케피케",
+          "biz": "2012174298",
+          "cat": "as",
+          "emp": "김기범"
+        },
+        {
+          "time": "15:15",
+          "store": "빛티지",
+          "biz": "6011351336",
+          "cat": "as",
+          "emp": "김규빈"
+        },
+        {
+          "time": "15:10",
+          "store": "짬뽕애호가",
+          "biz": "3225000958",
+          "cat": "as",
+          "emp": "김동욱"
+        },
+        {
+          "time": "15:04",
+          "store": "멕시코코 하시엔다",
+          "biz": "8824201319",
+          "cat": "as",
+          "emp": "김현기"
+        },
         {
           "time": "15:02",
           "store": "도도한댕댕",
@@ -27541,6 +27587,13 @@ window.SLACK_DATA = {
           "biz": "1178528958",
           "cat": "as",
           "emp": "심성현"
+        },
+        {
+          "time": "14:00",
+          "store": "카페 in cake",
+          "biz": "4786400694",
+          "cat": "delivery",
+          "emp": "최민석"
         },
         {
           "time": "13:59",
@@ -28124,28 +28177,29 @@ window.SLACK_DATA = {
           "emp": "김동욱"
         }
       ],
-      "updatedAt": "15:30",
+      "updatedAt": "15:42",
       "voc": {
-        "responses": 10,
+        "responses": 12,
         "install": {
           "count": 4,
           "low": 2
         },
         "nps": {
-          "count": 10,
-          "low": 4
+          "count": 12,
+          "low": 5
         },
         "high": {
           "install": 1,
-          "nps": 3
+          "nps": 4
         },
         "npsDist": {
+          "0": 1,
           "2": 2,
           "5": 2,
           "6": 1,
           "8": 1,
           "9": 1,
-          "10": 3
+          "10": 4
         },
         "installDist": {
           "1": 1,
@@ -28159,6 +28213,14 @@ window.SLACK_DATA = {
           "도소매": 1
         },
         "byTenure": {
+          "1개월": {
+            "total": 3,
+            "low": 2
+          },
+          "12개월": {
+            "total": 1,
+            "low": 1
+          },
           "구매설치": {
             "total": 4,
             "low": 2
@@ -28170,23 +28232,23 @@ window.SLACK_DATA = {
           "6개월": {
             "total": 1,
             "low": 1
-          },
-          "1개월": {
-            "total": 2,
-            "low": 2
           }
         },
         "byVan": {
+          "KPN": {
+            "total": 2,
+            "low": 1
+          },
+          "KSNET": {
+            "total": 1,
+            "low": 1
+          },
           "KIS": {
             "total": 4,
             "low": 1
           },
           "SECTA9": {
             "total": 3,
-            "low": 1
-          },
-          "KPN": {
-            "total": 1,
             "low": 1
           },
           "DAOU": {
@@ -28199,12 +28261,34 @@ window.SLACK_DATA = {
           }
         },
         "reasonCounts": {
+          "사용중 오류가 자주 발생함": 3,
           "구매,계약과정에서 설명이 부족": 1,
           "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 2,
-          "사용중 오류가 자주 발생함": 2,
           "단말기 설치나 초기 과정이 어려움": 1
         },
         "alerts": [
+          {
+            "time": "15:38",
+            "store": "서행",
+            "storeId": "204898",
+            "industry": "",
+            "indBucket": "",
+            "install": null,
+            "nps": 0,
+            "reasons": [
+              {
+                "q": "추천의향",
+                "score": 0,
+                "text": "오류 많음",
+                "cat": "사용중 오류가 자주 발생함"
+              }
+            ],
+            "emp": "",
+            "autoStatus": "",
+            "autoEmp": "",
+            "autoNote": "토스장애이슈 토스장애이슈",
+            "doneDate": ""
+          },
           {
             "time": "15:29",
             "store": "바닐라웨이",
