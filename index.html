@@ -2176,8 +2176,7 @@ function renderOverview(){
 
     <div class="grid2 even">
       <div class="card"><div class="card-head"><h3>📈 처리 추이</h3><span class="hint">최근 7일 (오늘 강조)</span></div>${overviewTrend(trendDates)}</div>
-      <div class="card"><div class="card-head"><h3>🍩 카테고리 구성</h3><span class="hint">${viewLabel} · 비중</span></div>
-        <div class="donut-hold">${donutChart(catTotals.map(c=>[c.name,(c.key==='voc'?c.proc:c.total),c.color]).filter(e=>e[1]>0))}</div></div>
+      <div class="card"><div class="card-head"><h3>⏰ 처리 추이 (시간대별)</h3><span class="hint">${viewLabel} · 인입 시각 기준 · 라벨=시작 시각(9시=9~10시)</span></div>${overviewHourly(viewDates)}</div>
     </div>
 
     ${overviewPendingCard()}
@@ -2297,6 +2296,27 @@ function overviewTrend(dates){
     return `<rect x="${x}" y="${y.toFixed(1)}" width="${bw}" height="${h.toFixed(1)}" rx="4" fill="${isT?'var(--blue)':'#cfe3fb'}"></rect>`
       +(v>0?`<text x="${x+bw/2}" y="${(y-5).toFixed(1)}" text-anchor="middle" font-size="10.5" font-weight="700" fill="#424245">${v}</text>`:'')
       +`<text x="${x+bw/2}" y="${H-11}" text-anchor="middle" font-size="9.5" fill="#86868b">${lbl}</text>`;}).join('');
+  return `<div class="chart-wrap"><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><line x1="${pad}" y1="${H-28}" x2="${W-pad}" y2="${H-28}" stroke="var(--line)"/>${bars}</svg></div>`;
+}
+// 시간대별 처리 추이 — done(처리완료) 항목을 인입 시각(HH) 시간대로 버킷팅
+function overviewHourly(dates){
+  const NIGHT=ovShift==='night';
+  const buckets=new Array(24).fill(0);
+  for(const d of dates){ const dn=slackDay(d); if(!dn||!dn.done) continue;
+    for(const it of dn.done){ const h=parseInt(String(it.time||'').slice(0,2),10); if(isNaN(h)) continue; if(NIGHT&&h<18) continue; buckets[h]++; } }
+  const withData=[]; for(let h=0;h<24;h++) if(buckets[h]>0) withData.push(h);
+  if(!withData.length) return '<div class="empty-note">시간대별 처리 데이터 없음</div>';
+  let lo=Math.min(...withData), hi=Math.max(...withData);
+  if(NIGHT){ lo=Math.min(lo,18); hi=Math.max(hi,22); } else { lo=Math.min(lo,9); hi=Math.max(hi,18); }   // 축 최소 범위 유지
+  const hrs=[]; for(let h=lo;h<=hi;h++) hrs.push(h);
+  const vals=hrs.map(h=>buckets[h]);
+  const mx=Math.max(1,...vals);
+  const gapUnit=Math.min(58,Math.max(30,720/hrs.length));
+  const W=Math.max(520,hrs.length*gapUnit), H=200, pad=26, gap=(W-pad*2)/hrs.length, bw=gap*0.6;
+  const bars=hrs.map((h,i)=>{ const v=vals[i], bh=(H-46)*(v/mx), x=pad+i*gap+(gap-bw)/2, y=H-28-bh;
+    return `<rect x="${x}" y="${y.toFixed(1)}" width="${bw}" height="${bh.toFixed(1)}" rx="4" fill="#5ac08a"><title>${h}시~${h+1}시: ${v}건</title></rect>`
+      +(v>0?`<text x="${x+bw/2}" y="${(y-5).toFixed(1)}" text-anchor="middle" font-size="10.5" font-weight="700" fill="#424245">${v}</text>`:'')
+      +`<text x="${x+bw/2}" y="${H-11}" text-anchor="middle" font-size="9.5" fill="#86868b">${h}시</text>`;}).join('');
   return `<div class="chart-wrap"><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><line x1="${pad}" y1="${H-28}" x2="${W-pad}" y2="${H-28}" stroke="var(--line)"/>${bars}</svg></div>`;
 }
 // 도넛 차트
