@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 632,
+  "version": 633,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -29008,7 +29008,7 @@ window.SLACK_DATA = {
             "emp": "",
             "autoStatus": "",
             "autoEmp": "",
-            "autoNote": "",
+            "autoNote": "토스장애이슈 CX일괄처리 토스장애이슈 CX일괄처리",
             "doneDate": ""
           },
           {
@@ -29030,7 +29030,7 @@ window.SLACK_DATA = {
             "emp": "",
             "autoStatus": "",
             "autoEmp": "",
-            "autoNote": "",
+            "autoNote": "[기록용: 네이버연동] [기록용: 네이버연동]",
             "doneDate": ""
           },
           {
@@ -29235,11 +29235,11 @@ window.SLACK_DATA = {
     "2026-07-16": {
       "counts": {
         "as": {
+          "배선유": 3,
           "김동욱": 3,
           "김규빈": 4,
-          "배선유": 1,
           "김현기": 11,
-          "송태양": 1
+          "송태양": 2
         },
         "extern": {
           "서상원": 1
@@ -29249,7 +29249,7 @@ window.SLACK_DATA = {
           "김동욱": 1
         },
         "transfer": {
-          "송태양": 1
+          "송태양": 2
         },
         "menu": {
           "김규빈": 4
@@ -29261,11 +29261,25 @@ window.SLACK_DATA = {
       "pending": [],
       "done": [
         {
+          "time": "11:00",
+          "store": "콩알2",
+          "biz": "5277300232",
+          "cat": "as",
+          "emp": "배선유"
+        },
+        {
           "time": "10:48",
           "store": "산도랑",
           "biz": "3881802373",
           "cat": "as",
           "emp": "김동욱"
+        },
+        {
+          "time": "10:47",
+          "store": "두번먹는명인김치찜 송파방이점",
+          "biz": "5921203362",
+          "cat": "as",
+          "emp": "배선유"
         },
         {
           "time": "10:47",
@@ -29287,6 +29301,20 @@ window.SLACK_DATA = {
           "biz": "7621002274",
           "cat": "as",
           "emp": "김규빈"
+        },
+        {
+          "time": "10:43",
+          "store": "블랙카페",
+          "biz": "1180227599",
+          "cat": "as",
+          "emp": "송태양"
+        },
+        {
+          "time": "10:30",
+          "store": "보스점핑",
+          "biz": "2072794111",
+          "cat": "transfer",
+          "emp": "송태양"
         },
         {
           "time": "10:27",
@@ -29471,7 +29499,7 @@ window.SLACK_DATA = {
           "emp": "김동욱"
         }
       ],
-      "updatedAt": "11:00",
+      "updatedAt": "11:11",
       "voc": {
         "responses": 2,
         "install": {
