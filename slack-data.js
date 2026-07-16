@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 630,
+  "version": 631,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -29234,14 +29234,14 @@ window.SLACK_DATA = {
     },
     "2026-07-16": {
       "counts": {
-        "extern": {
-          "서상원": 1
-        },
         "as": {
+          "김현기": 11,
           "김규빈": 2,
-          "김현기": 10,
           "김동욱": 1,
           "송태양": 1
+        },
+        "extern": {
+          "서상원": 1
         },
         "onboarding": {
           "송태양": 1,
@@ -29257,8 +29257,26 @@ window.SLACK_DATA = {
           "김현기": 1
         }
       },
-      "pending": [],
+      "pending": [
+        {
+          "time": "09:45",
+          "store": "트레머 커피 커먼스",
+          "biz": "1898802522",
+          "handler": "김현기",
+          "cat": "delivery",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        }
+      ],
       "done": [
+        {
+          "time": "10:27",
+          "store": "할매김밥",
+          "biz": "8304501186",
+          "cat": "as",
+          "emp": "김현기"
+        },
         {
           "time": "10:19",
           "store": "앨리스 도넛&amp;사라다 광주점",
@@ -29421,33 +29439,46 @@ window.SLACK_DATA = {
           "emp": "김동욱"
         }
       ],
-      "updatedAt": "10:30",
+      "updatedAt": "10:45",
       "voc": {
-        "responses": 1,
+        "responses": 2,
         "install": {
-          "count": 0,
+          "count": 1,
           "low": 0
         },
         "nps": {
-          "count": 1,
+          "count": 2,
           "low": 1
         },
         "high": {
           "install": 0,
-          "nps": 0
+          "nps": 1
         },
         "npsDist": {
+          "4": 1,
+          "10": 1
+        },
+        "installDist": {
           "4": 1
         },
-        "installDist": {},
-        "byIndustry": {},
+        "byIndustry": {
+          "서비스[학원]": 1
+        },
         "byTenure": {
+          "구매설치": {
+            "total": 1,
+            "low": 0
+          },
           "1개월": {
             "total": 1,
             "low": 1
           }
         },
         "byVan": {
+          "KPN": {
+            "total": 1,
+            "low": 0
+          },
           "DAOU": {
             "total": 1,
             "low": 1
@@ -29480,7 +29511,20 @@ window.SLACK_DATA = {
             "doneDate": ""
           }
         ],
-        "praises": []
+        "praises": [
+          {
+            "time": "10:34",
+            "store": "하경교육",
+            "storeId": "526982",
+            "indBucket": "서비스[학원]",
+            "emp": "",
+            "install": 4,
+            "nps": 10,
+            "text": "직접 설치. 해야 했는데 그것만 아쉬웠고 설치도 배송도 과정도 설명도 다 좋았음 매우 저렴 편리 기기도 좋아서",
+            "byReaction": false,
+            "doneDate": ""
+          }
+        ]
       }
     }
   }
