@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 627,
+  "version": 628,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -29235,15 +29235,32 @@ window.SLACK_DATA = {
     "2026-07-16": {
       "counts": {
         "as": {
-          "김현기": 4,
+          "김현기": 6,
           "송태양": 1
         },
         "onboarding": {
           "김동욱": 1
+        },
+        "delivery": {
+          "김현기": 1
         }
       },
       "pending": [],
       "done": [
+        {
+          "time": "09:39",
+          "store": "오오티네일",
+          "biz": "4046900816",
+          "cat": "as",
+          "emp": "김현기"
+        },
+        {
+          "time": "09:35",
+          "store": "잇밀",
+          "biz": "5053401474",
+          "cat": "as",
+          "emp": "김현기"
+        },
         {
           "time": "09:35",
           "store": "경인문구",
@@ -29256,6 +29273,13 @@ window.SLACK_DATA = {
           "store": "타이어세이프",
           "biz": "1430190316",
           "cat": "as",
+          "emp": "김현기"
+        },
+        {
+          "time": "09:30",
+          "store": "이유(leeyoo)",
+          "biz": "6981003384",
+          "cat": "delivery",
           "emp": "김현기"
         },
         {
@@ -29287,7 +29311,7 @@ window.SLACK_DATA = {
           "emp": "김동욱"
         }
       ],
-      "updatedAt": "09:45",
+      "updatedAt": "10:00",
       "voc": {
         "responses": 1,
         "install": {
