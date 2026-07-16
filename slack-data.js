@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 624,
+  "version": 625,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -29233,10 +29233,32 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-16": {
-      "counts": {},
+      "counts": {
+        "as": {
+          "송태양": 1
+        },
+        "onboarding": {
+          "김동욱": 1
+        }
+      },
       "pending": [],
-      "done": [],
-      "updatedAt": "09:00",
+      "done": [
+        {
+          "time": "09:03",
+          "store": "카페플롬",
+          "biz": "1200972330",
+          "cat": "as",
+          "emp": "송태양"
+        },
+        {
+          "time": "09:00",
+          "store": "(주)케어포올",
+          "biz": "5378803604",
+          "cat": "onboarding",
+          "emp": "김동욱"
+        }
+      ],
+      "updatedAt": "09:14",
       "voc": {
         "responses": 1,
         "install": {
