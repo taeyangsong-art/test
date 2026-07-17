@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 724,
+  "version": 725,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -32398,10 +32398,24 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-17": {
-      "counts": {},
+      "counts": {
+        "as": {
+          "배선유": 1
+        }
+      },
       "pending": [],
-      "done": [],
-      "updatedAt": "00:26",
+      "done": [
+        {
+          "time": "09:05",
+          "store": "서담수학영재사고력학원",
+          "biz": "5949701732",
+          "cat": "as",
+          "emp": "배선유",
+          "req": "포프(노트북) / 신규 온보딩 부탁드립니다 (키오스크 모드 원함)",
+          "note": "전원꺼짐 전원꺼짐 / 01022590507 01022590507 / 7이었군요.. 7이었군요.. / 노트북에 문제 생겨 업무폰으로 재연락 예정 노트북에 문제 생겨 업무폰으로 재연락 예정"
+        }
+      ],
+      "updatedAt": "09:05",
       "voc": {
         "responses": 1,
         "install": {
