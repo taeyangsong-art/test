@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 850,
+  "version": 851,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -33297,12 +33297,13 @@ window.SLACK_DATA = {
     "2026-07-18": {
       "counts": {
         "as": {
+          "최민석": 2,
           "미지정": 10,
-          "최민석": 1,
           "김현기": 21,
           "김기범": 1
         },
         "onboarding": {
+          "김현기": 1,
           "미지정": 1
         },
         "transfer": {
@@ -33311,6 +33312,24 @@ window.SLACK_DATA = {
       },
       "pending": [],
       "done": [
+        {
+          "time": "15:36",
+          "store": "보글보글워시세차장",
+          "biz": "8192701036",
+          "cat": "as",
+          "emp": "최민석",
+          "req": "• 결제 지연 문제가 있는 것 같은데, 영상통화로 확인 한번만 부탁드려요 ! :woman-bowing::skin-tone-2:",
+          "note": ""
+        },
+        {
+          "time": "15:23",
+          "store": "비앤에스 디자인(B&amp;S Design)",
+          "biz": "3170226289",
+          "cat": "onboarding",
+          "emp": "김현기",
+          "req": "포프(휴대폰) 온보딩 지원 요청드립니다.",
+          "note": "폰 온보딩 완료 폰 온보딩 완료"
+        },
         {
           "time": "15:17",
           "store": "황금 강정",
@@ -33627,25 +33646,27 @@ window.SLACK_DATA = {
           "note": "모바일 퍼스트포스 asp 연동이 불가함 / 오늘 퍼스트포스가 ;영업하지 않아서 당장은 확인이 어려음 월요일 문의 필요함 님 여기 혹시 이따 마감 즈음에 고객센터 다시 인입되어서, 토요일 오늘 매출금이랑 승인건수 kpn 조회해서 알려달라고 하셨어요. 야간당직자 전달만 부탁드립니다 모바일 퍼스트포스 asp 연동이 불가함 / 오늘 퍼스트포스가 ;영업하지 않아서 "
         }
       ],
-      "updatedAt": "15:23",
+      "updatedAt": "15:43",
       "voc": {
-        "responses": 8,
+        "responses": 11,
         "install": {
           "count": 4,
           "low": 0
         },
         "nps": {
-          "count": 8,
-          "low": 3
+          "count": 11,
+          "low": 4
         },
         "high": {
           "install": 4,
-          "nps": 4
+          "nps": 5
         },
         "npsDist": {
+          "3": 1,
           "5": 3,
           "6": 1,
-          "10": 4
+          "7": 1,
+          "10": 5
         },
         "installDist": {
           "5": 4
@@ -33657,6 +33678,18 @@ window.SLACK_DATA = {
           "서비스[뷰티,헤어]": 1
         },
         "byTenure": {
+          "3개월": {
+            "total": 1,
+            "low": 0
+          },
+          "1개월": {
+            "total": 2,
+            "low": 2
+          },
+          "12개월": {
+            "total": 1,
+            "low": 0
+          },
           "구매설치": {
             "total": 4,
             "low": 0
@@ -33664,24 +33697,24 @@ window.SLACK_DATA = {
           "6개월": {
             "total": 3,
             "low": 2
-          },
-          "1개월": {
-            "total": 1,
-            "low": 1
           }
         },
         "byVan": {
+          "SECTA9": {
+            "total": 2,
+            "low": 0
+          },
           "KIS": {
-            "total": 1,
+            "total": 2,
+            "low": 1
+          },
+          "KSNET": {
+            "total": 2,
             "low": 0
           },
           "SMARTRO": {
             "total": 2,
             "low": 1
-          },
-          "KSNET": {
-            "total": 1,
-            "low": 0
           },
           "DAOU": {
             "total": 1,
@@ -33690,18 +33723,36 @@ window.SLACK_DATA = {
           "KPN": {
             "total": 2,
             "low": 1
-          },
-          "SECTA9": {
-            "total": 1,
-            "low": 0
           }
         },
         "reasonCounts": {
-          "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 1,
+          "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 2,
           "고객센터 연락이 매우 힘듦": 1,
           "필요한 기능이 없거나 몰라서 불편": 1
         },
         "alerts": [
+          {
+            "time": "15:34",
+            "store": "엔타코",
+            "storeId": "503674",
+            "industry": "",
+            "indBucket": "",
+            "install": null,
+            "nps": 3,
+            "reasons": [
+              {
+                "q": "추천의향",
+                "score": 3,
+                "text": "현금계산 할 때 멍청하게도 정확하지 않을때가있음",
+                "cat": "기타 이슈(정산/직원에 대한 불만/호영님출몰)"
+              }
+            ],
+            "emp": "",
+            "autoStatus": "",
+            "autoEmp": "",
+            "autoNote": "",
+            "doneDate": ""
+          },
           {
             "time": "15:08",
             "store": "네일두뷰티",
@@ -33771,6 +33822,18 @@ window.SLACK_DATA = {
         ],
         "praises": [
           {
+            "time": "15:43",
+            "store": "니트베이크",
+            "storeId": "443942",
+            "indBucket": "",
+            "emp": "",
+            "install": null,
+            "nps": 7,
+            "text": "최근 결제 이슈때 대응이 좀 많이 아쉽네요",
+            "byReaction": false,
+            "doneDate": ""
+          },
+          {
             "time": "01:16",
             "store": "미미래쉬",
             "storeId": "542187",
@@ -33802,7 +33865,7 @@ window.SLACK_DATA = {
       },
       "1784353582.878579": {
         "post": "1784353582.878579",
-        "lastSeen": 1784356235.095
+        "lastSeen": 1784357128.431
       }
     },
     "days": {
