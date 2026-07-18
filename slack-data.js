@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 838,
+  "version": 839,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -33306,6 +33306,16 @@ window.SLACK_DATA = {
       },
       "pending": [
         {
+          "time": "11:41",
+          "store": "산약뜰",
+          "biz": "4243101849",
+          "handler": "김현기",
+          "cat": "as",
+          "reasons": [
+            "확인 후 미완료"
+          ]
+        },
+        {
           "time": "11:19",
           "store": "참사랑분식",
           "biz": "3770203838",
@@ -33558,11 +33568,11 @@ window.SLACK_DATA = {
       },
       "1784341800.920979": {
         "post": "1784341800.920979",
-        "lastSeen": 1784345434.852
+        "lastSeen": 1784346328.063
       },
       "1784341644.518769": {
         "post": "1784341644.518769",
-        "lastSeen": 1784345434.852
+        "lastSeen": 1784346328.063
       }
     },
     "days": {
