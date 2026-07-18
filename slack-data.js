@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 874,
+  "version": 875,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -33790,16 +33790,16 @@ window.SLACK_DATA = {
           "note": "모바일 퍼스트포스 asp 연동이 불가함 / 오늘 퍼스트포스가 ;영업하지 않아서 당장은 확인이 어려음 월요일 문의 필요함 님 여기 혹시 이따 마감 즈음에 고객센터 다시 인입되어서, 토요일 오늘 매출금이랑 승인건수 kpn 조회해서 알려달라고 하셨어요. 야간당직자 전달만 부탁드립니다 모바일 퍼스트포스 asp 연동이 불가함 / 오늘 퍼스트포스가 ;영업하지 않아서 "
         }
       ],
-      "updatedAt": "20:40",
+      "updatedAt": "21:10",
       "voc": {
-        "responses": 18,
+        "responses": 19,
         "install": {
           "count": 7,
           "low": 1
         },
         "nps": {
-          "count": 18,
-          "low": 7
+          "count": 19,
+          "low": 8
         },
         "high": {
           "install": 5,
@@ -33809,7 +33809,7 @@ window.SLACK_DATA = {
           "0": 1,
           "2": 1,
           "3": 1,
-          "5": 4,
+          "5": 5,
           "6": 1,
           "7": 1,
           "8": 1,
@@ -33827,6 +33827,10 @@ window.SLACK_DATA = {
           "카페": 1
         },
         "byTenure": {
+          "6개월": {
+            "total": 6,
+            "low": 3
+          },
           "12개월": {
             "total": 2,
             "low": 1
@@ -33839,16 +33843,16 @@ window.SLACK_DATA = {
             "total": 2,
             "low": 1
           },
-          "6개월": {
-            "total": 5,
-            "low": 2
-          },
           "1개월": {
             "total": 2,
             "low": 2
           }
         },
         "byVan": {
+          "DAOU": {
+            "total": 2,
+            "low": 2
+          },
           "KPN": {
             "total": 4,
             "low": 2
@@ -33872,20 +33876,38 @@ window.SLACK_DATA = {
           "KSNET": {
             "total": 2,
             "low": 0
-          },
-          "DAOU": {
-            "total": 1,
-            "low": 1
           }
         },
         "reasonCounts": {
+          "필요한 기능이 없거나 몰라서 불편": 4,
           "사용중 오류가 자주 발생함": 1,
-          "필요한 기능이 없거나 몰라서 불편": 3,
           "단말기 설치나 초기 과정이 어려움": 1,
           "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 2,
           "고객센터 연락이 매우 힘듦": 1
         },
         "alerts": [
+          {
+            "time": "21:10",
+            "store": "루브르미술학원",
+            "storeId": "335800",
+            "industry": "",
+            "indBucket": "",
+            "install": null,
+            "nps": 5,
+            "reasons": [
+              {
+                "q": "추천의향",
+                "score": 5,
+                "text": "종이영수증이 없어서  교육청정기정금할때  실물영수증이 필요한데   많이 불편해요",
+                "cat": "필요한 기능이 없거나 몰라서 불편"
+              }
+            ],
+            "emp": "",
+            "autoStatus": "",
+            "autoEmp": "",
+            "autoNote": "",
+            "doneDate": ""
+          },
           {
             "time": "18:31",
             "store": "카페수(cafe:秀(수))",
@@ -34112,7 +34134,7 @@ window.SLACK_DATA = {
       },
       "1784353582.878579": {
         "post": "1784353582.878579",
-        "lastSeen": 1784376109.916
+        "lastSeen": 1784376927.821
       },
       "1784358035.654419": {
         "post": "1784358035.654419",
