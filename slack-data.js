@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 980,
+  "version": 981,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -34134,16 +34134,16 @@ window.SLACK_DATA = {
       "counts": {},
       "pending": [],
       "done": [],
-      "updatedAt": "21:49",
+      "updatedAt": "22:44",
       "voc": {
-        "responses": 14,
+        "responses": 15,
         "install": {
           "count": 3,
           "low": 0
         },
         "nps": {
-          "count": 14,
-          "low": 3
+          "count": 15,
+          "low": 4
         },
         "high": {
           "install": 2,
@@ -34151,6 +34151,7 @@ window.SLACK_DATA = {
         },
         "npsDist": {
           "0": 1,
+          "2": 1,
           "3": 1,
           "4": 1,
           "7": 1,
@@ -34168,12 +34169,12 @@ window.SLACK_DATA = {
           "서비스[뷰티,헤어]": 1
         },
         "byTenure": {
+          "1개월": {
+            "total": 7,
+            "low": 2
+          },
           "6개월": {
             "total": 2,
-            "low": 1
-          },
-          "1개월": {
-            "total": 6,
             "low": 1
           },
           "12개월": {
@@ -34190,6 +34191,10 @@ window.SLACK_DATA = {
           }
         },
         "byVan": {
+          "KIS": {
+            "total": 6,
+            "low": 2
+          },
           "DAOU": {
             "total": 1,
             "low": 0
@@ -34206,10 +34211,6 @@ window.SLACK_DATA = {
             "total": 1,
             "low": 1
           },
-          "KIS": {
-            "total": 5,
-            "low": 1
-          },
           "SECTA9": {
             "total": 1,
             "low": 0
@@ -34220,10 +34221,32 @@ window.SLACK_DATA = {
           }
         },
         "reasonCounts": {
-          "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 2,
-          "사용중 오류가 자주 발생함": 1
+          "사용중 오류가 자주 발생함": 2,
+          "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 2
         },
         "alerts": [
+          {
+            "time": "22:44",
+            "store": "수월해",
+            "storeId": "504704",
+            "industry": "",
+            "indBucket": "",
+            "install": null,
+            "nps": 2,
+            "reasons": [
+              {
+                "q": "추천의향",
+                "score": 2,
+                "text": "다 좋은데 서버 다운 진짜 말이 안됨 안그래도 장사안되는데 그날 유일하게 손님 많았던 날이었는데.. 임시 어쩌구도 안되고 보상도 저번주 동일시간대? 소품샵은 그런거 대중이없음 손님오시면 무조건 잡아야되는데 그날 그냥 가신 손님은 보상받을길이없음",
+                "cat": "사용중 오류가 자주 발생함"
+              }
+            ],
+            "emp": "",
+            "autoStatus": "",
+            "autoEmp": "",
+            "autoNote": "",
+            "doneDate": ""
+          },
           {
             "time": "18:13",
             "store": "트래페",
@@ -34368,11 +34391,11 @@ window.SLACK_DATA = {
       },
       "1784461637.708539": {
         "post": "1784461637.708539",
-        "lastSeen": 1784467834.586
+        "lastSeen": 1784468728.738
       },
       "1784465381.338979": {
         "post": "1784465381.338979",
-        "lastSeen": 1784467834.586
+        "lastSeen": 1784468728.738
       }
     },
     "days": {
