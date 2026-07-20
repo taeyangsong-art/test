@@ -140,7 +140,9 @@ async function fetchAllRange(channelId, oldestTs, latestTs) {
 
 // 스레드 답글 읽기 (VOC 처리내용 자동 수집용). rate-limit/scope 문제로 실패해도 절대 throw하지 않음.
 let repliesFetched = 0, repliesWarned = false;
-const MAX_REPLY_FETCH = 150;  // 과도한 API 호출/rate-limit 방지 상한 (업무 처리내역 + VOC 공용)
+// 과도한 API 호출/rate-limit 방지 상한 (업무 처리내역 + VOC 공용).
+// 일회성 백필은 과거 전체 이력의 note를 한 번에 채워야 하므로 크게, 평시 롤링은 보수적으로.
+const MAX_REPLY_FETCH = backfillFrom ? 3000 : 500;
 async function fetchReplies(channelId, ts) {
   if (repliesFetched >= MAX_REPLY_FETCH) {
     if (!repliesWarned) { console.log(`  (처리내용 자동수집 상한 ${MAX_REPLY_FETCH}건 도달 — 이후 생략)`); repliesWarned = true; }
@@ -177,7 +179,12 @@ async function tallyInto(msgs, ch, counts, pending, done, opts) {
   async function grabNote(m, catKey, time, store, biz) {
     const key = time + '|' + store + '|' + biz + '|' + catKey;
     if (priorNotes[key]) return priorNotes[key];
-    if ((m.reply_count || 0) > 0 && ch.id) { const reps = await fetchReplies(ch.id, m.ts); return cleanNote(reps.map(r => blocksText(r)).join(' / ')); }
+    if ((m.reply_count || 0) > 0 && ch.id) {
+      const reps = await fetchReplies(ch.id, m.ts);
+      // blocksText는 m.text와 m.blocks의 동일 내용을 둘 다 담아 문구가 중복됨 → 답글별 동일 줄 제거
+      const txt = reps.map(r => [...new Set(blocksText(r).split('\n').map(x => x.trim()).filter(Boolean))].join(' ')).join(' / ');
+      return cleanNote(txt);
+    }
     return '';
   }
   let completed = 0, externCount = 0, dup = 0, latest = '';
@@ -402,7 +409,9 @@ async function tallyVoc(msgs, voc, channelId, opts) {
   const wdStart = `${wdStartObj.getUTCFullYear()}-${pad(wdStartObj.getUTCMonth() + 1)}-${pad(wdStartObj.getUTCDate())}`;
   const workDates = backfillFrom ? dateList(backfillFrom, targetDate) : dateList(wdStart, targetDate);
   if (backfillFrom) console.log(`[백필] ${backfillFrom} ~ ${targetDate} (${workDates.length}일) 재집계`);
-  for (const dstr of workDates) {
+  // 처리내역(note) 수집은 MAX_REPLY_FETCH 상한을 공유하므로, 최신 날짜부터 처리해
+  // 사람들이 가장 많이 보는 '오늘' 건의 note가 상한 소진 전에 먼저 채워지도록 한다.
+  for (const dstr of [...workDates].reverse()) {
     const b = boundsOf(dstr);
     const counts = {}, pending = [], done = [];
     // 이전 실행에서 수집한 처리내역 보존(재호출 방지) — done 항목 key: time|store|biz|cat
