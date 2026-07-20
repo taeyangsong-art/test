@@ -2040,7 +2040,7 @@ function renderGame(){
   }
   document.getElementById("main").innerHTML=`
     <div class="page-head"><div><h2>🎮 원격 상점</h2><div class="sub">원격 <b>1건 = 🪙1코인</b> · 코인으로 타이틀·네임택·아바타를 획득! · <b>매월 1일 코인 0 초기화</b>${GAME_API?'':' · <b style="color:var(--red)">(현재 이 브라우저에만 저장 — 팀 공유 세팅 필요)</b>'}</div></div>
-      <div class="controls"><select class="sel" onchange="setGameMe(this.value)"><option value="">👤 본인 선택</option>${opts}</select><button class="btn" onclick="adminResetPin()" title="관리자: 직원 PIN 초기화">🔧 PIN 초기화</button><button class="btn" onclick="adminResetEmpItems()" title="관리자: 특정 직원 획득 아이템 초기화">🔄 아이템 초기화</button></div>
+      <div class="controls"><select class="sel" onchange="setGameMe(this.value)"><option value="">👤 본인 선택</option>${opts}</select><button class="btn" onclick="adminResetPin()" title="관리자: 직원 PIN 초기화">🔧 PIN 초기화</button></div>
     </div>
     ${body}`;
   if(gameMe && GAME[gameMe] && !GAME[gameMe].gender && !genderDismissed){ const o=document.getElementById('genderPop'); if(o)o.remove(); document.body.insertAdjacentHTML('beforeend', genderModal()); }
