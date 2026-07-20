@@ -1905,6 +1905,8 @@ function loadCloud(cb){
   }).catch(()=>{ if(cb)cb(); });
 }
 function loadGameCloud(cb){ loadCloud(cb); }   // 하위호환
+// 팀 공유 클라우드 데이터 스냅샷 — 주기 동기화 시 '변경됐을 때만' 재렌더 판정용
+function cloudSnapshot(){ try{ return JSON.stringify([GAME,FISHWAIT,VOCEDIT,VOCPRAISE,VOCCOMMENT,DUTYOVER]); }catch(e){ return ''; } }
 async function setGameMe(v){
   gameMe=v; save("opcare_gameme_v1",gameMe); renderGame();
   if(v && GAME_API && !isGameAuthed(v)){
@@ -3999,6 +4001,9 @@ function startAutoRefresh(){
       const gcur=(window.GCAL_DATA && window.GCAL_DATA.version) || 0;
       if(gcur!==gprev && activeCat==="share") renderShare();
     });
+    // 팀 공유 클라우드 주기 동기화 (낚시 대기·코인·아이템·VOC편집·당번) — 바뀐 경우에만 재렌더
+    const csBefore=cloudSnapshot();
+    loadCloud(function(){ if(cloudSnapshot()!==csBefore) renderMain(); });
   }, 120000);
 }
 
