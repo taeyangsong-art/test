@@ -2441,14 +2441,14 @@ function donutChart(entries){
 }
 // ── AS 유형 분류 — 요청 '내용'(req) + 처리내역(note) 키워드 기반 ──
 const AS_ISSUE_RULES = [
-  {label:'프린터',        color:'#5e5ce6', kw:['프린터','영수증','출력','용지','인쇄','라벨','프린트']},
-  {label:'결제/카드',     color:'#ff9500', kw:['결제','카드','단말기','van','밴','승인','정산','환불','매출전표']},
-  {label:'네트워크/연동', color:'#00c7be', kw:['네트워크','랜','lan','인터넷','와이파이','wifi','연동','배달','통신','공유기']},
-  {label:'프론트/포스',   color:'#0071e3', kw:['프론트','포스','pos','키오스크','kiosk','화면','터치','앱','재부팅','리셋','먹통','태블릿']},
-  {label:'온보딩/사용법', color:'#34c759', kw:['사용법','사용방법','사용 방법','교육','온보딩','문의','어려','알려','방법','세팅','설치','메뉴등록']},
+  {label:'프론트/터미널',   color:'#0071e3', kw:['프론트','터미널','terminal','front','본체']},
+  {label:'포스/키오스크',   color:'#34c759', kw:['포스','pos','키오스크','kiosk','키오','태블릿','테이블오더','테이블 오더']},
+  {label:'프린터',          color:'#5e5ce6', kw:['프린터','프린트','영수증','출력','용지','인쇄','라벨']},
+  {label:'CAT/무선단말기',  color:'#ff9500', kw:['cat','무선단말기','무선단말','무선기','단말기','카드','결제','승인','정산','환불','매출전표','van','밴','조회기','카드기']},
+  {label:'네트워크/연동',   color:'#00c7be', kw:['네트워크','랜','lan','인터넷','와이파이','wifi','연동','배달','통신','공유기','ap']},
 ];
 const AS_ISSUE_ETC='기타';
-const AS_ISSUE_COLOR={'프린터':'#5e5ce6','결제/카드':'#ff9500','네트워크/연동':'#00c7be','프론트/포스':'#0071e3','온보딩/사용법':'#34c759','기타':'#8e8e93'};
+const AS_ISSUE_COLOR={'프론트/터미널':'#0071e3','포스/키오스크':'#34c759','프린터':'#5e5ce6','CAT/무선단말기':'#ff9500','네트워크/연동':'#00c7be','기타':'#8e8e93'};
 function classifyAsIssue(text){ const t=(text||'').toLowerCase(); for(const r of AS_ISSUE_RULES){ if(r.kw.some(k=>t.includes(k.toLowerCase()))) return r.label; } return AS_ISSUE_ETC; }
 function asIssueRows(dates){ const rows=[]; for(const d of dates){ const dd=slackDay(d)||{}; (dd.done||[]).forEach(x=>{ if(x.cat!=='as')return; rows.push({date:d,time:x.time,store:x.store,emp:x.emp,req:x.req||'',note:x.note||'',issue:classifyAsIssue((x.req||'')+' '+(x.note||''))}); }); } return rows; }
 function asIssueBreakdown(dates){
