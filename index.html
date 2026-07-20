@@ -1953,17 +1953,16 @@ async function adminResetPin(){
   if(r&&r.ok){ delete GAMEAUTH[emp.trim()]; save(LS_GAMEAUTH,GAMEAUTH); alert(`✅ ${emp} 님 PIN이 초기화됐어요.\n그 직원이 다음에 코인 쓸 때 새로 설정하면 됩니다.`); }
   else alert('초기화 실패: '+(r&&r.error==='bad_key'?'관리자 키가 틀렸어요':(r&&r.error)||''));
 }
-// 관리자: 특정 직원의 획득 아이템 초기화 — owned/equipped 비움(기본 꾸미기·코인은 유지).
+// 관리자: 특정 직원 게임 초기화 — owned/equipped/spentM 비움(아이템·낚시코인 초기화. 업무로 번 코인은 자동 재계산되어 유지).
 function adminResetEmpItems(){
-  const emp=prompt('아이템을 전부 미획득으로 되돌릴 직원 이름을 정확히 입력하세요 (예: 김동욱)'); if(!emp) return;
+  const emp=prompt('게임 데이터(아이템·낚시코인)를 초기화할 직원 이름을 정확히 입력하세요 (예: 김동욱)'); if(!emp) return;
   const e=emp.trim(); const g=GAME[e];
   if(!g){ alert(`'${e}' 님의 게임 데이터가 없습니다.`); return; }
   const n=(g.owned||[]).length;
-  if(n===0){ alert(`'${e}' 님은 초기화할(획득한) 아이템이 없습니다.`); return; }
-  if(!confirm(`⚠️ ${e} 님이 획득한 아이템 ${n}개를 전부 '미획득'으로 되돌립니다.\n(착용 중인 꾸미기도 해제 · 코인은 유지)\n\n계속할까요?`)) return;
-  g.owned=[]; g.equipped={};
+  if(!confirm(`⚠️ ${e} 님의 게임을 초기화합니다.\n· 획득 아이템 ${n}개 → 전부 미획득\n· 착용 꾸미기 해제\n· 낚시로 적립한 코인 → 0 (업무로 번 코인은 유지)\n\n계속할까요?`)) return;
+  g.owned=[]; g.equipped={}; g.spentM={}; g.spent=0;
   save(LS_GAME,GAME); pushPatch({players:{[e]:g}}); renderGame();
-  alert(`✅ ${e} 님 아이템 ${n}개가 모두 미획득으로 초기화됐습니다.`);
+  alert(`✅ ${e} 님 게임이 초기화됐습니다. (⚠️ 그 직원이 탭을 열어뒀다면 반드시 새로고침해야 반영됩니다)`);
 }
 // 👑 유일 타이틀 [곽호영] 착용 시 능력: 모든 상점(코인) 아이템 무료
 function hasFreeShop(emp){ const t=itemById('title',(gs(emp).equipped||{}).title); return !!(t&&t.freeShop); }
