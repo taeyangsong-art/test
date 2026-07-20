@@ -466,6 +466,22 @@
   .game-me.previewing::after{content:'👀 미리보기'; position:absolute; top:10px; right:14px; font-size:12px; font-weight:800; color:#8a3ffb}
   .game-me{position:relative}
   .shop-item{cursor:pointer}
+  /* 📢 공지사항 게시판 */
+  .notice-form{display:flex; flex-direction:column; gap:10px}
+  .notice-form-row{display:flex; gap:10px; flex-wrap:wrap}
+  .notice-text{width:100%; font-family:inherit; font-size:14px; padding:11px 14px; border:1px solid var(--line); border-radius:12px; background:var(--canvas); color:var(--ink); resize:vertical; line-height:1.5}
+  .notice-text:focus{outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-soft)}
+  .notice-list{display:flex; flex-direction:column; gap:12px}
+  .notice-card{border:1px solid var(--line-soft); border-left:4px solid var(--blue); border-radius:14px; padding:14px 16px; background:var(--surface2)}
+  .notice-card.nt-share{border-left-color:var(--green)}
+  .notice-top{display:flex; align-items:center; gap:10px; margin-bottom:8px}
+  .notice-badge{font-size:12px; font-weight:800; padding:3px 10px; border-radius:20px; white-space:nowrap}
+  .notice-badge.b-notice{background:var(--blue-soft); color:var(--blue-deep)}
+  .notice-badge.b-share{background:var(--green-soft); color:#166534}
+  .notice-meta{font-size:12px; color:var(--gray2); font-weight:600}
+  .notice-del{margin-left:auto; border:none; background:transparent; color:var(--gray2); font-size:18px; cursor:pointer; line-height:1; padding:0 7px; border-radius:6px}
+  .notice-del:hover{color:var(--red); background:var(--red-soft)}
+  .notice-body{font-size:14px; line-height:1.6; color:var(--ink); word-break:break-word}
   /* 리프레쉬 타임 */
   .rt-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:16px}
   .rt-slot{border:2px solid var(--line-soft); border-radius:18px; padding:20px 22px; background:var(--surface2); transition:.15s}
@@ -1176,6 +1192,52 @@ let DUTY   = load(LS_DUTY, {});    // { "YYYY-MM-DD": { day, aft, nit } }
 let SHARE  = load(LS_SHARE, {});   // { "YYYY-MM-DD": [ {id, emp, type, title, time} ] }
 const LS_DUTYOVER = "opcare_dutyover_v1";
 let DUTYOVER = load(LS_DUTYOVER, {});   // { "date|time|title": "직원명" } — 회의 원격당번 수동 지정
+// 📢 공지사항 · 공유 게시판 (팀 공유 클라우드)
+const LS_NOTICES = "opcare_notices_v1";
+let NOTICES = load(LS_NOTICES, {});   // { id: {text, author, ts, type:'공지'|'공유', deleted} }
+const LS_NOTICE_AUTHOR = "opcare_noticeauthor_v1";
+let noticeAuthor = load(LS_NOTICE_AUTHOR, "");
+function noticeList(){ return Object.entries(NOTICES).filter(([id,n])=>n&&!n.deleted).sort((a,b)=>(b[1].ts||0)-(a[1].ts||0)); }
+function fmtNoticeTime(ts){ if(!ts) return ''; const d=new Date(ts), p=n=>String(n).padStart(2,'0'); return `${d.getFullYear()}.${p(d.getMonth()+1)}.${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`; }
+function postNotice(){
+  const text=(document.getElementById('noticeText').value||'').trim(); if(!text){ alert('내용을 입력하세요.'); return; }
+  const author=(document.getElementById('noticeAuthor').value||'').trim()||'익명';
+  const type=document.getElementById('noticeType').value||'공유';
+  noticeAuthor=author; save(LS_NOTICE_AUTHOR, noticeAuthor);
+  const id='n_'+Date.now()+'_'+Math.floor(Math.random()*1000);
+  NOTICES[id]={text, author, ts:Date.now(), type};
+  save(LS_NOTICES,NOTICES); pushPatch({notices:{[id]:NOTICES[id]}}); renderShareNotice();
+}
+function deleteNotice(id){ if(!NOTICES[id]) return; if(!confirm('이 글을 삭제할까요?')) return; NOTICES[id].deleted=true; save(LS_NOTICES,NOTICES); pushPatch({notices:{[id]:NOTICES[id]}}); renderShareNotice(); }
+function renderShareNotice(){
+  const list=noticeList();
+  const rows = list.length ? list.map(([id,n])=>`
+    <div class="notice-card ${n.type==='공지'?'nt-notice':'nt-share'}">
+      <div class="notice-top">
+        <span class="notice-badge ${n.type==='공지'?'b-notice':'b-share'}">${n.type==='공지'?'📢 공지':'💬 공유'}</span>
+        <span class="notice-meta">${escapeHtml(n.author||'익명')} · ${fmtNoticeTime(n.ts)}</span>
+        <button class="notice-del" title="삭제" onclick="deleteNotice('${id}')">×</button>
+      </div>
+      <div class="notice-body">${escapeHtml(n.text).replace(/\n/g,'<br>')}</div>
+    </div>`).join('') : '<div class="empty-note">아직 게시글이 없습니다. 첫 소식을 올려보세요! 📢</div>';
+  document.getElementById("main").innerHTML=`
+    <div class="page-head"><div><h2>📢 공지사항 · 공유 게시판</h2><div class="sub">대시보드 업데이트·수정사항이나 팀 공유 내용을 자유롭게 올려주세요 · 팀 전체에 공유됩니다</div></div></div>
+    <div class="card">
+      <div class="card-head"><h3>✍️ 새 글 작성</h3></div>
+      <div class="notice-form">
+        <div class="notice-form-row">
+          <input id="noticeAuthor" class="search-box" style="max-width:180px" type="text" placeholder="작성자 이름" value="${escapeHtml(noticeAuthor)}">
+          <select id="noticeType" class="praise-teamfilter"><option value="공유">💬 공유</option><option value="공지">📢 공지</option></select>
+        </div>
+        <textarea id="noticeText" class="notice-text" rows="3" placeholder="내용을 입력하세요 (여러 줄 가능)"></textarea>
+        <button class="btn" style="align-self:flex-start;background:var(--blue);color:#fff;border-color:var(--blue)" onclick="postNotice()">게시하기</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>📋 게시글 <span class="cnt-badge">${list.length}</span></h3></div>
+      <div class="notice-list">${rows}</div>
+    </div>`;
+}
 function saveDutyOverride(key, name){ if(name) DUTYOVER[key]=name; else delete DUTYOVER[key]; save(LS_DUTYOVER, DUTYOVER); pushPatch({dutyOver:{[key]:DUTYOVER[key]||null}}); renderShare(); }
 function dutyPersonAt(key, mapVal){ return DUTYOVER[key] || mapVal || ''; }
 const LS_REFRESH = "opcare_refresh_v1";
@@ -1203,6 +1265,7 @@ function checkRefreshWeek(){
     REFRESH_WEEK = thisMon; save(LS_REFRESH_WEEK, REFRESH_WEEK);
     if(activeCat==='share') renderShare();
     else if(activeCat==='share-refresh') renderShareRefresh();
+    else if(activeCat==='share-notice') renderShareNotice();
     showRefreshResetAlert();
   }
 }
@@ -1429,16 +1492,18 @@ function renderNav(){
       <span class="ic">📊</span>전체 현황</button>
     <div class="nav-div"></div>`;
   document.getElementById("nav").innerHTML = ov + CATEGORIES.map(c=>{
-    const active = (c.key===activeCat) || (c.key==='voc' && activeCat==='voc-monthly') || (c.key==='game' && activeCat==='game-fish') || (c.key==='share' && activeCat==='share-refresh');
+    const active = (c.key===activeCat) || (c.key==='voc' && activeCat==='voc-monthly') || (c.key==='game' && activeCat==='game-fish') || (c.key==='share' && (activeCat==='share-refresh'||activeCat==='share-notice'));
     let btn = `<button class="navbtn ${active?'active':''}" onclick="selectCat('${c.key}')">
       <span class="ic">${c.icon}</span>${c.name}</button>`;
     if(c.key==='voc' && (activeCat==='voc'||activeCat==='voc-monthly')){
       btn += `<button class="navbtn sub ${activeCat==='voc-monthly'?'active':''}" onclick="selectCat('voc-monthly')">
         <span class="ic">└</span>Monthly</button>`;
     }
-    if(c.key==='share' && (activeCat==='share'||activeCat==='share-refresh')){
+    if(c.key==='share' && (activeCat==='share'||activeCat==='share-refresh'||activeCat==='share-notice')){
       btn += `<button class="navbtn sub ${activeCat==='share-refresh'?'active':''}" onclick="selectCat('share-refresh')">
         <span class="ic">└</span>☕ 리프레쉬 타임</button>`;
+      btn += `<button class="navbtn sub ${activeCat==='share-notice'?'active':''}" onclick="selectCat('share-notice')">
+        <span class="ic">└</span>📢 공지사항</button>`;
     }
     if(c.key==='game' && (activeCat==='game'||activeCat==='game-fish')){
       btn += `<button class="navbtn sub ${activeCat==='game-fish'?'active':''}" onclick="selectCat('game-fish')">
@@ -1463,6 +1528,7 @@ function renderMain(){
   else if(activeCat==="duty") renderDuty();
   else if(activeCat==="share") renderShare();
   else if(activeCat==="share-refresh") renderShareRefresh();
+  else if(activeCat==="share-notice") renderShareNotice();
   else if(activeCat==="voc") renderVoc();
   else if(activeCat==="voc-monthly") renderVocMonthly();
   else if(activeCat==="game") renderGame();
@@ -1924,17 +1990,18 @@ function loadCloud(cb){
         const mR=mergeCloudDict(VOCPRAISE,b.vocPraise); VOCPRAISE=mR.merged;   if(Object.keys(mR.restore).length) rp.vocPraise=mR.restore;
         const mC=mergeCloudDict(VOCCOMMENT,b.vocComment);VOCCOMMENT=mC.merged; if(Object.keys(mC.restore).length) rp.vocComment=mC.restore;
         const mD=mergeCloudDict(DUTYOVER,b.dutyOver);   DUTYOVER=mD.merged;    if(Object.keys(mD.restore).length) rp.dutyOver=mD.restore;
+        const mNo=mergeCloudDict(NOTICES,b.notices);   NOTICES=mNo.merged;    if(Object.keys(mNo.restore).length) rp.notices=mNo.restore;
         if(b.fishWait!==undefined){ FISHWAIT=b.fishWait||{}; save(LS_FISHWAIT,FISHWAIT); }   // 낚시 대기: 서버 값이 정답(로컬 클리어로 우회 방지)
         if(Object.keys(rp).length) pushPatch(rp);      // 로컬에만 있던 데이터를 클라우드에 복원
       } else { GAME=mergeCloudDict(GAME,b).merged; }   // 구 포맷(게임 데이터만)
-      save(LS_GAME,GAME); save(LS_VOCEDIT,VOCEDIT); save(LS_VOCPRAISE,VOCPRAISE); save(LS_VOCCOMMENT,VOCCOMMENT); save(LS_DUTYOVER,DUTYOVER);
+      save(LS_GAME,GAME); save(LS_VOCEDIT,VOCEDIT); save(LS_VOCPRAISE,VOCPRAISE); save(LS_VOCCOMMENT,VOCCOMMENT); save(LS_DUTYOVER,DUTYOVER); save(LS_NOTICES,NOTICES);
     }
     if(cb)cb();
   }).catch(()=>{ if(cb)cb(); });
 }
 function loadGameCloud(cb){ loadCloud(cb); }   // 하위호환
 // 팀 공유 클라우드 데이터 스냅샷 — 주기 동기화 시 '변경됐을 때만' 재렌더 판정용
-function cloudSnapshot(){ try{ return JSON.stringify([GAME,FISHWAIT,VOCEDIT,VOCPRAISE,VOCCOMMENT,DUTYOVER]); }catch(e){ return ''; } }
+function cloudSnapshot(){ try{ return JSON.stringify([GAME,FISHWAIT,VOCEDIT,VOCPRAISE,VOCCOMMENT,DUTYOVER,NOTICES]); }catch(e){ return ''; } }
 async function setGameMe(v){
   gameMe=v; save("opcare_gameme_v1",gameMe); renderGame();
   if(v && GAME_API && !isGameAuthed(v)){
