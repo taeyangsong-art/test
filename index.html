@@ -632,6 +632,8 @@
   .emp-click{cursor:pointer; transition:color .12s}
   .emp-click:hover{color:var(--blue); text-decoration:underline}
   svg text.emp-click:hover{fill:var(--blue)}
+  .etc-row td{border-top:1.5px solid var(--line); background:var(--surface-soft)}
+  .etc-row:hover td{background:var(--surface2)}
   .count-input{width:74px; text-align:right; font-family:inherit; font-size:14px; font-weight:600;
     padding:7px 9px; border:1px solid var(--line); border-radius:9px; background:var(--surface2);
     color:var(--ink); transition:.15s}
@@ -2511,8 +2513,12 @@ function renderOverview(){
     const vc = vocByEmp[e]||0;
     return {emp:e, cells, vc, total:cells.reduce((a,b)=>a+b,0)+vc};   // total=업무처리 + VOC 처리(랭킹·MVP)
   }).sort((a,b)=>b.total-a.total);
+  // 기타(미등록 담당자 = 미지정·타파트 지원 등) — 랭킹/MVP·차트엔 미포함, 표에서 숫자만 일치시키는 집계 행
+  const etcCells = WORK_CATS.map((c,ci)=> Math.max(0, workCatTotals[ci].total - empRows.reduce((a,r)=>a+r.cells[ci],0)));
+  const etcVc = Math.max(0, vocAttr - empRows.reduce((a,r)=>a+r.vc,0));
+  const etcTotal = etcCells.reduce((a,b)=>a+b,0)+etcVc;
   const maxEmp = Math.max(1, ...empRows.map(r=>r.total));
-  const maxCell = Math.max(1, ...empRows.flatMap(r=>[...r.cells, r.vc]));
+  const maxCell = Math.max(1, ...empRows.flatMap(r=>[...r.cells, r.vc]), ...etcCells, etcVc);
 
   // ── 헤드라인/알림/근무 계산 ──
   const periodWord = ovLabel();
@@ -2607,7 +2613,7 @@ function renderOverview(){
     <div class="card">
       <div class="card-head">
         <h3>직원별 · 카테고리별 처리건수</h3>
-        <span class="hint">${viewLabel} · 🔎 <b>직원 이름 클릭 → 처리 내역 상세</b> · VOC는 확인 담당자 기준 · 색이 진할수록 많음</span>
+        <span class="hint">${viewLabel} · 🔎 <b>직원 이름 클릭 → 처리 내역 상세</b> · 미등록 담당(타파트 지원 등)은 <b>🧩 기타</b> 행 · VOC는 확인 담당자 기준</span>
       </div>
       <div style="overflow-x:auto">
         <table class="matrix">
@@ -2619,6 +2625,12 @@ function renderOverview(){
               <td class="num mcell" style="${r.vc>0?`background:${hexA('#ff2d55',0.08+r.vc/maxCell*0.30)}`:''}">${r.vc||'<span class="zero">·</span>'}</td>
               <td class="num tot">${r.total}</td>
             </tr>`).join("")}
+            ${etcTotal>0?`<tr class="etc-row" onclick="showDoneDetail('etc','')" style="cursor:pointer" title="🔎 미지정·타파트 지원 처리 내역 보기">
+              <td class="emp-name" style="color:var(--gray2)">🧩 기타 <span style="font-size:11px">(미지정·타파트)</span> <span style="font-size:11px">🔎</span></td>
+              ${etcCells.map((n,ci)=>`<td class="num mcell" style="${n>0?`background:${hexA(WORK_CATS[ci].color,0.06+n/maxCell*0.24)}`:''}">${n||'<span class="zero">·</span>'}</td>`).join("")}
+              <td class="num mcell" style="${etcVc>0?`background:${hexA('#ff2d55',0.06+etcVc/maxCell*0.24)}`:''}">${etcVc||'<span class="zero">·</span>'}</td>
+              <td class="num tot">${etcTotal}</td>
+            </tr>`:''}
           </tbody>
           <tfoot><tr><td>합계</td>${workCatTotals.map(c=>`<td class="num">${c.total}</td>`).join("")}<td class="num">${vocAttr}</td><td class="num tot">${grandProc}</td></tr></tfoot>
         </table>
@@ -2677,6 +2689,10 @@ function showDoneDetail(mode, key){
     title = key+' 처리 상세';
     dates.forEach(d=>((slackDay(d)||{}).done||[]).forEach(x=>{ if(x.emp===key) items.push({time:x.time,store:x.store,biz:x.biz,emp:x.emp,cat:x.cat,date:d,st:'처리'}); }));
     pushVocDone(key);   // 이 직원의 VOC 처리도 포함 (랭킹 수치와 일치)
+  } else if(mode==='etc'){   // 미등록 담당자(미지정·타파트 지원 등) 전체
+    title = '기타(미지정·타파트) 처리 상세';
+    dates.forEach(d=>((slackDay(d)||{}).done||[]).forEach(x=>{ if(!EMPLOYEES.includes((x.emp||'').trim())) items.push({time:x.time,store:x.store,biz:x.biz,emp:x.emp||'미지정',cat:x.cat,date:d,st:'처리'}); }));
+    allSlackDates().forEach(d=>{ const v=(slackDay(d)||{}).voc; if(!v)return; [...(v.alerts||[]),...(v.praises||[])].forEach(x=>{ if(x.doneDate&&set.has(x.doneDate)&&!EMPLOYEES.includes((x.emp||'').trim())) items.push({time:'',store:x.store,biz:x.storeId,emp:x.emp||'미지정',cat:'voc',date:x.doneDate,st:'처리',nt:isNightTime(x.time)}); }); });
   } else { // 'all' = 원격 총 건수 (처리 + 부재 + 확인필요)
     title = '원격 총 건수 상세';
     dates.forEach(d=>((slackDay(d)||{}).done||[]).forEach(x=>items.push({time:x.time,store:x.store,biz:x.biz,emp:x.emp,cat:x.cat,date:d,st:'처리'})));
