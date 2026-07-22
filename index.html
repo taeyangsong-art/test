@@ -1229,11 +1229,26 @@ const HOLIDAYS = {
 const LS_COUNT = "opcare_counts_v1";
 const LS_DUTY  = "opcare_duty_v1";
 const LS_SHARE = "opcare_share_v1";
+const LS_SHAREEV = "opcare_shareev_v1";   // 공유 일정 — 이벤트 단위(id) 저장·동기화(팀 공유 안정화)
 const LS_VOCEDIT = "opcare_vocedit_v1";
 let COUNTS = load(LS_COUNT, {});   // { cat: { "YYYY-MM-DD": { emp: n } } }
 let DUTY   = load(LS_DUTY, {});    // { "YYYY-MM-DD": { day, aft, nit } }
-let SHARE  = load(LS_SHARE, {});   // { "YYYY-MM-DD": [ {id, emp, type, title, time} ] } — 팀 공유(클라우드)
-function pushShareDates(dates){ const p={}; (dates||[]).forEach(ds=>{ if(ds) p[ds]=SHARE[ds]||null; }); if(Object.keys(p).length) pushPatch({share:p}); }
+// 공유 일정: 이벤트(id) 단위로 저장·동기화 → 같은 날 여러 명이 동시에 등록/삭제해도 안 밀림(팀 전체 동일 화면).
+// SHAREEV = { id: {id, ds, emp, type, time, title, grp?, deleted?, ts} } (정본) · SHARE = 렌더용 날짜별 파생.
+let SHAREEV = load(LS_SHAREEV, null);
+if(SHAREEV===null){   // 최초 1회: 구(舊) 날짜배열 포맷(opcare_share_v1) → 이벤트 단위로 이관
+  SHAREEV={}; const oldS=load(LS_SHARE, {});
+  for(const ds in oldS){ (oldS[ds]||[]).forEach(e=>{ if(e&&e.id) SHAREEV[e.id]=Object.assign({ds, ts:0}, e); }); }
+  save(LS_SHAREEV, SHAREEV);
+}
+let SHARE = {};
+function rebuildShare(){ SHARE={}; for(const id in SHAREEV){ const e=SHAREEV[id]; if(!e||e.deleted||!e.ds) continue; (SHARE[e.ds]=SHARE[e.ds]||[]).push(e); } }
+rebuildShare();
+function newShareId(){ return 'sv_'+Date.now()+'_'+Math.floor(Math.random()*100000); }
+// 변경된 이벤트만 클라우드로 전송(삭제는 deleted:true 표식으로 전송 → 팀 전체에 삭제가 확실히 전파)
+function pushShareEv(ids){ const p={}; (ids||[]).forEach(id=>{ if(id&&SHAREEV[id]) p[id]=SHAREEV[id]; }); if(Object.keys(p).length) pushPatch({shareEv:p}); }
+// 구 클라우드/구 버전 클라이언트가 올린 날짜배열(share)을 이벤트 저장소로 흡수(이미 있는 id는 건너뜀 → 삭제표식 보존)
+function foldLegacyShare(dateMap){ if(!dateMap) return; for(const ds in dateMap){ (dateMap[ds]||[]).forEach(e=>{ if(e&&e.id&&!SHAREEV[e.id]) SHAREEV[e.id]=Object.assign({ds, ts:0}, e); }); } }
 function pushDutyDates(dates){ const p={}; (dates||[]).forEach(ds=>{ if(ds) p[ds]=DUTY[ds]||null; }); if(Object.keys(p).length) pushPatch({duty:p}); }
 const LS_DUTYOVER = "opcare_dutyover_v1";
 let DUTYOVER = load(LS_DUTYOVER, {});   // { "date|time|title": "직원명" } — 회의 원격당번 수동 지정
@@ -2090,7 +2105,7 @@ function rankNameHTML(emp, noFace){ const eq=(GAME[emp]||{}).equipped||{}; const
 // 랭킹·MVP용 미니 전신 아바타(캐릭터+꾸미기 전부) — 122x150 원본을 w px로 축소. 게임 미참여 직원도 기본 캐릭터 렌더.
 function avatarMini(emp, w){ const g=GAME[emp]||{}; const eq=g.equipped||{}; const s=w/122; return `<div class="av-mini" style="width:${w}px;height:${Math.round(150*s)}px"><div class="av-mini-in" style="transform:scale(${s.toFixed(3)})">${avatarBig(eq, g.gender)}</div></div>`; }
 // 팀 공유 클라우드 = {players:GAME, vocEdit, vocPraise, vocComment, dutyOver, fishWait} 통합 블롭 (백엔드는 game 블롭을 그대로 저장/반환)
-function cloudBlob(){ return { _v:2, players:GAME, vocEdit:VOCEDIT, vocPraise:VOCPRAISE, vocComment:VOCCOMMENT, dutyOver:DUTYOVER, share:SHARE, duty:DUTY }; }
+function cloudBlob(){ return { _v:2, players:GAME, vocEdit:VOCEDIT, vocPraise:VOCPRAISE, vocComment:VOCCOMMENT, dutyOver:DUTYOVER, shareEv:SHAREEV, duty:DUTY }; }
 // 변경된 항목만 patch로 전송 → 서버가 잠금+병합(동시편집 안전, 경량)
 function pushPatch(patch){ if(!GAME_API) return; fetch(GAME_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({patch})}).catch(()=>{}); }
 function saveGame(){ save(LS_GAME,GAME); if(gameMe&&GAME[gameMe]) pushPatch({players:{[gameMe]:GAME[gameMe]}}); }
@@ -2118,19 +2133,20 @@ function loadCloud(cb){
         const mNo=mergeCloudDict(NOTICES,b.notices);   NOTICES=mNo.merged;    if(Object.keys(mNo.restore).length) rp.notices=mNo.restore;
         const mNc=mergeCloudDict(NCOMMENTS,b.nComments);NCOMMENTS=mNc.merged; if(Object.keys(mNc.restore).length) rp.nComments=mNc.restore;
         const mNr=mergeCloudDict(NREACTS,b.nReacts);   NREACTS=mNr.merged;    if(Object.keys(mNr.restore).length) rp.nReacts=mNr.restore;
-        const mSh=mergeCloudDict(SHARE,b.share);       SHARE=mSh.merged;      if(Object.keys(mSh.restore).length) rp.share=mSh.restore;
+        const mSh=mergeCloudDict(SHAREEV,b.shareEv);   SHAREEV=mSh.merged;    if(Object.keys(mSh.restore).length) rp.shareEv=mSh.restore;
+        foldLegacyShare(b.share); rebuildShare();      // 구 포맷 흡수 후 렌더용 날짜별 재구성
         const mDt=mergeCloudDict(DUTY,b.duty);         DUTY=mDt.merged;       if(Object.keys(mDt.restore).length) rp.duty=mDt.restore;
         if(b.fishWait!==undefined){ FISHWAIT=b.fishWait||{}; save(LS_FISHWAIT,FISHWAIT); }   // 낚시 대기: 서버 값이 정답(로컬 클리어로 우회 방지)
         if(Object.keys(rp).length) pushPatch(rp);      // 로컬에만 있던 데이터를 클라우드에 복원
       } else { GAME=mergeCloudDict(GAME,b).merged; }   // 구 포맷(게임 데이터만)
-      save(LS_GAME,GAME); save(LS_VOCEDIT,VOCEDIT); save(LS_VOCPRAISE,VOCPRAISE); save(LS_VOCCOMMENT,VOCCOMMENT); save(LS_DUTYOVER,DUTYOVER); save(LS_NOTICES,NOTICES); save(LS_NCOMMENTS,NCOMMENTS); save(LS_NREACTS,NREACTS); save(LS_SHARE,SHARE); save(LS_DUTY,DUTY);
+      save(LS_GAME,GAME); save(LS_VOCEDIT,VOCEDIT); save(LS_VOCPRAISE,VOCPRAISE); save(LS_VOCCOMMENT,VOCCOMMENT); save(LS_DUTYOVER,DUTYOVER); save(LS_NOTICES,NOTICES); save(LS_NCOMMENTS,NCOMMENTS); save(LS_NREACTS,NREACTS); save(LS_SHAREEV,SHAREEV); save(LS_DUTY,DUTY);
     }
     if(cb)cb();
   }).catch(()=>{ if(cb)cb(); });
 }
 function loadGameCloud(cb){ loadCloud(cb); }   // 하위호환
 // 팀 공유 클라우드 데이터 스냅샷 — 주기 동기화 시 '변경됐을 때만' 재렌더 판정용
-function cloudSnapshot(){ try{ return JSON.stringify([GAME,FISHWAIT,VOCEDIT,VOCPRAISE,VOCCOMMENT,DUTYOVER,NOTICES,NCOMMENTS,NREACTS,SHARE,DUTY]); }catch(e){ return ''; } }
+function cloudSnapshot(){ try{ return JSON.stringify([GAME,FISHWAIT,VOCEDIT,VOCPRAISE,VOCCOMMENT,DUTYOVER,NOTICES,NCOMMENTS,NREACTS,SHAREEV,DUTY]); }catch(e){ return ''; } }
 async function setGameMe(v){
   gameMe=v; save("opcare_gameme_v1",gameMe); renderGame();
   if(v && GAME_API && !isGameAuthed(v)){
@@ -4056,37 +4072,31 @@ function submitShare(){
   const type=document.getElementById("sfType").value;
   const title=document.getElementById("sfTitle").value.trim();
   if(!ds||!emp) return;
-  const dirty=new Set();
+  const changed=[];
 
-  // 수정 모드면 기존 일정(단건) 먼저 제거
-  let keepId=null;
-  if(shareEdit){
-    const src=SHARE[shareEdit.ds]||[];
-    const idx=src.findIndex(e=>e.id===shareEdit.id);
-    if(idx>=0){ keepId=src[idx].id; src.splice(idx,1); if(src.length===0) delete SHARE[shareEdit.ds]; }
-    dirty.add(shareEdit.ds);
-  }
+  // 수정 모드면 기존 일정(단건)을 삭제 표식 처리 (새 이벤트로 다시 등록)
+  if(shareEdit && SHAREEV[shareEdit.id]){ SHAREEV[shareEdit.id].deleted=true; SHAREEV[shareEdit.id].ts=Date.now(); changed.push(shareEdit.id); }
 
   if(type==="vacation"){
     // 휴가: 시작일~종료일 각 날짜에 하루씩 등록 (같은 grp 로 묶어 일괄 삭제 가능)
     let a=ds, b=document.getElementById("sfEndDate").value||ds;
     if(b<a){ const t=a; a=b; b=t; }
     const grp="v"+ds.replace(/-/g,'')+"_"+(Date.now()%100000);
-    eachDate(a,b).forEach((d,i)=>{
-      if(!SHARE[d]) SHARE[d]=[];
-      SHARE[d].push({ id:grp+"_"+i, grp, emp, type, time:"", title });
-      dirty.add(d);
+    eachDate(a,b).forEach((d)=>{
+      const id=newShareId();
+      SHAREEV[id]={ id, ds:d, grp, emp, type, time:"", title, ts:Date.now() };
+      changed.push(id);
     });
   } else {
     const s=document.getElementById("sfStart").value, e2=document.getElementById("sfEnd").value;
     let time="";
     if(s&&e2) time=`${s} ~ ${e2}`; else if(s) time=`${s} ~`; else if(e2) time=`~ ${e2}`;
-    if(!SHARE[ds]) SHARE[ds]=[];
-    SHARE[ds].push({ id: keepId || ("e"+ds.replace(/-/g,'')+"_"+SHARE[ds].length+"_"+emp.length), emp, type, time, title });
-    dirty.add(ds);
+    const id=newShareId();
+    SHAREEV[id]={ id, ds, emp, type, time, title, ts:Date.now() };
+    changed.push(id);
   }
   shareEdit=null;
-  save(LS_SHARE, SHARE); pushShareDates([...dirty]);
+  save(LS_SHAREEV, SHAREEV); rebuildShare(); pushShareEv(changed);
   closeShareForm();
   renderShare();
 }
@@ -4108,23 +4118,19 @@ function timeOptions(){
   return opts;
 }
 function removeShare(ds, id){
-  if(!SHARE[ds]) return;
-  const ev=SHARE[ds].find(e=>e.id===id); if(!ev) return;
+  const ev=SHAREEV[id]; if(!ev||ev.deleted) return;
   const t=typeMeta(ev.type);
-  const dirty=[];
+  const changed=[];
   if(ev.grp){
-    // 휴가(여러 날) → 그룹 전체 삭제 (영향받는 모든 날짜를 클라우드에 반영)
-    const affected=Object.keys(SHARE).filter(d=>SHARE[d].some(e=>e.grp===ev.grp));
-    const days=affected.reduce((n,d)=>n+SHARE[d].filter(e=>e.grp===ev.grp).length,0);
-    if(!confirm(`${ev.emp}님의 ${t.label}(${days}일) 전체를 삭제할까요?`)) return;
-    affected.forEach(d=>{ SHARE[d]=SHARE[d].filter(e=>e.grp!==ev.grp); if(SHARE[d].length===0) delete SHARE[d]; dirty.push(d); });
+    // 휴가(여러 날) → 그룹 전체 삭제(표식). 팀 전체에 삭제가 전파됨.
+    const members=Object.keys(SHAREEV).filter(k=>{ const e=SHAREEV[k]; return e && !e.deleted && e.grp===ev.grp; });
+    if(!confirm(`${ev.emp}님의 ${t.label}(${members.length}일) 전체를 삭제할까요?`)) return;
+    members.forEach(k=>{ SHAREEV[k].deleted=true; SHAREEV[k].ts=Date.now(); changed.push(k); });
   } else {
     if(!confirm(`${ev.emp}님의 ${t.label}${ev.title?' ('+ev.title+')':''} 일정을 삭제할까요?`)) return;
-    SHARE[ds]=SHARE[ds].filter(e=>e.id!==id);
-    if(SHARE[ds].length===0) delete SHARE[ds];
-    dirty.push(ds);
+    ev.deleted=true; ev.ts=Date.now(); changed.push(id);
   }
-  save(LS_SHARE, SHARE); pushShareDates(dirty);
+  save(LS_SHAREEV, SHAREEV); rebuildShare(); pushShareEv(changed);
   renderShare();
 }
 
@@ -4145,13 +4151,9 @@ function shareDrop(ev, targetDs, cell){
   if(!src){ const d=(ev.dataTransfer.getData("text/plain")||"").split("|"); if(d.length===2) src={ds:d[0], id:d[1]}; }
   shareDrag=null;
   if(!src || src.ds===targetDs) return;           // 같은 날이면 무시
-  const list=SHARE[src.ds]; if(!list) return;
-  const idx=list.findIndex(e=>e.id===src.id); if(idx<0) return;
-  const moved=list.splice(idx,1)[0];
-  if(list.length===0) delete SHARE[src.ds];
-  if(!SHARE[targetDs]) SHARE[targetDs]=[];
-  SHARE[targetDs].push(moved);
-  save(LS_SHARE, SHARE); pushShareDates([src.ds, targetDs]);
+  const se=SHAREEV[src.id]; if(!se||se.deleted) return;
+  se.ds=targetDs; se.ts=Date.now();
+  save(LS_SHAREEV, SHAREEV); rebuildShare(); pushShareEv([src.id]);
   renderShare();
 }
 
