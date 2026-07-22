@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 1222,
+  "version": 1223,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -47161,10 +47161,25 @@ window.SLACK_DATA = {
       }
     },
     "2026-07-22": {
-      "counts": {},
+      "counts": {
+        "as": {
+          "김현기": 1
+        }
+      },
       "pending": [],
-      "done": [],
-      "updatedAt": "08:30"
+      "done": [
+        {
+          "time": "09:07",
+          "store": "펠(PEL)학원",
+          "biz": "7459501807",
+          "cat": "as",
+          "emp": "김현기",
+          "req": "유프 호환 문의",
+          "hw": "",
+          "note": "개인구매cpp3000 / RJ45케이블 구매링크 전달 완"
+        }
+      ],
+      "updatedAt": "09:07"
     }
   },
   "resp": {
@@ -47180,10 +47195,6 @@ window.SLACK_DATA = {
       "1784611801.660229": {
         "post": "1784611801.660229",
         "lastSeen": 1784611829.595
-      },
-      "1784676601.941029": {
-        "post": "1784676601.941029",
-        "lastSeen": 1784678433.026
       }
     },
     "days": {
