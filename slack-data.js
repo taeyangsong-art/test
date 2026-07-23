@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 1383,
+  "version": 1384,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -54042,7 +54042,7 @@ window.SLACK_DATA = {
     "2026-07-23": {
       "counts": {
         "as": {
-          "최민석": 27,
+          "최민석": 28,
           "서상원": 7,
           "김기범": 17,
           "김동욱": 29,
@@ -54084,6 +54084,17 @@ window.SLACK_DATA = {
       },
       "pending": [],
       "done": [
+        {
+          "time": "23:45",
+          "store": "돈찌본점",
+          "biz": "6660303531",
+          "cat": "as",
+          "emp": "최민석",
+          "req": "• 배민/요기요/쿠팡이츠 입점 했으며, 무선프린터기에 해당 주문건들이 나올 수 있도록 요청 드립니다.",
+          "hw": "",
+          "intake": "online",
+          "note": "1차 거절"
+        },
         {
           "time": "23:23",
           "store": "토이즈나",
@@ -56913,7 +56924,7 @@ window.SLACK_DATA = {
         }
       ],
       "intake": {
-        "online": 219,
+        "online": 220,
         "offline": 37,
         "unknown": 0
       },
@@ -57182,6 +57193,17 @@ window.SLACK_DATA = {
           }
         ]
       }
+    },
+    "2026-07-24": {
+      "counts": {},
+      "pending": [],
+      "done": [],
+      "intake": {
+        "online": 0,
+        "offline": 0,
+        "unknown": 0
+      },
+      "updatedAt": ""
     }
   },
   "resp": {
