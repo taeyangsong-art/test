@@ -3,10 +3,73 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 16,
- "updatedAt": "2026-07-23 16:45",
+ "version": 17,
+ "updatedAt": "2026-07-23 17:00",
  "days": 30,
  "items": [
+  {
+   "ts": "1784793427.010489",
+   "date": "2026-07-23",
+   "time": "16:57",
+   "store": "인딕슬로우",
+   "biz": "3090831798",
+   "phone": "",
+   "pos": "토스포스",
+   "content": "토스포스 메뉴 등록 수정 요청주시어 확인 부탁드리겠습니다..!",
+   "special": "",
+   "drive": [],
+   "files": 0,
+   "att": [],
+   "replies": [
+    "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784624019849009\n\n이전 스레드\n\n파일대로 메뉴 및 옵션이 등록되어있지 않다고 말씀주시어, 혹시 원격으로 진행 부탁드려도 될까요..!?\n\n5시부터 주문 받으시는데 급하다고 하시어 요청드립니다:ㅠㅠ:",
+    "감사합니다!!!"
+   ],
+   "rc": 4,
+   "lr": "1784793511.484109",
+   "status": "confirm",
+   "handler": "배선유",
+   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784793427010489"
+  },
+  {
+   "ts": "1784793115.993819",
+   "date": "2026-07-23",
+   "time": "16:51",
+   "store": "청학동하이트마을",
+   "biz": "6392500586",
+   "phone": "01053538787\n-",
+   "pos": "토스포스",
+   "content": "족발포장12000",
+   "special": "",
+   "drive": [],
+   "files": 0,
+   "att": [],
+   "replies": [],
+   "rc": 1,
+   "lr": "1784793120.666429",
+   "status": "wait",
+   "handler": null,
+   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784793115993819"
+  },
+  {
+   "ts": "1784792863.517579",
+   "date": "2026-07-23",
+   "time": "16:47",
+   "store": "주식회사 에스앤제이에프앤비",
+   "biz": "6468703949",
+   "phone": "",
+   "pos": "오케이포스",
+   "content": "오케이포스 메뉴 등록 요청 드립니다!",
+   "special": "",
+   "drive": [],
+   "files": 0,
+   "att": [],
+   "replies": [],
+   "rc": 2,
+   "lr": "1784792931.053019",
+   "status": "wait",
+   "handler": null,
+   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784792863517579"
+  },
   {
    "ts": "1784791428.618789",
    "date": "2026-07-23",
@@ -44,10 +107,11 @@ window.MENU_REQUESTS = {
    "att": [],
    "replies": [
     "엑셀파일 안열림",
-    "이메일 전달"
+    "이메일 전달",
+    "메일로 처리 완료"
    ],
-   "rc": 3,
-   "lr": "1784791844.199189",
+   "rc": 4,
+   "lr": "1784793129.603819",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784790693724379"
@@ -510,10 +574,12 @@ window.MENU_REQUESTS = {
    "files": 0,
    "att": [],
    "replies": [
-    "담배빼고, 터치키 NO 되어잇는거 빼고만 등록"
+    "담배빼고, 터치키 NO 되어잇는거 빼고만 등록",
+    "바코드 그대로 등록했는디...",
+    "OKPOS에서 터치키 NO되어잇는건 빼고 올라와잇는것만 등록햇어요"
    ],
-   "rc": 4,
-   "lr": "1784792559.680189",
+   "rc": 6,
+   "lr": "1784793251.470759",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784704133329699"
@@ -699,8 +765,8 @@ window.MENU_REQUESTS = {
    "replies": [
     "맞습니다.\n근데 인입 당시 메일 수신 확인 안돼서 메뉴등록 요청 링크로 재접수 하시도록 안내드렸는데 메일 확인이 되는군요 ㅠㅠ"
    ],
-   "rc": 7,
-   "lr": "1784698489.574459",
+   "rc": 13,
+   "lr": "1784793135.852989",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784694526574119"
