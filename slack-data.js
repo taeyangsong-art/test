@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 1371,
+  "version": 1372,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -54042,7 +54042,7 @@ window.SLACK_DATA = {
     "2026-07-23": {
       "counts": {
         "as": {
-          "최민석": 22,
+          "최민석": 23,
           "서상원": 7,
           "김기범": 17,
           "김동욱": 29,
@@ -54082,6 +54082,17 @@ window.SLACK_DATA = {
       },
       "pending": [],
       "done": [
+        {
+          "time": "20:52",
+          "store": "모먼트준",
+          "biz": "4192102513",
+          "cat": "as",
+          "emp": "최민석",
+          "req": "배민 토스포스 연동 요청 프린터 설정 도움 부탁드립니다",
+          "hw": "",
+          "intake": "online",
+          "note": "1차 부재"
+        },
         {
           "time": "20:36",
           "store": "목림커피",
@@ -56801,19 +56812,19 @@ window.SLACK_DATA = {
         }
       ],
       "intake": {
-        "online": 210,
+        "online": 211,
         "offline": 36,
         "unknown": 0
       },
-      "updatedAt": "20:36",
+      "updatedAt": "20:53",
       "voc": {
-        "responses": 21,
+        "responses": 22,
         "install": {
           "count": 1,
           "low": 0
         },
         "nps": {
-          "count": 21,
+          "count": 22,
           "low": 7
         },
         "high": {
@@ -56826,7 +56837,7 @@ window.SLACK_DATA = {
           "4": 2,
           "7": 1,
           "8": 3,
-          "9": 2,
+          "9": 3,
           "10": 8
         },
         "installDist": {
@@ -56836,13 +56847,13 @@ window.SLACK_DATA = {
           "서비스[학원]": 1
         },
         "byTenure": {
+          "3개월": {
+            "total": 4,
+            "low": 1
+          },
           "6개월": {
             "total": 5,
             "low": 2
-          },
-          "3개월": {
-            "total": 3,
-            "low": 1
           },
           "1개월": {
             "total": 7,
@@ -56858,6 +56869,10 @@ window.SLACK_DATA = {
           }
         },
         "byVan": {
+          "KPN": {
+            "total": 8,
+            "low": 2
+          },
           "DAOU": {
             "total": 1,
             "low": 0
@@ -56869,10 +56884,6 @@ window.SLACK_DATA = {
           "KIS": {
             "total": 10,
             "low": 3
-          },
-          "KPN": {
-            "total": 7,
-            "low": 2
           },
           "NICE": {
             "total": 1,
@@ -57045,6 +57056,18 @@ window.SLACK_DATA = {
         ],
         "praises": [
           {
+            "time": "20:53",
+            "store": "음악캠프",
+            "storeId": "446808",
+            "indBucket": "",
+            "emp": "",
+            "install": null,
+            "nps": 9,
+            "text": "편리하고 시간의 흐름에맞춰 업그레이드가잘되고 다채로운 방식으로 도움을 주고있어요",
+            "byReaction": false,
+            "doneDate": ""
+          },
+          {
             "time": "16:59",
             "store": "솔브온(solve on) 수학교습소",
             "storeId": "416627",
@@ -57080,23 +57103,23 @@ window.SLACK_DATA = {
       },
       "1784786404.300819": {
         "post": "1784786404.300819",
-        "lastSeen": 1784807123.089
+        "lastSeen": 1784808037.668
       },
       "1784794088.947879": {
         "post": "1784794088.947879",
-        "lastSeen": 1784807123.089
+        "lastSeen": 1784808037.668
       },
       "1784797494.045879": {
         "post": "1784797494.045879",
-        "lastSeen": 1784807123.089
+        "lastSeen": 1784808037.668
       },
       "1784799717.430769": {
         "post": "1784799717.430769",
-        "lastSeen": 1784807123.089
+        "lastSeen": 1784808037.668
       },
       "1784802746.464459": {
         "post": "1784802746.464459",
-        "lastSeen": 1784807123.089
+        "lastSeen": 1784808037.668
       }
     },
     "days": {
