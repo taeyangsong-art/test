@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 1378,
+  "version": 1379,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -54073,7 +54073,7 @@ window.SLACK_DATA = {
           "김동욱": 2
         },
         "menu": {
-          "최민석": 2,
+          "최민석": 3,
           "배선유": 13,
           "김규빈": 7
         },
@@ -54084,6 +54084,17 @@ window.SLACK_DATA = {
       },
       "pending": [],
       "done": [
+        {
+          "time": "21:59",
+          "store": "파도어시장",
+          "biz": "1892502212",
+          "cat": "menu",
+          "emp": "최민석",
+          "req": "",
+          "hw": "",
+          "intake": "online",
+          "note": "확인 바랍니다! 확인 바랍니다! 확인 바랍니다!"
+        },
         {
           "time": "21:36",
           "store": "온도 혼술바 청주 동남지구점",
@@ -56869,7 +56880,7 @@ window.SLACK_DATA = {
         }
       ],
       "intake": {
-        "online": 216,
+        "online": 217,
         "offline": 36,
         "unknown": 0
       },
@@ -57160,15 +57171,15 @@ window.SLACK_DATA = {
       },
       "1784786404.300819": {
         "post": "1784786404.300819",
-        "lastSeen": 1784813435.919
+        "lastSeen": 1784814324.516
       },
       "1784794088.947879": {
         "post": "1784794088.947879",
-        "lastSeen": 1784813435.919
+        "lastSeen": 1784814324.516
       },
       "1784797494.045879": {
         "post": "1784797494.045879",
-        "lastSeen": 1784813435.919
+        "lastSeen": 1784814324.516
       }
     },
     "days": {
