@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 1337,
+  "version": 1338,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -54044,7 +54044,7 @@ window.SLACK_DATA = {
       "counts": {
         "as": {
           "송태양": 11,
-          "심성현": 10,
+          "심성현": 11,
           "김규빈": 3,
           "김동욱": 5,
           "김기범": 1,
@@ -54152,6 +54152,17 @@ window.SLACK_DATA = {
           "hw": "",
           "intake": "online",
           "note": "금액입력결제모드 불편할것으로 예상되셔서 반품 or CAT 프론트 조합으로 재상담 예정으로 고객센터인입 예정"
+        },
+        {
+          "time": "11:50",
+          "store": "돗가비누각",
+          "biz": "8712701320",
+          "cat": "as",
+          "emp": "심성현",
+          "req": "포프+유프 / 유선프린터기 3인치 영수증 교체했으나 안나오는 증상 점검 부탁드립니다",
+          "hw": "",
+          "intake": "online",
+          "note": "01039681018 / 8385 롤러 제거 후 정상"
         },
         {
           "time": "11:47",
@@ -54807,19 +54818,75 @@ window.SLACK_DATA = {
         }
       ],
       "intake": {
-        "online": 61,
+        "online": 62,
         "offline": 5,
         "unknown": 0
       },
-      "updatedAt": "12:07"
+      "updatedAt": "12:45",
+      "voc": {
+        "responses": 1,
+        "install": {
+          "count": 0,
+          "low": 0
+        },
+        "nps": {
+          "count": 1,
+          "low": 1
+        },
+        "high": {
+          "install": 0,
+          "nps": 0
+        },
+        "npsDist": {
+          "4": 1
+        },
+        "installDist": {},
+        "byIndustry": {},
+        "byTenure": {
+          "12개월": {
+            "total": 1,
+            "low": 1
+          }
+        },
+        "byVan": {
+          "KPN": {
+            "total": 1,
+            "low": 1
+          }
+        },
+        "reasonCounts": {
+          "기타 이슈(정산/직원에 대한 불만/호영님출몰)": 1
+        },
+        "alerts": [
+          {
+            "time": "12:37",
+            "store": "사서의 책방(문화비)",
+            "storeId": "213799",
+            "industry": "",
+            "indBucket": "",
+            "install": null,
+            "nps": 4,
+            "reasons": [
+              {
+                "q": "추천의향",
+                "score": 4,
+                "text": "AS받기가 힘들었음",
+                "cat": "기타 이슈(정산/직원에 대한 불만/호영님출몰)"
+              }
+            ],
+            "emp": "",
+            "autoStatus": "",
+            "autoEmp": "",
+            "autoNote": "",
+            "doneDate": ""
+          }
+        ],
+        "praises": []
+      }
     }
   },
   "resp": {
     "watch": {
-      "1784605301.891209": {
-        "post": "1784605301.891209",
-        "lastSeen": 1784664521.485
-      },
       "1784611801.660229": {
         "post": "1784611801.660229",
         "lastSeen": 1784611829.595
@@ -54842,7 +54909,11 @@ window.SLACK_DATA = {
       },
       "1784772002.565589": {
         "post": "1784772002.565589",
-        "lastSeen": 1784777427.371
+        "lastSeen": 1784778322.984
+      },
+      "1784778300.426929": {
+        "post": "1784778300.426929",
+        "lastSeen": 1784778322.984
       }
     },
     "days": {
