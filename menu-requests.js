@@ -3,10 +3,30 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 14,
- "updatedAt": "2026-07-23 16:15",
+ "version": 15,
+ "updatedAt": "2026-07-23 16:30",
  "days": 30,
  "items": [
+  {
+   "ts": "1784791428.618789",
+   "date": "2026-07-23",
+   "time": "16:23",
+   "store": "청학동하이트마을",
+   "biz": "6392500586",
+   "phone": "01053538787",
+   "pos": "퍼스트포스",
+   "content": "메뉴 등록 요청\n\n족발 포장 11,000원 상품 밑에 족발 포장 12,000원 상품 추가 요청",
+   "special": "",
+   "drive": [],
+   "files": 0,
+   "att": [],
+   "replies": [],
+   "rc": 1,
+   "lr": "1784791433.735309",
+   "status": "wait",
+   "handler": null,
+   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784791428618789"
+  },
   {
    "ts": "1784790693.724379",
    "date": "2026-07-23",
@@ -22,9 +42,11 @@ window.MENU_REQUESTS = {
    ],
    "files": 0,
    "att": [],
-   "replies": [],
-   "rc": 1,
-   "lr": "1784790697.884179",
+   "replies": [
+    "엑셀파일 안열림"
+   ],
+   "rc": 2,
+   "lr": "1784791819.585029",
    "status": "wait",
    "handler": null,
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784790693724379"
@@ -45,10 +67,10 @@ window.MENU_REQUESTS = {
    "replies": [
     "파스타면 카테고리에 오븐치즈스파게티 18,900원 추가 요청 드립니다!"
    ],
-   "rc": 2,
-   "lr": "1784789747.335259",
-   "status": "wait",
-   "handler": null,
+   "rc": 3,
+   "lr": "1784791746.654639",
+   "status": "done",
+   "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784789741165009"
   },
   {
@@ -65,10 +87,10 @@ window.MENU_REQUESTS = {
    "files": 0,
    "att": [],
    "replies": [],
-   "rc": 1,
-   "lr": "1784789686.873739",
-   "status": "wait",
-   "handler": null,
+   "rc": 2,
+   "lr": "1784791524.691649",
+   "status": "done",
+   "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784789682521779"
   },
   {
