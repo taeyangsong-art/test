@@ -1687,6 +1687,48 @@ let menuregSel=null, menuregFilter='all';
 const MENUREG_ST={done:['✅ 완료','#34c759'],confirm:['🔎 확인중','#ff9500'],wait:['⏳ 대기','#ff3b30'],dup:['🔁 중복','#8e8e93']};
 const menuregGridCache={};   // ts → 편집 중인 그리드 내용 보존
 function menuregItems(){ return (window.MENU_REQUESTS&&window.MENU_REQUESTS.items)||[]; }
+// ── 매장 메모 (팀 공유: 클라우드 동기화) — 사용 프로그램·ASP 계정 등. 키=사업자번호(없으면 상호)
+const LS_MENUMEMO = "opcare_menumemo_v1";
+let MENUMEMO = load(LS_MENUMEMO, {});   // { "<사업자번호|상호>": "메모" }
+function menuregMemoKey(it){ return (it&&(it.biz||it.store))||''; }
+function menuregMemoSave(){
+  const it=menuregItems().find(i=>i.ts===menuregSel); if(!it) return;
+  const k=menuregMemoKey(it); if(!k){ alert('사업자번호/상호가 없어 메모를 저장할 수 없습니다.'); return; }
+  const v=(document.getElementById('mrMemo').value||'').trim();
+  if(v) MENUMEMO[k]=v; else delete MENUMEMO[k];
+  save(LS_MENUMEMO,MENUMEMO); pushPatch({menuMemo:{[k]:v}});   // 삭제도 ''(묘비) — 타 브라우저 복원 방지
+  renderMenuReg();
+}
+// ── 매장조회(검색) — 상호 또는 사업자번호
+let menuregSearch='';
+function menuregFiltered(){
+  const all=menuregItems();
+  const q=(menuregSearch||'').trim().toLowerCase(), qd=q.replace(/[^0-9]/g,'');
+  let items=q?all.filter(i=>((i.store||'').toLowerCase().includes(q))||(qd.length>=3&&String(i.biz||'').includes(qd))):all;
+  if(menuregFilter!=='all') items=items.filter(i=>i.status===menuregFilter);
+  return {all,items};
+}
+function menuregSetSearch(v){   // 입력 중 포커스 유지 위해 목록만 부분 갱신
+  menuregSearch=v;
+  const f=menuregFiltered();
+  const l=document.getElementById('mrList'); if(l) l.innerHTML=menuregRowsHtml(f.items);
+  const c=document.getElementById('mrCnt'); if(c) c.textContent=f.items.length;
+}
+function menuregRowsHtml(items){
+  return items.length?items.map(i=>{
+    const st=MENUREG_ST[i.status]||MENUREG_ST.wait;
+    const memo=MENUMEMO[menuregMemoKey(i)];
+    return `<div onclick="menuregSelect('${i.ts}')" style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line,#eee);cursor:pointer;${i.ts===menuregSel?'background:rgba(94,92,230,.08);':''}">
+      <span style="font-size:12px;color:#888;white-space:nowrap">${i.date.slice(5)} ${i.time}</span>
+      <b style="flex:0 0 auto;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(i.store||'(상호미상)')}</b>
+      ${memo?`<span title="${escapeHtml(memo)}" style="font-size:11px;background:#fff3c4;color:#7a5d00;border-radius:8px;padding:2px 7px;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">📝 ${escapeHtml(String(memo).replace(/\n/g,' ').slice(0,26))}</span>`:''}
+      <span style="font-size:12px;color:#666">${escapeHtml(i.pos||'POS?')}</span>
+      <span style="font-size:12px;color:#999;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml((i.content||'').slice(0,40))}</span>
+      ${(i.replies||[]).length?`<span style="font-size:12px;color:var(--blue,#5e5ce6);white-space:nowrap">💬${i.replies.length}</span>`:''}
+      <span style="font-size:12px;font-weight:700;color:${st[1]};white-space:nowrap">${st[0]}</span>
+      ${i.handler?`<span style="font-size:12px;color:#666;white-space:nowrap">${escapeHtml(i.handler)}</span>`:''}
+    </div>`;}).join(''):'<div class="empty-note">조건에 맞는 요청이 없습니다.</div>';
+}
 // 요청 원문에서 '메뉴명 가격' 초안 추출 (룰 기반 — 복잡한 요청은 /메뉴판독 스킬로 정밀 판독)
 function menuregDraft(txt){
   const rows=[];
@@ -1744,24 +1786,14 @@ function menuregSelect(ts){ menuregSel=(menuregSel===ts?null:ts); renderMenuReg(
 function menuregSetFilter(f){ menuregFilter=f; renderMenuReg(); }
 function menuregCacheGrid(){ const ta=document.getElementById('mrGrid'); if(ta&&menuregSel) menuregGridCache[menuregSel]=ta.value; }
 function renderMenuReg(){
-  const all=menuregItems();
-  const items=menuregFilter==='all'?all:all.filter(i=>i.status===menuregFilter);
+  const {all,items}=menuregFiltered();
   const upd=(window.MENU_REQUESTS&&window.MENU_REQUESTS.updatedAt)||'';
   const cnt=s=>all.filter(i=>i.status===s).length;
   const chips=[['all','전체 '+all.length],['wait','⏳ 대기 '+cnt('wait')],['confirm','🔎 확인중 '+cnt('confirm')],['done','✅ 완료 '+cnt('done')],['dup','🔁 중복 '+cnt('dup')]]
     .map(([k,l])=>`<button class="btn" style="${menuregFilter===k?'background:var(--blue);color:#fff;border-color:var(--blue)':''}" onclick="menuregSetFilter('${k}')">${l}</button>`).join(' ');
   const sel=all.find(i=>i.ts===menuregSel);
-  const rows=items.length?items.map(i=>{
-    const st=MENUREG_ST[i.status]||MENUREG_ST.wait;
-    return `<div onclick="menuregSelect('${i.ts}')" style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line,#eee);cursor:pointer;${i.ts===menuregSel?'background:rgba(94,92,230,.08);':''}">
-      <span style="font-size:12px;color:#888;white-space:nowrap">${i.date.slice(5)} ${i.time}</span>
-      <b style="flex:0 0 auto;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(i.store||'(상호미상)')}</b>
-      <span style="font-size:12px;color:#666">${escapeHtml(i.pos||'POS?')}</span>
-      <span style="font-size:12px;color:#999;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml((i.content||'').slice(0,40))}</span>
-      ${(i.replies||[]).length?`<span style="font-size:12px;color:var(--blue,#5e5ce6);white-space:nowrap">💬${i.replies.length}</span>`:''}
-      <span style="font-size:12px;font-weight:700;color:${st[1]};white-space:nowrap">${st[0]}</span>
-      ${i.handler?`<span style="font-size:12px;color:#666;white-space:nowrap">${escapeHtml(i.handler)}</span>`:''}
-    </div>`;}).join(''):'<div class="empty-note">해당 상태의 요청이 없습니다.</div>';
+  const memoVal=sel?(MENUMEMO[menuregMemoKey(sel)]||''):'';
+  const rows=menuregRowsHtml(items);
   const grid=sel?(menuregGridCache[sel.ts]!==undefined?menuregGridCache[sel.ts]:menuregDraft(sel.content+'\n'+((sel.replies||[]).join('\n')))):'';
   const detail=sel?`
     <div class="card">
@@ -1771,6 +1803,10 @@ function renderMenuReg(){
         <a class="btn" href="${sel.link}" target="_blank">💬 슬랙 원문</a>
         ${(sel.drive||[]).map((d,i2)=>`<a class="btn" href="${d}" target="_blank">🖼 이미지${(sel.drive.length>1?' '+(i2+1):'')}</a>`).join('')}
         ${sel.files?`<span class="hint" style="align-self:center">📎 슬랙 첨부 ${sel.files}장 (슬랙 원문에서 확인)</span>`:''}
+      </div>
+      <div style="display:flex;gap:8px;align-items:stretch;margin:8px 0">
+        <textarea id="mrMemo" rows="2" placeholder="📝 매장 메모 (팀 공유) — 사용 프로그램, ASP 계정, 특이사항 등" style="flex:1;border:1px solid #e6d9a0;background:#fffbe8;border-radius:10px;padding:8px 11px;font-size:13px">${escapeHtml(memoVal)}</textarea>
+        <button class="btn" style="align-self:center" onclick="menuregMemoSave()">💾 메모 저장</button>
       </div>
       <div style="background:var(--surface,#f7f7f8);border-radius:10px;padding:10px 12px;font-size:13px;white-space:pre-wrap;max-height:180px;overflow:auto">${escapeHtml(sel.content||'(요청내용 없음)')}${sel.special?'\n\n[특이사항] '+escapeHtml(sel.special):''}</div>
       ${(sel.replies||[]).length?`<div style="margin-top:8px">
@@ -1794,8 +1830,12 @@ function renderMenuReg(){
   document.getElementById("main").innerHTML=`
     <div class="page-head"><div><h2>🍱 메뉴등록</h2><div class="sub">슬랙 #oc팀_메뉴요청 자동 적재 (최근 ${(window.MENU_REQUESTS&&window.MENU_REQUESTS.days)||7}일) · 요청 선택 → 메뉴 확인 → POS 양식 다운로드${upd?' · 최신 적재 '+upd:''}</div></div></div>
     <div class="card">
-      <div class="card-head"><h3>📋 요청 목록 <span class="cnt-badge">${items.length}</span></h3><div style="display:flex;gap:6px;flex-wrap:wrap">${chips}</div></div>
-      <div style="max-height:380px;overflow:auto">${rows}</div>
+      <div class="card-head"><h3>📋 요청 목록 <span class="cnt-badge" id="mrCnt">${items.length}</span></h3>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+          <input id="mrSearch" value="${escapeHtml(menuregSearch||'')}" placeholder="🔍 매장조회 — 상호 또는 사업자번호" style="border:1px solid var(--line,#ddd);border-radius:8px;padding:6px 10px;font-size:13px;width:220px" oninput="menuregSetSearch(this.value)">
+          ${chips}
+        </div></div>
+      <div style="max-height:380px;overflow:auto" id="mrList">${rows}</div>
     </div>
     ${detail}
     ${!all.length?'<div class="empty-note">아직 적재된 요청이 없습니다. 자동 적재(10분 주기)가 곧 채웁니다.</div>':''}`;
@@ -2245,7 +2285,7 @@ function rankNameHTML(emp, noFace){ const eq=(GAME[emp]||{}).equipped||{}; const
 // 랭킹·MVP용 미니 전신 아바타(캐릭터+꾸미기 전부) — 122x150 원본을 w px로 축소. 게임 미참여 직원도 기본 캐릭터 렌더.
 function avatarMini(emp, w){ const g=GAME[emp]||{}; const eq=g.equipped||{}; const s=w/122; return `<div class="av-mini" style="width:${w}px;height:${Math.round(150*s)}px"><div class="av-mini-in" style="transform:scale(${s.toFixed(3)})">${avatarBig(eq, g.gender)}</div></div>`; }
 // 팀 공유 클라우드 = {players:GAME, vocEdit, vocPraise, vocComment, dutyOver, fishWait} 통합 블롭 (백엔드는 game 블롭을 그대로 저장/반환)
-function cloudBlob(){ return { _v:2, players:GAME, vocEdit:VOCEDIT, vocPraise:VOCPRAISE, vocComment:VOCCOMMENT, dutyOver:DUTYOVER, shareEv:SHAREEV, duty:DUTY }; }
+function cloudBlob(){ return { _v:2, players:GAME, vocEdit:VOCEDIT, vocPraise:VOCPRAISE, vocComment:VOCCOMMENT, dutyOver:DUTYOVER, shareEv:SHAREEV, duty:DUTY, menuMemo:MENUMEMO }; }
 // 변경된 항목만 patch로 전송 → 서버가 잠금+병합(동시편집 안전, 경량)
 function pushPatch(patch){ if(!GAME_API) return; fetch(GAME_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({patch})}).catch(()=>{}); }
 function saveGame(){ save(LS_GAME,GAME); if(gameMe&&GAME[gameMe]) pushPatch({players:{[gameMe]:GAME[gameMe]}}); }
@@ -2276,17 +2316,18 @@ function loadCloud(cb){
         const mSh=mergeCloudDict(SHAREEV,b.shareEv);   SHAREEV=mSh.merged;    if(Object.keys(mSh.restore).length) rp.shareEv=mSh.restore;
         foldLegacyShare(b.share); rebuildShare();      // 구 포맷 흡수 후 렌더용 날짜별 재구성
         const mDt=mergeCloudDict(DUTY,b.duty);         DUTY=mDt.merged;       if(Object.keys(mDt.restore).length) rp.duty=mDt.restore;
+        const mMm=mergeCloudDict(MENUMEMO,b.menuMemo); MENUMEMO=mMm.merged;   if(Object.keys(mMm.restore).length) rp.menuMemo=mMm.restore;
         if(b.fishWait!==undefined){ FISHWAIT=b.fishWait||{}; save(LS_FISHWAIT,FISHWAIT); }   // 낚시 대기: 서버 값이 정답(로컬 클리어로 우회 방지)
         if(Object.keys(rp).length) pushPatch(rp);      // 로컬에만 있던 데이터를 클라우드에 복원
       } else { GAME=mergeCloudDict(GAME,b).merged; }   // 구 포맷(게임 데이터만)
-      save(LS_GAME,GAME); save(LS_VOCEDIT,VOCEDIT); save(LS_VOCPRAISE,VOCPRAISE); save(LS_VOCCOMMENT,VOCCOMMENT); save(LS_DUTYOVER,DUTYOVER); save(LS_NOTICES,NOTICES); save(LS_NCOMMENTS,NCOMMENTS); save(LS_NREACTS,NREACTS); save(LS_SHAREEV,SHAREEV); save(LS_DUTY,DUTY);
+      save(LS_GAME,GAME); save(LS_VOCEDIT,VOCEDIT); save(LS_VOCPRAISE,VOCPRAISE); save(LS_VOCCOMMENT,VOCCOMMENT); save(LS_DUTYOVER,DUTYOVER); save(LS_NOTICES,NOTICES); save(LS_NCOMMENTS,NCOMMENTS); save(LS_NREACTS,NREACTS); save(LS_SHAREEV,SHAREEV); save(LS_DUTY,DUTY); save(LS_MENUMEMO,MENUMEMO);
     }
     if(cb)cb();
   }).catch(()=>{ if(cb)cb(); });
 }
 function loadGameCloud(cb){ loadCloud(cb); }   // 하위호환
 // 팀 공유 클라우드 데이터 스냅샷 — 주기 동기화 시 '변경됐을 때만' 재렌더 판정용
-function cloudSnapshot(){ try{ return JSON.stringify([GAME,FISHWAIT,VOCEDIT,VOCPRAISE,VOCCOMMENT,DUTYOVER,NOTICES,NCOMMENTS,NREACTS,SHAREEV,DUTY]); }catch(e){ return ''; } }
+function cloudSnapshot(){ try{ return JSON.stringify([GAME,FISHWAIT,VOCEDIT,VOCPRAISE,VOCCOMMENT,DUTYOVER,NOTICES,NCOMMENTS,NREACTS,SHAREEV,DUTY,MENUMEMO]); }catch(e){ return ''; } }
 async function setGameMe(v){
   gameMe=v; save("opcare_gameme_v1",gameMe); renderGame();
   if(v && GAME_API && !isGameAuthed(v)){

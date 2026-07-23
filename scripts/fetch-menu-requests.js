@@ -14,7 +14,7 @@ if (!TOKEN) { console.error('SLACK_BOT_TOKEN 환경변수가 필요합니다.');
 
 const CHANNEL = 'C08740SFT1S';                      // #oc팀_메뉴요청
 const WORKSPACE = 'w1659946222-hxm266180.slack.com'; // 퍼머링크용
-const DAYS = parseInt(process.env.MENU_REQ_DAYS || '7', 10);
+const DAYS = parseInt(process.env.MENU_REQ_DAYS || '30', 10);   // 매장조회(이력) 위해 30일 적재
 
 const pad = (n) => String(n).padStart(2, '0');
 const personMap = { '규빈': '김규빈', '선유': '배선유', '성현': '심성현', '동욱': '김동욱', '현기': '김현기', '태양': '송태양', '기범': '김기범', '상원': '서상원', '민석': '최민석' };
@@ -132,7 +132,7 @@ function detectPos(text) {
     });
   }
   items.sort((a, b) => parseFloat(b.ts) - parseFloat(a.ts));
-  const capped = items.slice(0, 400);
+  const capped = items.slice(0, 800);
 
   // 기존 파일과 내용 동일하면 rewrite 생략(불필요한 커밋 방지) · version 승계
   let version = 0, prevItems = null;
