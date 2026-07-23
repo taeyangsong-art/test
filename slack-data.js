@@ -3,7 +3,7 @@
  * GitHub Actions(daily-slack-tally)가 매일 자동 갱신합니다.
  */
 window.SLACK_DATA = {
-  "version": 1380,
+  "version": 1381,
   "days": {
     "2026-07-08": {
       "updatedAt": "22:50",
@@ -54042,7 +54042,7 @@ window.SLACK_DATA = {
     "2026-07-23": {
       "counts": {
         "as": {
-          "최민석": 25,
+          "최민석": 27,
           "서상원": 7,
           "김기범": 17,
           "김동욱": 29,
@@ -54084,6 +54084,28 @@ window.SLACK_DATA = {
       },
       "pending": [],
       "done": [
+        {
+          "time": "23:05",
+          "store": "파도어시장",
+          "biz": "1892502212",
+          "cat": "as",
+          "emp": "최민석",
+          "req": "메뉴설정 및 프린터별 메뉴설정 완료 프린터 음량설정 요청",
+          "hw": "",
+          "intake": "online",
+          "note": "메뉴설정 및 프린터별 메뉴설정 완료 프린터 음량설정 완료"
+        },
+        {
+          "time": "23:04",
+          "store": "용용선생 천안두정점",
+          "biz": "7691002412",
+          "cat": "as",
+          "emp": "최민석",
+          "req": "프린터 설정",
+          "hw": "",
+          "intake": "offline",
+          "note": "메뉴설정 변경요청"
+        },
         {
           "time": "21:59",
           "store": "파도어시장",
@@ -56880,11 +56902,11 @@ window.SLACK_DATA = {
         }
       ],
       "intake": {
-        "online": 217,
-        "offline": 36,
+        "online": 218,
+        "offline": 37,
         "unknown": 0
       },
-      "updatedAt": "21:59",
+      "updatedAt": "23:05",
       "voc": {
         "responses": 22,
         "install": {
@@ -57171,15 +57193,15 @@ window.SLACK_DATA = {
       },
       "1784786404.300819": {
         "post": "1784786404.300819",
-        "lastSeen": 1784815235.868
+        "lastSeen": 1784816123.186
       },
       "1784794088.947879": {
         "post": "1784794088.947879",
-        "lastSeen": 1784815235.868
+        "lastSeen": 1784816123.186
       },
       "1784797494.045879": {
         "post": "1784797494.045879",
-        "lastSeen": 1784815235.868
+        "lastSeen": 1784816123.186
       }
     },
     "days": {
