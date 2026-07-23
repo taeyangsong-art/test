@@ -1250,7 +1250,8 @@ function newShareId(){ return 'sv_'+Date.now()+'_'+Math.floor(Math.random()*1000
 function pushShareEv(ids){ const p={}; (ids||[]).forEach(id=>{ if(id&&SHAREEV[id]) p[id]=SHAREEV[id]; }); if(Object.keys(p).length) pushPatch({shareEv:p}); }
 // 구 클라우드/구 버전 클라이언트가 올린 날짜배열(share)을 이벤트 저장소로 흡수(이미 있는 id는 건너뜀 → 삭제표식 보존)
 function foldLegacyShare(dateMap){ if(!dateMap) return; for(const ds in dateMap){ (dateMap[ds]||[]).forEach(e=>{ if(e&&e.id&&!SHAREEV[e.id]) SHAREEV[e.id]=Object.assign({ds, ts:0}, e); }); } }
-function pushDutyDates(dates){ const p={}; (dates||[]).forEach(ds=>{ if(ds) p[ds]=DUTY[ds]||null; }); if(Object.keys(p).length) pushPatch({duty:p}); }
+// 날짜 전체 삭제 시 null(키 제거) 대신 {}(묘비)를 푸시 — 키가 클라우드에 남아야 다른 브라우저의 '로컬 복원' 로직이 옛 값을 되살리지 않음
+function pushDutyDates(dates){ const p={}; (dates||[]).forEach(ds=>{ if(ds) p[ds]=DUTY[ds]||{}; }); if(Object.keys(p).length) pushPatch({duty:p}); }
 const LS_DUTYOVER = "opcare_dutyover_v1";
 let DUTYOVER = load(LS_DUTYOVER, {});   // { "date|time|title": "직원명" } — 회의 원격당번 수동 지정
 // 📢 공지사항 · 공유 게시판 (팀 공유 클라우드)
@@ -1375,7 +1376,7 @@ function renderShareChangelog(){
     </div>`;
   markChangelogSeen();
 }
-function saveDutyOverride(key, name){ if(name) DUTYOVER[key]=name; else delete DUTYOVER[key]; save(LS_DUTYOVER, DUTYOVER); pushPatch({dutyOver:{[key]:DUTYOVER[key]||null}}); renderShare(); }
+function saveDutyOverride(key, name){ if(name) DUTYOVER[key]=name; else delete DUTYOVER[key]; save(LS_DUTYOVER, DUTYOVER); pushPatch({dutyOver:{[key]:DUTYOVER[key]||''}}); renderShare(); }   // 삭제는 ''(묘비) — null이면 키 제거→타 브라우저 복원으로 부활
 function dutyPersonAt(key, mapVal){ return DUTYOVER[key] || mapVal || ''; }
 const LS_REFRESH = "opcare_refresh_v1";
 let REFRESH = load(LS_REFRESH, {});   // { "0900": "이름" } — 리프레쉬(휴게) 타임
