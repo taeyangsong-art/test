@@ -3,8 +3,8 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 1,
- "updatedAt": "2026-07-23 11:00",
+ "version": 2,
+ "updatedAt": "2026-07-23 11:45",
  "days": 7,
  "items": [
   {
@@ -30,6 +30,11 @@ window.MENU_REQUESTS = {
     "https://drive.google.com/file/d/12uAezB_S5YKlzKYlk1bS0TQUOc243cKx/view?usp=drivesdk"
    ],
    "files": 0,
+   "replies": [
+    "필수선택 설정 완료"
+   ],
+   "rc": 2,
+   "lr": "1784771324.602809",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784770829821969"
@@ -46,6 +51,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "여기다 이미지만 올려줘염"
+   ],
+   "rc": 3,
+   "lr": "1784767560.625109",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784767321248779"
@@ -62,6 +72,14 @@ window.MENU_REQUESTS = {
    "special": "완료 문자가 왔는데 하나도 수정이 안되어 있습니다",
    "drive": [],
    "files": 0,
+   "replies": [
+    "넘 잘되어있음",
+    "원격으로 확인 시 진짜 변경 안되어있어 처리",
+    "kcl4223",
+    ":memo: *kis okpos 아님!*"
+   ],
+   "rc": 5,
+   "lr": "1784766837.795689",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784765757686229"
@@ -78,6 +96,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "• 5384201479(도호커피 본점) 메뉴 등록 요청 건\n1841002644 사업장에 있는 메뉴에  옵션 동일하게 추가 요청(도호 커피에 있는 기존 메뉴는 그대로 유지)\n\n  - 토스트, 떡볶이, 볶음밥, 버거, 치킨박스, 사이드메뉴\n  - 음료 제외\n  - 옵션도 동일하게 적용"
+   ],
+   "rc": 3,
+   "lr": "1784727734.152099",
    "status": "done",
    "handler": "최민석",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784711911498519"
@@ -94,6 +117,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "메뉴등록 완료 솔라피 발송완료"
+   ],
+   "rc": 2,
+   "lr": "1784726900.353889",
    "status": "done",
    "handler": "최민석",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784710940096429"
@@ -110,6 +138,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 2,
+   "lr": "1784715050.288339",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784707102861099"
@@ -126,6 +157,12 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "님 부탁좀 할게용\n\n이메일로 온건데 요거 부탁좀!",
+    "배민에서 캡쳐뜬 사진임.."
+   ],
+   "rc": 4,
+   "lr": "1784706910.465889",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784706871054809"
@@ -142,6 +179,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "요거트아이스크림\n• 초코쉘 세트 4800\n• 꼬맹이세트 7000\n빙수\n• 새하얀 눈꽃 빙수 5600\n• 자몽 대가족 12000\n• 딸기 치즈 대가족 10400\n• 마멀레이드 사과 빙수 9600\n수제 과일청, 시럽, 잼 추가선택\n• 블루베리 청 800\n• 망고청 800\n토핑 추가 선택\n• 오레오 샌드 3ea 800\n• 다크콘푸로스트 500\n• 다크초코칩 800\n변경 부탁드리며 없는 항목들은 추가 부탁드리겠습니다 !"
+   ],
+   "rc": 3,
+   "lr": "1784704666.677489",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784704399694949"
@@ -158,6 +200,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "담배빼고, 터치키 NO 되어잇는거 빼고만 등록"
+   ],
+   "rc": 2,
+   "lr": "1784704361.715039",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784704133329699"
@@ -174,6 +221,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "이 3개의 화면을 한 화면으로 묶어주세요\n\n피자가격만 3만원으로 변경해주세요\n쿠키가격을 5000원으로 수정해주세요"
+   ],
+   "rc": 3,
+   "lr": "1784703756.008999",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784703682304849"
@@ -190,6 +242,13 @@ window.MENU_REQUESTS = {
    "special": "엑셀 파일대로 등록하되 이해가 안되는 항목은(옵션) 배달해주세요 - 어반치킨앤버거에 등록된대로 부탁드립니다",
    "drive": [],
    "files": 0,
+   "replies": [
+    "옵션 어지럽네..",
+    "토플파도없음 ㅅㄱ",
+    "토플파 생성되는거 지켜봐야될듯요... 일단 저장해놓기"
+   ],
+   "rc": 4,
+   "lr": "1784702695.706669",
    "status": "confirm",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784702216873929"
@@ -206,6 +265,18 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "3000원으로 되어있음",
+    "오잉 중복인가,,,? 다 해놧는뎅",
+    "이모지를 안찍은겨? 뭐징",
+    "위에 똑같은게 잇어염",
+    "문자도 보냇는데 껏켯을 안하셧는가봉가",
+    "전화해볼게여",
+    "껏켯 안하신둣",
+    "문자도 보내써연"
+   ],
+   "rc": 10,
+   "lr": "1784702469.435809",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784702028709639"
@@ -222,6 +293,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "토스포스에서 지속 실패하시어 이관 드립니다. :꾸벅:"
+   ],
+   "rc": 4,
+   "lr": "1784702250.448099",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784701132092259"
@@ -238,6 +314,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784699971.261449",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784699966509239"
@@ -254,6 +333,12 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "• 육류\n    ◦ 생토시살(150g) 25,000원\n    ◦ 토시살주물럭(150g) 25,000원",
+    "등록 이후 문자 한통만 부탁드립니다!"
+   ],
+   "rc": 4,
+   "lr": "1784698360.757669",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784696937562839"
@@ -270,6 +355,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 2,
+   "lr": "1784698185.484389",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784694954587979"
@@ -286,6 +374,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "맞습니다.\n근데 인입 당시 메일 수신 확인 안돼서 메뉴등록 요청 링크로 재접수 하시도록 안내드렸는데 메일 확인이 되는군요 ㅠㅠ"
+   ],
+   "rc": 7,
+   "lr": "1784698489.574459",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784694526574119"
@@ -302,6 +395,11 @@ window.MENU_REQUESTS = {
    "special": "사진은 가지고 계신 파일로 추가 해주세요",
    "drive": [],
    "files": 0,
+   "replies": [
+    ":telephone_receiver: 완료"
+   ],
+   "rc": 2,
+   "lr": "1784689476.610269",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784688309485099"
@@ -320,6 +418,9 @@ window.MENU_REQUESTS = {
     "https://drive.google.com/file/d/16-b5_-UfPtZNFcvmTy8FQ97ZAgd8Yg9i/view?usp=drivesdk"
    ],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784687797.614229",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784687793155599"
@@ -336,6 +437,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 3,
+   "lr": "1784686297.366029",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784686273885019"
@@ -352,6 +456,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784685310.692339",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784685305722849"
@@ -368,6 +475,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "유플러스 입니다."
+   ],
+   "rc": 22,
+   "lr": "1784688201.529729",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784684753124959"
@@ -387,6 +499,9 @@ window.MENU_REQUESTS = {
     "https://drive.google.com/file/d/1ZCEiuSHN4VnymIgJ5Awj5Udl_pT1VVTK/view?usp=drivesdk"
    ],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784684518.559449",
    "status": "dup",
    "handler": null,
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784684513733729"
@@ -406,6 +521,11 @@ window.MENU_REQUESTS = {
     "https://drive.google.com/open?id=1QvpA8ruhnUVljcEr6LrpF0BkSIb1TzDn"
    ],
    "files": 0,
+   "replies": [
+    "오지마 차? 오미자 차? 일단 메뉴판 그대로"
+   ],
+   "rc": 2,
+   "lr": "1784684941.994169",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784684378495469"
@@ -426,6 +546,18 @@ window.MENU_REQUESTS = {
     "https://drive.google.com/open?id=1L0kSmgdsdkp8Gg2yLtqH0zzM7LOSYcXf"
    ],
    "files": 0,
+   "replies": [
+    "님, 안녕하세요.\n대표님 재인입되어 맥주세트, 브루잉커피만 추가 되어있고 다른 옵션 등 추가가 이루어지지 않았다고 하시어 확인 한버만 부탁 드리겠습니다. :꾸벅:\n재부팅 이후에도 포스/키오스크 모두 동일하다고 하십니다.",
+    "키오스크인가요 포스기인가요",
+    "둘다라고 하십니다..!",
+    "되어있는뎀..",
+    "옵션은 제가 안걸은게 맞아요 처리할게요",
+    "감사합니다..! 말씀해주시면 제가 대표님께 재부팅 안내 하겠습니다.",
+    "넵 안내부탁드려요",
+    "님, 변경은 완료 되었다고 하십니다.\n추가 요청사항이 있어 요거까지만 부탁 드립니다..! :개굴-pray2:\n\n커피메뉴에 배치브루핫,아이스삭제 부탁드리고 일맥세트 메뉴명을  2인일맥세트(파스타1+맥주2잔) 으로 변경 부탁드립니다"
+   ],
+   "rc": 11,
+   "lr": "1784688235.423049",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784684009650729"
@@ -442,6 +574,9 @@ window.MENU_REQUESTS = {
    "special": "바로 부탁드립니다",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784682868.985729",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784682863328969"
@@ -458,6 +593,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "*[가격 변경]*\n탕수육 짜장1 짬뽕1\n28000\n\n탕수육 짬뽕2개\n30000\n\n탕수육 쟁반짜장\n32000\n\n*[메뉴 삭제]*\n• 냉짬뽕\n• 돼지고기 가지볶음\n• 깐풍가지\n• 어향가지새우"
+   ],
+   "rc": 3,
+   "lr": "1784641010.894409",
    "status": "done",
    "handler": "최민석",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784628801009349"
@@ -474,6 +614,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "KSNET -> KIS 메뉴 복사 요청 드립니다!"
+   ],
+   "rc": 3,
+   "lr": "1784631597.797149",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784626521680269"
@@ -490,6 +635,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "메뉴 등록 이후 <tel:010-9460-9831|010-9460-9831> 해당 번호로 문자 발송 요청 드립니다 :woman-bowing::skin-tone-4:"
+   ],
+   "rc": 4,
+   "lr": "1784631096.467479",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784625612247609"
@@ -506,6 +656,13 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "-엑셀 파일 업로드가 안돼서 해결 후 올리겠습니다 :루피눈물:",
+    "네ㅜㅜ 계속 암호화걸리는데 혹시 엑셀파일 전달 방법이 있을까요..?ㅜㅜ",
+    "파일 1은 가격 있고 파일2는 가격 없는 파일입니다! 두 파일 모두 등록 요청하셨습니다 :woman-bowing:"
+   ],
+   "rc": 9,
+   "lr": "1784628817.059039",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784624260253589"
@@ -522,6 +679,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "메뉴 사진 별도로 추후 전송 예정입니다!"
+   ],
+   "rc": 3,
+   "lr": "1784624077.417929",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784624019849009"
@@ -538,6 +700,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784622965.116869",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784622960842869"
@@ -556,6 +721,15 @@ window.MENU_REQUESTS = {
     "https://drive.google.com/open?id=12S4RJ7lvH59eqLRMsE2MVDS--nQ6ThpH"
    ],
    "files": 0,
+   "replies": [
+    "해당 매장, 테이블 오더 사용 매장이라\n전시관리 등록이 필요합니다. 진행 부탁드리겠습니다 :slightly_smiling_face:",
+    "여기 아까 완료해썽요",
+    "엇! 인입되어서 전시관리 등록 해달라고 요청주셔서...\n흠냐 잠시만용",
+    "어머 그렇네요. 다시 재안내할게욤",
+    "넹~"
+   ],
+   "rc": 6,
+   "lr": "1784633798.003209",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784622898374529"
@@ -572,6 +746,9 @@ window.MENU_REQUESTS = {
    "special": "바로 해주세요",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784621122.438439",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784621116645489"
@@ -588,6 +765,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 1,
+   "replies": [
+    "막국수와 얼큰막국수를 물/비빔 나누는 요청입니다"
+   ],
+   "rc": 3,
+   "lr": "1784617652.948459",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784617367166589"
@@ -606,6 +788,9 @@ window.MENU_REQUESTS = {
     "https://drive.google.com/file/d/1ZCGXAr_tvDpD60cUivs4ZgsrzHYhSUEZ/view?usp=drivesdk"
    ],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784615778.463049",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784615773869209"
@@ -622,6 +807,12 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "탕찌개 카테고리 > 순살떡도리탕 *삭제*\n탕찌개 카테고리 > 김치수제비순살닭도리탕 27,900원 *추가*",
+    "혹시 수정 후 솔라피 밝송 부탁 드려도 될까요? :감사합니다꾸벅:"
+   ],
+   "rc": 4,
+   "lr": "1784615897.461339",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784615511438259"
@@ -638,6 +829,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 2,
+   "lr": "1784614706.337049",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784614669127979"
@@ -654,6 +848,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 2,
+   "lr": "1784614638.782219",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784614544290459"
@@ -670,6 +867,12 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "머!",
+    "문자발송"
+   ],
+   "rc": 3,
+   "lr": "1784614230.677969",
    "status": "wait",
    "handler": null,
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784612705347739"
@@ -686,6 +889,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "오케이포스\n\n*[메뉴 삭제]*\n카테고리: 피자\n메뉴명: 체험피자\n\n*[메뉴 추가]*\n카테고리: 피자\n메뉴명: 비프/치킨타코\n가격: 15,900원\n\n카테고리: 크러스트\n메뉴명: 비프/치킨타코크러스트\n가격: 18,900원\n\n카테고리: 사이드,토핑추카\n메뉴명: 할라피뇨\n가격: 500원"
+   ],
+   "rc": 2,
+   "lr": "1784610981.862629",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784610945917399"
@@ -702,6 +910,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 2,
+   "lr": "1784610930.883219",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784610917170279"
@@ -718,6 +929,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784610193.883789",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784610189016449"
@@ -734,6 +948,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "장어 ( 1kg 는 잘 등록 되어있다고합니다! )\n500g -> 17,500원\n100g -> 3,500원\n10g -> 350원"
+   ],
+   "rc": 6,
+   "lr": "1784610258.977879",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784609903683779"
@@ -750,6 +969,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 3,
+   "lr": "1784607596.946089",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784607539264439"
@@ -766,6 +988,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "메뉴 요청 문자 발송"
+   ],
+   "rc": 2,
+   "lr": "1784608596.305079",
    "status": "wait",
    "handler": null,
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784607313602819"
@@ -782,6 +1009,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "문자로 받았는데 해상도 다깨져서 확인 안됨 이메일 요청"
+   ],
+   "rc": 2,
+   "lr": "1784605361.712079",
    "status": "wait",
    "handler": null,
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784605301891209"
@@ -798,6 +1030,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784603123.558149",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784603119669479"
@@ -814,6 +1049,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 3,
+   "lr": "1784603552.957879",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784603079845949"
@@ -830,6 +1068,9 @@ window.MENU_REQUESTS = {
    "special": "메뉴 가리비찜 수정부탁드립니다.",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784602728.184089",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784602723983739"
@@ -846,6 +1087,11 @@ window.MENU_REQUESTS = {
    "special": "기존에 신청한 메뉴에서",
    "drive": [],
    "files": 0,
+   "replies": [
+    "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784602908319559"
+   ],
+   "rc": 2,
+   "lr": "1784603125.905309",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784602517541959"
@@ -862,6 +1108,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "오케이포스!\n\n\n• 카테고리 : [식사]\n얼큰 숙주순대국 : 13,000원\n\n(얼큰순대국 옆에 위치 요청)"
+   ],
+   "rc": 4,
+   "lr": "1784602939.481629",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784602295871719"
@@ -880,6 +1131,9 @@ window.MENU_REQUESTS = {
     "https://drive.google.com/file/d/1cVSNaLDrGrAK-_n1UqQtAShEzJiEhXYf/view?usp=drivesdk"
    ],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784602140.301419",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784602134653989"
@@ -896,6 +1150,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "*메뉴 삭제*\n카테고리: [식사]\n• 행사 한우 불고기 \n*메뉴 추가*\n카테고리: [고기류]\n버섯갈비전골  60,000원"
+   ],
+   "rc": 3,
+   "lr": "1784600361.774749",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784599959387169"
@@ -912,6 +1171,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "8191702185 / 본점\n7351502466 / 화명점\n- 화명점 > 본점 메뉴로 전부 똑같이 변경 요청"
+   ],
+   "rc": 4,
+   "lr": "1784558451.509699",
    "status": "done",
    "handler": "최민석",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784539029405799"
@@ -928,6 +1192,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "순대국(포장)\n맥주 프린터 해제"
+   ],
+   "rc": 2,
+   "lr": "1784538371.655639",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784538364150319"
@@ -944,6 +1213,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784536495.442669",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784536488876279"
@@ -960,6 +1232,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784534091.553409",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784534087324769"
@@ -976,6 +1251,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 2,
+   "lr": "1784531367.926809",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784531331664349"
@@ -992,6 +1270,9 @@ window.MENU_REQUESTS = {
    "special": "1283678896",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784531058.205069",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784531051794269"
@@ -1008,6 +1289,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "메뉴 이미지와 메뉴 별 금액 압축하여 첨부드립니다"
+   ],
+   "rc": 3,
+   "lr": "1784532491.048589",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784529797935699"
@@ -1024,6 +1310,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 2,
+   "lr": "1784528995.608939",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784528904852669"
@@ -1040,6 +1329,13 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "직접 삭제하시다가 일괄로 삭제 요청하셨는데 전화드려 한번 더 확인해 보겠습니다..! :개굴-죄송:",
+    "지금 원격 요청하신건도 있어서요!\n프린터 설정 때문에 통화중이실수도 있으셔요,,!",
+    "전화번호는 01080008417여기로 부탁드립니다!"
+   ],
+   "rc": 8,
+   "lr": "1784529817.993849",
    "status": "done",
    "handler": "최민석",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784528467858269"
@@ -1056,6 +1352,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "왜~ 되어있징"
+   ],
+   "rc": 3,
+   "lr": "1784527567.768179",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784527418695909"
@@ -1072,6 +1373,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "• 카테고리 : 주류\n*오디주 18,000원*"
+   ],
+   "rc": 2,
+   "lr": "1784525091.607409",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784525073955009"
@@ -1088,6 +1394,12 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "전골 카테고리\n(신라면불닭핵불닭)\n매운맛단계 꼭 넣어주세요\n오곱새 18.000\n오삼새 17.000\n돌판볶음카테고리\n(신라면불닭핵불닭)\n매운맛단계 꼭 넣어주세요\n오대 18.000\n오새 17.000\n오삼 16.000\n오징어 15.000\n별미카테고리\n통오징어+알 숙회 25.000\n오징어프라이드 25.000\n누룽지치즈지슬전 25.000\n백합조개탕 15.000\n사이드카테고리\n오징어까스2p 5.000\n반숙후라이4p 5.000\n불꽃치즈볶음밥 5.000\n김가루대접밥3.000\n당면사리 3.000\n우동사리 3.000\n미나리사리3.000\n공깃밥1.000\n주류카테고리\n소주,맥주 5.000\n제주막걸리4.000\n음료 2.000",
+    "기존 메뉴 모두 삭제 후 재구성 요청드립니다!(LG 포스기)"
+   ],
+   "rc": 5,
+   "lr": "1784523084.778619",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784522465049319"
@@ -1104,6 +1416,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784522004.910059",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784522000232929"
@@ -1120,6 +1435,13 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "토스포스 대시보드상에는 아무 메뉴가 없는데 대표자분께서 노트북에는 등록한 내역이 있다고 하십니다",
+    "감사합니다 규빈님",
+    "감사합니다 고생 많으셨습니다"
+   ],
+   "rc": 9,
+   "lr": "1784519548.083829",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784517728533079"
@@ -1136,6 +1458,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784514754.929919",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784514720972089"
@@ -1152,6 +1477,12 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "님 , 스파로스 사용 그대로 프론트 도입했던 이력이 있습니다..!\n https://w1659946222-hxm266180.slack.com/archives/C07AY99U3F1/p1764659176737349",
+    "kis 입니다"
+   ],
+   "rc": 9,
+   "lr": "1784513125.664989",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784510571745689"
@@ -1168,6 +1499,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 2,
+   "lr": "1784508797.975689",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784508699571049"
@@ -1184,6 +1518,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "원격방으로 접수된듯"
+   ],
+   "rc": 2,
+   "lr": "1784507979.069559",
    "status": "wait",
    "handler": null,
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784507881569669"
@@ -1200,6 +1539,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 2,
+   "lr": "1784505858.448099",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784505739652639"
@@ -1216,6 +1558,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "001396"
+   ],
+   "rc": 2,
+   "lr": "1784506791.151899",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784468911100679"
@@ -1232,6 +1579,12 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "*김치찌개* - *20,000원*으로 수정 부탁드립니다. :감사합니다꾸벅:",
+    "오..여기 퍼스트 아니고 토스포스네요 감사합니당 광두님 :감사콩:"
+   ],
+   "rc": 4,
+   "lr": "1784358858.684709",
    "status": "wait",
    "handler": null,
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784353582878579"
@@ -1248,6 +1601,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "생체 항칠 생오리 양념 불고기\n항칠 생오리 구이\n항칠 오리 능이 백숙\n\n메뉴 재노출 부탁드립니다"
+   ],
+   "rc": 3,
+   "lr": "1784280936.734119",
    "status": "wait",
    "handler": null,
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784280103551129"
@@ -1264,6 +1622,14 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "님 혹시 상기 건 차주 월요일 적용 가능으로 안내 드려야 할까요?",
+    "급하다고는 하셨는데 안되면 시간 양해를 구하겠습니다",
+    "감사합니다 !!",
+    "선유님 너무 고생많으십니다"
+   ],
+   "rc": 9,
+   "lr": "1784277517.378239",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784272576238579"
@@ -1280,6 +1646,11 @@ window.MENU_REQUESTS = {
    "special": "16시 전까지 부탁드립니다",
    "drive": [],
    "files": 0,
+   "replies": [
+    "케이핀"
+   ],
+   "rc": 2,
+   "lr": "1784248690.778339",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784248562338659"
@@ -1296,6 +1667,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 3,
+   "lr": "1784207765.911269",
    "status": "done",
    "handler": "최민석",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784206215398309"
@@ -1312,6 +1686,11 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [
+    "포스화면에\n테이블번호 2-1\n3-2 추가\n\n테이블번호 13번 뒤에 포장 추가"
+   ],
+   "rc": 4,
+   "lr": "1784205355.253429",
    "status": "done",
    "handler": "최민석",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784198459670669"
@@ -1328,6 +1707,9 @@ window.MENU_REQUESTS = {
    "special": "동기화가 안되요",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 2,
+   "lr": "1784205629.892179",
    "status": "done",
    "handler": "최민석",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784197195305059"
@@ -1344,6 +1726,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784190753.800599",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784190726200599"
@@ -1369,6 +1754,9 @@ window.MENU_REQUESTS = {
     "https://drive.google.com/open?id=1biyLuAscle4YF9Zxi77wCmjp44fywaSe"
    ],
    "files": 0,
+   "replies": [],
+   "rc": 3,
+   "lr": "1784191261.263049",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784190632504709"
@@ -1385,6 +1773,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 20,
+   "lr": "1784191106.916049",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784190608597369"
@@ -1412,6 +1803,9 @@ window.MENU_REQUESTS = {
     "https://drive.google.com/open?id=1nGzCtKvXMZGrUrIrwO-abClcnyVolLe1"
    ],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784190517.827539",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784190512892049"
@@ -1428,6 +1822,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 6,
+   "lr": "1784191336.996359",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784189509933229"
@@ -1444,6 +1841,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 2,
+   "lr": "1784188377.317119",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784188054601629"
@@ -1460,6 +1860,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784187969.211399",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784187963519469"
@@ -1476,6 +1879,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 2,
+   "lr": "1784187391.394239",
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784187376070729"
@@ -1492,6 +1898,9 @@ window.MENU_REQUESTS = {
    "special": "지금 바로 해주세요",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784183152.206769",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784183146785519"
@@ -1508,6 +1917,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 2,
+   "lr": "1784181110.191279",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784181090393389"
@@ -1524,6 +1936,9 @@ window.MENU_REQUESTS = {
    "special": "바로 해주세요",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 1,
+   "lr": "1784180405.903959",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784180400125019"
@@ -1540,6 +1955,9 @@ window.MENU_REQUESTS = {
    "special": "",
    "drive": [],
    "files": 0,
+   "replies": [],
+   "rc": 5,
+   "lr": "1784179056.473749",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784177531153359"
