@@ -3,10 +3,32 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 13,
- "updatedAt": "2026-07-23 16:00",
+ "version": 14,
+ "updatedAt": "2026-07-23 16:15",
  "days": 30,
  "items": [
+  {
+   "ts": "1784790693.724379",
+   "date": "2026-07-23",
+   "time": "16:11",
+   "store": "세리빠",
+   "biz": "5332501254",
+   "phone": "01024114052\n-",
+   "pos": "토스포스",
+   "content": "전체 업로드 부탁드립니다",
+   "special": "",
+   "drive": [
+    "https://drive.google.com/file/d/1dweyBZeqkzcUWWOLEqKg00DGbUO-bGJm/view?usp=drivesdk"
+   ],
+   "files": 0,
+   "att": [],
+   "replies": [],
+   "rc": 1,
+   "lr": "1784790697.884179",
+   "status": "wait",
+   "handler": null,
+   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784790693724379"
+  },
   {
    "ts": "1784789741.165009",
    "date": "2026-07-23",
@@ -65,8 +87,8 @@ window.MENU_REQUESTS = {
    "replies": [],
    "rc": 1,
    "lr": "1784789569.383829",
-   "status": "wait",
-   "handler": null,
+   "status": "confirm",
+   "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784789564812569"
   },
   {
@@ -85,7 +107,7 @@ window.MENU_REQUESTS = {
    "replies": [],
    "rc": 2,
    "lr": "1784789370.805269",
-   "status": "confirm",
+   "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784789354200529"
   },
@@ -10666,26 +10688,6 @@ window.MENU_REQUESTS = {
    "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782200045870179"
-  },
-  {
-   "ts": "1782198687.213829",
-   "date": "2026-06-23",
-   "time": "16:11",
-   "store": "뵈르뵈르 건대로데오점",
-   "biz": "8037700599",
-   "phone": "",
-   "pos": "",
-   "content": "메뉴등록요청",
-   "special": "",
-   "drive": [],
-   "files": 0,
-   "att": [],
-   "replies": [],
-   "rc": 4,
-   "lr": "1782198796.849659",
-   "status": "done",
-   "handler": "김규빈",
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782198687213829"
   }
  ]
 };
