@@ -3,10 +3,53 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 60,
- "updatedAt": "2026-07-24 17:45",
+ "version": 61,
+ "updatedAt": "2026-07-24 18:00",
  "days": 30,
  "items": [
+  {
+   "ts": "1784883107.625199",
+   "date": "2026-07-24",
+   "time": "17:51",
+   "store": "인딕슬로우",
+   "biz": "3090831798",
+   "phone": "01091036975",
+   "pos": "",
+   "content": "Thali 메뉴에 옵션 추가 요청",
+   "special": "",
+   "drive": [],
+   "files": 0,
+   "att": [],
+   "replies": [
+    "[Thali] 라는 메뉴에 옵션을 하나 추가해서 적용 부탁 드립니다.\n\n• 추가할 옵션 이름 => 난 선택(런치용)\n    ◦ 현재 `난 선택(셋트용)`이 있는데 이거랑 똑같이 만들어서 이름만 런치용으로 바꾼 후 [Thali] 메뉴 선택 시 필수 옵션으로 넣어달라고 요청주셨습니다.\n    ◦ [Thali] 메뉴 옵션에 `난 선택(셋트용)` 은 삭제 해 주시고 난 선택(런치용)을 넣어주시면 됩니다. 감사합니다. :꾸벅:",
+    "수정 후 솔라피 발송 부탁 드립니다!"
+   ],
+   "rc": 3,
+   "lr": "1784883281.204879",
+   "status": "wait",
+   "handler": null,
+   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784883107625199"
+  },
+  {
+   "ts": "1784883012.244919",
+   "date": "2026-07-24",
+   "time": "17:50",
+   "store": "총각네식육식당",
+   "biz": "2051470277",
+   "phone": "",
+   "pos": "",
+   "content": "신규 설치 예정 메뉴 등록",
+   "special": "",
+   "drive": [],
+   "files": 0,
+   "att": [],
+   "replies": [],
+   "rc": 2,
+   "lr": "1784883038.805889",
+   "status": "wait",
+   "handler": null,
+   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784883012244919"
+  },
   {
    "ts": "1784882380.928199",
    "date": "2026-07-24",
@@ -26,8 +69,8 @@ window.MENU_REQUESTS = {
    "replies": [],
    "rc": 1,
    "lr": "1784882385.149719",
-   "status": "wait",
-   "handler": null,
+   "status": "confirm",
+   "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784882380928199"
   },
   {
@@ -10542,26 +10585,6 @@ window.MENU_REQUESTS = {
    "status": "done",
    "handler": "최민석",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782292790837569"
-  },
-  {
-   "ts": "1782291069.481989",
-   "date": "2026-06-24",
-   "time": "17:51",
-   "store": "황제찹쌀꽈배기",
-   "biz": "4310603431",
-   "phone": "",
-   "pos": "토스포스",
-   "content": "해당 매장 스파로스->토스포스 사용 매장으로 메뉴 이관 부탁드립니다",
-   "special": "",
-   "drive": [],
-   "files": 0,
-   "att": [],
-   "replies": [],
-   "rc": 2,
-   "lr": "1782291407.021009",
-   "status": "done",
-   "handler": "배선유",
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782291069481989"
   }
  ]
 };
