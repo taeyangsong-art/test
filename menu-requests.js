@@ -3,10 +3,50 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 37,
- "updatedAt": "2026-07-24 09:30",
+ "version": 38,
+ "updatedAt": "2026-07-24 10:00",
  "days": 30,
  "items": [
+  {
+   "ts": "1784854483.351899",
+   "date": "2026-07-24",
+   "time": "09:54",
+   "store": "온찬",
+   "biz": "2951902699",
+   "phone": "05071411262\n-",
+   "pos": "토스포스",
+   "content": "메뉴 일괄등록",
+   "special": "",
+   "drive": [],
+   "files": 0,
+   "att": [],
+   "replies": [],
+   "rc": 1,
+   "lr": "1784854488.317059",
+   "status": "confirm",
+   "handler": "김규빈",
+   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784854483351899"
+  },
+  {
+   "ts": "1784853952.762379",
+   "date": "2026-07-24",
+   "time": "09:45",
+   "store": "주식회사 이태리총각 성북지점",
+   "biz": "4758500706",
+   "phone": "",
+   "pos": "",
+   "content": "메뉴 등록",
+   "special": "",
+   "drive": [],
+   "files": 0,
+   "att": [],
+   "replies": [],
+   "rc": 1,
+   "lr": "1784853957.872159",
+   "status": "done",
+   "handler": "김규빈",
+   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784853952762379"
+  },
   {
    "ts": "1784816602.774619",
    "date": "2026-07-23",
