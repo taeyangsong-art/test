@@ -3,8 +3,8 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 36,
- "updatedAt": "2026-07-24 09:15",
+ "version": 37,
+ "updatedAt": "2026-07-24 09:30",
  "days": 30,
  "items": [
   {
@@ -10709,26 +10709,6 @@ window.MENU_REQUESTS = {
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782263540466659"
-  },
-  {
-   "ts": "1782260673.118659",
-   "date": "2026-06-24",
-   "time": "09:24",
-   "store": "재리스 토스트(내포신도시점)",
-   "biz": "3602202498",
-   "phone": "",
-   "pos": "토스포스",
-   "content": "재리스토스트 중앙대점과 메뉴 동일하게 등록 부탁드립니다~",
-   "special": "",
-   "drive": [],
-   "files": 0,
-   "att": [],
-   "replies": [],
-   "rc": 3,
-   "lr": "1782260798.599569",
-   "status": "done",
-   "handler": "김규빈",
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782260673118659"
   }
  ]
 };
