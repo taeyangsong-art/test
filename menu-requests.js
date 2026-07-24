@@ -3,10 +3,30 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 58,
- "updatedAt": "2026-07-24 17:15",
+ "version": 59,
+ "updatedAt": "2026-07-24 17:30",
  "days": 30,
  "items": [
+  {
+   "ts": "1784881626.841289",
+   "date": "2026-07-24",
+   "time": "17:27",
+   "store": "일마지오 킨텍스점",
+   "biz": "7528502275",
+   "phone": "01036942860\n-",
+   "pos": "퍼스트포스",
+   "content": "생맥주 가격 5,500원으로 수정 부탁드립니다",
+   "special": "",
+   "drive": [],
+   "files": 0,
+   "att": [],
+   "replies": [],
+   "rc": 1,
+   "lr": "1784881632.300259",
+   "status": "done",
+   "handler": "배선유",
+   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784881626841289"
+  },
   {
    "ts": "1784869502.774709",
    "date": "2026-07-24",
@@ -10559,26 +10579,6 @@ window.MENU_REQUESTS = {
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782289837587709"
-  },
-  {
-   "ts": "1782289614.381509",
-   "date": "2026-06-24",
-   "time": "17:26",
-   "store": "라떼 이즈 홀",
-   "biz": "7556900465",
-   "phone": "",
-   "pos": "",
-   "content": "메뉴등록",
-   "special": "",
-   "drive": [],
-   "files": 0,
-   "att": [],
-   "replies": [],
-   "rc": 1,
-   "lr": "1782289618.735089",
-   "status": "done",
-   "handler": "배선유",
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782289614381509"
   }
  ]
 };
