@@ -3,10 +3,30 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 62,
- "updatedAt": "2026-07-24 18:11",
+ "version": 63,
+ "updatedAt": "2026-07-24 18:30",
  "days": 30,
  "items": [
+  {
+   "ts": "1784885413.871379",
+   "date": "2026-07-24",
+   "time": "18:30",
+   "store": "바다향기",
+   "biz": "3840403301",
+   "phone": "01038772193",
+   "pos": "",
+   "content": "• 메뉴 가격 변경 요청 드립니다.",
+   "special": "",
+   "drive": [],
+   "files": 0,
+   "att": [],
+   "replies": [],
+   "rc": 1,
+   "lr": "1784885419.950789",
+   "status": "wait",
+   "handler": null,
+   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784885413871379"
+  },
   {
    "ts": "1784883107.625199",
    "date": "2026-07-24",
@@ -10565,26 +10585,6 @@ window.MENU_REQUESTS = {
    "status": "wait",
    "handler": null,
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782341950528169"
-  },
-  {
-   "ts": "1782292790.837569",
-   "date": "2026-06-24",
-   "time": "18:19",
-   "store": "은성한정식",
-   "biz": "5298703678",
-   "phone": "01025147226\n-",
-   "pos": "퍼스트포스",
-   "content": "2층 7호-1을 세로 두칸으로 나눠서 2층 7호-1, 2층 7호-2 로 만들어주세요 / 채식정식 가격변경(39,000원)",
-   "special": "",
-   "drive": [],
-   "files": 0,
-   "att": [],
-   "replies": [],
-   "rc": 2,
-   "lr": "1782304930.178579",
-   "status": "done",
-   "handler": "최민석",
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782292790837569"
   }
  ]
 };
