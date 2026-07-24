@@ -3,10 +3,33 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 59,
- "updatedAt": "2026-07-24 17:30",
+ "version": 60,
+ "updatedAt": "2026-07-24 17:45",
  "days": 30,
  "items": [
+  {
+   "ts": "1784882380.928199",
+   "date": "2026-07-24",
+   "time": "17:39",
+   "store": "브라운",
+   "biz": "1051988486",
+   "phone": "01086009890\n-",
+   "pos": "오케이포스",
+   "content": "사진으로 첨부드립니다",
+   "special": "",
+   "drive": [
+    "https://drive.google.com/file/d/1EDMiyXneieaUCQ_dKdN4IfCHVYwnfZdr/view?usp=drivesdk",
+    "https://drive.google.com/file/d/1ZkfzE4mlJ0Lk14RCtv0TraVDEsmT9B8v/view?usp=drivesdk"
+   ],
+   "files": 0,
+   "att": [],
+   "replies": [],
+   "rc": 1,
+   "lr": "1784882385.149719",
+   "status": "wait",
+   "handler": null,
+   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784882380928199"
+  },
   {
    "ts": "1784881626.841289",
    "date": "2026-07-24",
@@ -20,9 +43,11 @@ window.MENU_REQUESTS = {
    "drive": [],
    "files": 0,
    "att": [],
-   "replies": [],
-   "rc": 1,
-   "lr": "1784881632.300259",
+   "replies": [
+    "완"
+   ],
+   "rc": 2,
+   "lr": "1784881862.170599",
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784881626841289"
@@ -10537,48 +10562,6 @@ window.MENU_REQUESTS = {
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782291069481989"
-  },
-  {
-   "ts": "1782290673.483299",
-   "date": "2026-06-24",
-   "time": "17:44",
-   "store": "빅데이커피",
-   "biz": "3653501820",
-   "phone": "",
-   "pos": "토스포스",
-   "content": "토스포스",
-   "special": "",
-   "drive": [],
-   "files": 0,
-   "att": [],
-   "replies": [],
-   "rc": 11,
-   "lr": "1782291270.307029",
-   "status": "done",
-   "handler": "배선유",
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782290673483299"
-  },
-  {
-   "ts": "1782289837.587709",
-   "date": "2026-06-24",
-   "time": "17:30",
-   "store": "카페415",
-   "biz": "1407500418",
-   "phone": "01023248010\n-",
-   "pos": "토스포스",
-   "content": "메뉴추가",
-   "special": "",
-   "drive": [
-    "https://drive.google.com/open?id=1m4UFhTrCDFxmdeoAhDAI_0D8bRFwmoTH"
-   ],
-   "files": 0,
-   "att": [],
-   "replies": [],
-   "rc": 1,
-   "lr": "1782289844.984639",
-   "status": "done",
-   "handler": "배선유",
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782289837587709"
   }
  ]
 };
