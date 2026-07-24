@@ -3,8 +3,8 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 38,
- "updatedAt": "2026-07-24 10:00",
+ "version": 39,
+ "updatedAt": "2026-07-24 10:15",
  "days": 30,
  "items": [
   {
@@ -20,9 +20,12 @@ window.MENU_REQUESTS = {
    "drive": [],
    "files": 0,
    "att": [],
-   "replies": [],
-   "rc": 1,
-   "lr": "1784854488.317059",
+   "replies": [
+    "엑셀 편집자 권한 요청",
+    "이메일로 받기로"
+   ],
+   "rc": 3,
+   "lr": "1784855109.269779",
    "status": "confirm",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784854483351899"
@@ -10729,26 +10732,6 @@ window.MENU_REQUESTS = {
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782265509675159"
-  },
-  {
-   "ts": "1782263540.466659",
-   "date": "2026-06-24",
-   "time": "10:12",
-   "store": "카페911커피",
-   "biz": "8791201918",
-   "phone": "01075357258\n-",
-   "pos": "퍼스트포스",
-   "content": "수고가많으시죠?\n추가요청 드립니다\n\n아메리카노 옵션 24온즈 1,000 1리터2,000\n\n아샷추 옵션 생성 \n사이즈 24온즈1,500 /1리터3,000 \n원두변경 디카페인 500 \n샷추가 1샷추가500 /2샷추가1,000\n\n제주감귤차4,000 생성 \n제주청귤차4,000 생성 \n한라봉차를 제주한라봉차로 명칭변경하고 4,000 가격변경 \n레몬티를 레몬차로 명칭변경 \n자몽티를 자몽차로 명칭변경 \n자몽블랙티를 자몽블랙차로 명칭변경 \n애플유자티를 애플유자차로 명칭변경 \n\n청포도에이드 4,500 가격변경 \n\n수고하세요",
-   "special": "",
-   "drive": [],
-   "files": 0,
-   "att": [],
-   "replies": [],
-   "rc": 12,
-   "lr": "1782266823.499919",
-   "status": "done",
-   "handler": "배선유",
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782263540466659"
   }
  ]
 };
