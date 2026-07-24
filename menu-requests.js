@@ -3,8 +3,8 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 61,
- "updatedAt": "2026-07-24 18:00",
+ "version": 62,
+ "updatedAt": "2026-07-24 18:11",
  "days": 30,
  "items": [
   {
@@ -24,10 +24,10 @@ window.MENU_REQUESTS = {
     "[Thali] 라는 메뉴에 옵션을 하나 추가해서 적용 부탁 드립니다.\n\n• 추가할 옵션 이름 => 난 선택(런치용)\n    ◦ 현재 `난 선택(셋트용)`이 있는데 이거랑 똑같이 만들어서 이름만 런치용으로 바꾼 후 [Thali] 메뉴 선택 시 필수 옵션으로 넣어달라고 요청주셨습니다.\n    ◦ [Thali] 메뉴 옵션에 `난 선택(셋트용)` 은 삭제 해 주시고 난 선택(런치용)을 넣어주시면 됩니다. 감사합니다. :꾸벅:",
     "수정 후 솔라피 발송 부탁 드립니다!"
    ],
-   "rc": 3,
-   "lr": "1784883281.204879",
-   "status": "wait",
-   "handler": null,
+   "rc": 9,
+   "lr": "1784883955.438489",
+   "status": "done",
+   "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784883107625199"
   },
   {
@@ -46,8 +46,8 @@ window.MENU_REQUESTS = {
    "replies": [],
    "rc": 2,
    "lr": "1784883038.805889",
-   "status": "wait",
-   "handler": null,
+   "status": "done",
+   "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784883012244919"
   },
   {
@@ -69,7 +69,7 @@ window.MENU_REQUESTS = {
    "replies": [],
    "rc": 1,
    "lr": "1784882385.149719",
-   "status": "confirm",
+   "status": "done",
    "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784882380928199"
   },
