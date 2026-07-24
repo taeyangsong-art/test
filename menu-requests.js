@@ -3,8 +3,8 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 55,
- "updatedAt": "2026-07-24 16:00",
+ "version": 56,
+ "updatedAt": "2026-07-24 16:45",
  "days": 30,
  "items": [
   {
@@ -10639,26 +10639,6 @@ window.MENU_REQUESTS = {
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782287716605029"
-  },
-  {
-   "ts": "1782286897.838019",
-   "date": "2026-06-24",
-   "time": "16:41",
-   "store": "주식회사 야무진",
-   "biz": "2618125639",
-   "phone": "01068669638",
-   "pos": "",
-   "content": "로데오라 -> 야무진 메뉴 복사 요청",
-   "special": "",
-   "drive": [],
-   "files": 0,
-   "att": [],
-   "replies": [],
-   "rc": 2,
-   "lr": "1782287091.845549",
-   "status": "done",
-   "handler": "김현기",
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782286897838019"
   }
  ]
 };
