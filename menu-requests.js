@@ -3,8 +3,8 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 54,
- "updatedAt": "2026-07-24 15:30",
+ "version": 55,
+ "updatedAt": "2026-07-24 16:00",
  "days": 30,
  "items": [
   {
@@ -10659,26 +10659,6 @@ window.MENU_REQUESTS = {
    "status": "done",
    "handler": "김현기",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782286897838019"
-  },
-  {
-   "ts": "1782284329.307819",
-   "date": "2026-06-24",
-   "time": "15:58",
-   "store": "카페911커피",
-   "biz": "8791201918",
-   "phone": "01075357258\n-",
-   "pos": "퍼스트포스",
-   "content": "아이스아메리카노 두번째 옵션에 \n\n사이즈[필수] [선택]\n구조16oz 2샷\n긴급(24oz) 3샷 ₩1,000\nCPR(1리터) 4샷  ₩2,000\n\n이렇게만 변경 부탁드릴께요\n커피라 샷을 표기해야 해서요",
-   "special": "빠른변경 부탁드립니다",
-   "drive": [],
-   "files": 0,
-   "att": [],
-   "replies": [],
-   "rc": 3,
-   "lr": "1782288618.539749",
-   "status": "done",
-   "handler": "배선유",
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782284329307819"
   }
  ]
 };
