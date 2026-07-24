@@ -3,8 +3,8 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 40,
- "updatedAt": "2026-07-24 10:30",
+ "version": 41,
+ "updatedAt": "2026-07-24 10:45",
  "days": 30,
  "items": [
   {
@@ -10712,26 +10712,6 @@ window.MENU_REQUESTS = {
    "status": "wait",
    "handler": null,
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782277238747169"
-  },
-  {
-   "ts": "1782265509.675159",
-   "date": "2026-06-24",
-   "time": "10:45",
-   "store": "상촌리뼈해장국부대찌개",
-   "biz": "2862800078",
-   "phone": "01022898480",
-   "pos": "퍼스트포스",
-   "content": "FDK/ 메뉴 수정+등록 요청드립니다.\n\n메인 카테고리\n감자탕 대자 아래쪽에 추가 요청\n\n포장비 1,000원",
-   "special": "",
-   "drive": [],
-   "files": 0,
-   "att": [],
-   "replies": [],
-   "rc": 1,
-   "lr": "1782265514.988199",
-   "status": "done",
-   "handler": "배선유",
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782265509675159"
   }
  ]
 };
