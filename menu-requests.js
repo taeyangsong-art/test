@@ -3,8 +3,8 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 57,
- "updatedAt": "2026-07-24 17:00",
+ "version": 58,
+ "updatedAt": "2026-07-24 17:15",
  "days": 30,
  "items": [
   {
@@ -10579,46 +10579,6 @@ window.MENU_REQUESTS = {
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782289614381509"
-  },
-  {
-   "ts": "1782288568.280349",
-   "date": "2026-06-24",
-   "time": "17:09",
-   "store": "베리하운드 (BERRY HOUND)",
-   "biz": "4988502745",
-   "phone": "01094932080",
-   "pos": "",
-   "content": "메뉴 이미지 등록 부탁드립니다.",
-   "special": "",
-   "drive": [],
-   "files": 1,
-   "att": [],
-   "replies": [],
-   "rc": 2,
-   "lr": "1782290459.724219",
-   "status": "done",
-   "handler": "배선유",
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782288568280349"
-  },
-  {
-   "ts": "1782288372.074899",
-   "date": "2026-06-24",
-   "time": "17:06",
-   "store": "스위트 몽키 카페",
-   "biz": "2048532358",
-   "phone": "",
-   "pos": "토스포스",
-   "content": "페이히어 > 토스포스 전환",
-   "special": "",
-   "drive": [],
-   "files": 0,
-   "att": [],
-   "replies": [],
-   "rc": 2,
-   "lr": "1782289132.019939",
-   "status": "done",
-   "handler": "배선유",
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782288372074899"
   }
  ]
 };
