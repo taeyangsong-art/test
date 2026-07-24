@@ -3,8 +3,8 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 44,
- "updatedAt": "2026-07-24 12:30",
+ "version": 45,
+ "updatedAt": "2026-07-24 12:45",
  "days": 30,
  "items": [
   {
@@ -42,11 +42,14 @@ window.MENU_REQUESTS = {
    ],
    "files": 0,
    "att": [],
-   "replies": [],
-   "rc": 1,
-   "lr": "1784863408.507289",
-   "status": "wait",
-   "handler": null,
+   "replies": [
+    "커피 1L 보틀 옵션으로",
+    "아메리카노  3500 인상\n카페라떼 4800\n바닐라라떼 5800\n헤이즐넛 4000\n헤이즐넛 라떼 5300\n\n옵션 추가"
+   ],
+   "rc": 3,
+   "lr": "1784864541.607359",
+   "status": "done",
+   "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784863403875369"
   },
   {
@@ -65,8 +68,8 @@ window.MENU_REQUESTS = {
    "replies": [],
    "rc": 1,
    "lr": "1784863128.599279",
-   "status": "wait",
-   "handler": null,
+   "status": "done",
+   "handler": "김규빈",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784863122368229"
   },
   {
