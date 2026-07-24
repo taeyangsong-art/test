@@ -3,8 +3,8 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 51,
- "updatedAt": "2026-07-24 14:45",
+ "version": 52,
+ "updatedAt": "2026-07-24 15:00",
  "days": 30,
  "items": [
   {
@@ -44,10 +44,10 @@ window.MENU_REQUESTS = {
     "https://w1659946222-hxm266180.slack.com/archives/C0ADC9759KQ/p1784868888348889?thread_ts=1784797780.805749&cid=C0ADC9759KQ",
     "https://w1659946222-hxm266180.slack.com/archives/C0ADC9759KQ/p1784868896585869?thread_ts=1784797780.805749&cid=C0ADC9759KQ"
    ],
-   "rc": 3,
-   "lr": "1784869335.781389",
-   "status": "wait",
-   "handler": null,
+   "rc": 4,
+   "lr": "1784872430.766269",
+   "status": "done",
+   "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784869313292949"
   },
   {
@@ -68,8 +68,8 @@ window.MENU_REQUESTS = {
    "replies": [],
    "rc": 1,
    "lr": "1784868336.800179",
-   "status": "wait",
-   "handler": null,
+   "status": "confirm",
+   "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784868332769939"
   },
   {
@@ -86,9 +86,9 @@ window.MENU_REQUESTS = {
    "files": 0,
    "att": [],
    "replies": [],
-   "rc": 0,
-   "lr": "",
-   "status": "confirm",
+   "rc": 1,
+   "lr": "1784871955.611119",
+   "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1784867995076749"
   },
