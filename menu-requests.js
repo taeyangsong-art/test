@@ -3,8 +3,8 @@
  * scripts/fetch-menu-requests.js 가 GitHub Actions에서 주기 갱신합니다.
  */
 window.MENU_REQUESTS = {
- "version": 50,
- "updatedAt": "2026-07-24 14:30",
+ "version": 51,
+ "updatedAt": "2026-07-24 14:45",
  "days": 30,
  "items": [
   {
@@ -10782,66 +10782,6 @@ window.MENU_REQUESTS = {
    "status": "done",
    "handler": "배선유",
    "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782281048745539"
-  },
-  {
-   "ts": "1782279583.565239",
-   "date": "2026-06-24",
-   "time": "14:39",
-   "store": "사천반점",
-   "biz": "5765000569",
-   "phone": "",
-   "pos": "",
-   "content": "외주 메뉴",
-   "special": "",
-   "drive": [],
-   "files": 0,
-   "att": [],
-   "replies": [],
-   "rc": 4,
-   "lr": "1782280071.117059",
-   "status": "wait",
-   "handler": null,
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782279583565239"
-  },
-  {
-   "ts": "1782279099.164479",
-   "date": "2026-06-24",
-   "time": "14:31",
-   "store": "희조",
-   "biz": "3502700974",
-   "phone": "",
-   "pos": "토스포스",
-   "content": "토스포스 메뉴등록",
-   "special": "",
-   "drive": [],
-   "files": 0,
-   "att": [],
-   "replies": [],
-   "rc": 2,
-   "lr": "1782279323.694209",
-   "status": "done",
-   "handler": "배선유",
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782279099164479"
-  },
-  {
-   "ts": "1782279074.349669",
-   "date": "2026-06-24",
-   "time": "14:31",
-   "store": "밀라이스",
-   "biz": "1380221793",
-   "phone": "",
-   "pos": "",
-   "content": "메뉴수정",
-   "special": "",
-   "drive": [],
-   "files": 0,
-   "att": [],
-   "replies": [],
-   "rc": 1,
-   "lr": "1782279078.804499",
-   "status": "done",
-   "handler": "배선유",
-   "link": "https://w1659946222-hxm266180.slack.com/archives/C08740SFT1S/p1782279074349669"
   }
  ]
 };
